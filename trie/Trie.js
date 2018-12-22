@@ -1,5 +1,3 @@
-import TrieNode from './TrieNode';
-
 /*
 208. Implement Trie (Prefix Tree)
 Implement a trie with insert, search, and startsWith methods.
@@ -23,44 +21,66 @@ Note:
 
 */
 
-const Trie = () => {
-  this.head = new TrieNode('*');
-};
+import TrieNode from './TrieNode';
 
-/**
- * Inserts a word into the trie.
- * @param {string} word
- * @return {void}
- */
-Trie.prototype.insert = (word) => {
-  let currNode = this.head;
 
-  for (let i = 0; i < word.length; i++) {
-    const character = word[i];
-    const isCompleWord = i === word.length - 1;
-    currNode = currNode.addChild(character, isCompleWord);
+export default class Trie {
+  constructor() {
+    this.head = new TrieNode('*');
   }
 
-  this.head.toString();
-};
 
-/**
- * Returns if the word is in the trie.
- * @param {string} word
- * @return {boolean}
- */
-Trie.prototype.search = (word) => {
+  /**
+   * Inserts a word into the trie.
+   * @param {string} word
+   * @return {void}
+   */
+  insert(word) {
+    let currNode = this.head;
 
-};
+    for (let i = 0; i < word.length; i++) {
+      const character = word[i];
+      const isCompletedWord = i === word.length - 1;
+      currNode = currNode.addChild(character, isCompletedWord);
+    }
+  }
 
-/**
- * Returns if there is any word in the trie that starts with the given prefix.
- * @param {string} prefix
- * @return {boolean}
- */
-Trie.prototype.startsWith = (prefix) => {
+  /**
+   * Returns if the word is in the trie.
+   * @param {string} word
+   * @return {boolean}
+   */
+  search(word) {
+    let currNode = this.head;
 
-};
+    for (let i = 0; i < word.length; i++) {
+      const character = word[i];
+      currNode = currNode.getChild(character);
+
+      if (!currNode) return false;
+    }
+
+    return currNode.isCompletedWord;
+  }
+
+  /**
+   * Returns if there is any word in the trie that starts with the given prefix.
+   * @param {string} prefix
+   * @return {boolean}
+   */
+  startsWith(prefix) {
+    let currNode = this.head;
+
+    for (let i = 0; i < prefix.length; i++) {
+      const character = prefix[i];
+      currNode = currNode.getChild(character);
+
+      if (!currNode) return false;
+    }
+
+    return true;
+  }
+}
 
 /**
  * Your Trie object will be instantiated and called as such:

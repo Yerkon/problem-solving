@@ -8,11 +8,15 @@ export default class TrieNode {
 
   /**
    * @param {string} character
-   * @param {boolean} isCompleteWord
+   * @param {boolean} isCompletedWord
    * @return {TrieNode}
    */
-  addChild(character, isCompleteWord = false) {
-    this.children[character] = new TrieNode(character, isCompleteWord);
+  addChild(character, isCompletedWord = false) {
+    if (this.children[character] && this.children[character].isCompletedWord === false) {
+      this.children[character].isCompletedWord = isCompletedWord;
+    } else if (!this.children[character]) {
+      this.children[character] = new TrieNode(character, isCompletedWord);
+    }
 
     return this.children[character];
   }
@@ -30,24 +34,5 @@ export default class TrieNode {
    */
   getChildren() {
     return Object.keys(this.children);
-  }
-
-  toString() {
-    const resultArr = [];
-    const currNode = this;
-    const childrenArr = this.getChildren();
-
-
-    for (let i = 0; i < childrenArr.length; i++) {
-      while (currNode) {
-        const childCharacter = childrenArr[i];
-        const childNode = currNode[childCharacter];
-        resultArr.push(childCharacter);
-      }
-
-      resultArr.push('end of', i);
-    }
-
-    console.log(resultArr);
   }
 }
