@@ -4,7 +4,8 @@ Implement a trie with insert, search, and startsWith methods.
 
 Example:
 
-    Trie trie = new Trie();
+
+Trie trie = new Trie();
 
     trie.insert("apple");
     trie.search("apple");   // returns true
