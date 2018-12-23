@@ -13,6 +13,7 @@
     "no-loop-func": "off",
     "linebreak-style":"off",
     "no-plusplus":"off",
-    "no-unused-vars":"warn"    
+    "no-unused-vars":"warn",
+    "indent": ["warn", 4]
   }
 }

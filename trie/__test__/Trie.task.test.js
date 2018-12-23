@@ -1,4 +1,5 @@
 import Trie from '../Trie';
+import longestWord from '../LongestWordInDictionary';
 
 /* Example:
 
@@ -38,8 +39,6 @@ describe('Trie', () => {
     expect(trie.search('app')).toBe(true);
   });
 
-  // ["search","search","search","search","search","search","search","search","search","startsWith","startsWith","startsWith","startsWith","startsWith","startsWith","startsWith","startsWith","startsWith"]
-  // [["apps"],["app"],["ad"],["applepie"],["rest"],["jan"],["rent"],["beer"],["jam"],["apps"],["app"],["ad"],["applepie"],["rest"],["jan"],["rent"],["beer"],["jam"]]
   it('test 3', () => {
     const trie = new Trie();
     trie.insert('app');
@@ -51,5 +50,23 @@ describe('Trie', () => {
 
     expect(trie.search('apps')).toBe(false);
     expect(trie.search('app')).toBe(true);
+  });
+
+  it('Longest Word in Dictionary', () => {
+    let words = ['w', 'wo', 'wor', 'worl', 'world'];
+
+    expect(longestWord(words)).toBe('world');
+
+    words = ['a', 'banana', 'app', 'appl', 'ap', 'apple', 'apply'];
+    expect(longestWord(words)).toBe('apple');
+
+    words = ['m', 'mo', 'moc', 'moch', 'mocha', 'l', 'la', 'lat', 'latt', 'latte', 'c', 'ca', 'cat'];
+    expect(longestWord(words)).toBe('latte');
+
+    words = ['t', 'ti', 'tig', 'tige', 'tiger', 'e', 'en', 'eng', 'engl', 'engli', 'englis', 'english', 'h', 'hi', 'his', 'hist', 'histo', 'histor', 'history'];
+    expect(longestWord(words)).toBe('english');
+
+    words = ['yo', 'ew', 'fc', 'zrc', 'yodn', 'fcm', 'qm', 'qmo', 'fcmz', 'z', 'ewq', 'yod', 'ewqz', 'y'];
+    expect(longestWord(words)).toBe('yodn');
   });
 });

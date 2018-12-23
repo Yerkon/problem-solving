@@ -25,61 +25,95 @@ import TrieNode from './TrieNode';
 
 
 export default class Trie {
-  constructor() {
-    this.head = new TrieNode('*');
-  }
-
-
-  /**
-   * Inserts a word into the trie.
-   * @param {string} word
-   * @return {void}
-   */
-  insert(word) {
-    let currNode = this.head;
-
-    for (let i = 0; i < word.length; i++) {
-      const character = word[i];
-      const isCompletedWord = i === word.length - 1;
-      currNode = currNode.addChild(character, isCompletedWord);
-    }
-  }
-
-  /**
-   * Returns if the word is in the trie.
-   * @param {string} word
-   * @return {boolean}
-   */
-  search(word) {
-    let currNode = this.head;
-
-    for (let i = 0; i < word.length; i++) {
-      const character = word[i];
-      currNode = currNode.getChild(character);
-
-      if (!currNode) return false;
+    constructor() {
+        this.head = new TrieNode('*');
     }
 
-    return currNode.isCompletedWord;
-  }
 
-  /**
-   * Returns if there is any word in the trie that starts with the given prefix.
-   * @param {string} prefix
-   * @return {boolean}
-   */
-  startsWith(prefix) {
-    let currNode = this.head;
+    /**
+* Inserts a word into the trie.
+* @param {string} word
+* @return void
+*/
+    insert(word) {
+        let currNode = this.head;
 
-    for (let i = 0; i < prefix.length; i++) {
-      const character = prefix[i];
-      currNode = currNode.getChild(character);
-
-      if (!currNode) return false;
+        for (let i = 0; i < word.length; i++) {
+            const character = word[i];
+            const isCompletedWord = i === word.length - 1;
+            currNode = currNode.addChild(character, isCompletedWord);
+        }
     }
 
-    return true;
-  }
+    /**
+* @param {string} word
+* @return {Trie}
+*/
+    deleteWord(word) { }
+
+    /**
+* Returns if the word is in the trie.
+* @param {string} word
+* @return {boolean}
+*/
+    search(word) {
+        let currNode = this.head;
+
+        for (let i = 0; i < word.length; i++) {
+            const character = word[i];
+            currNode = currNode.getChild(character);
+
+            if (!currNode) return false;
+        }
+
+        return currNode.isCompletedWord;
+    }
+
+    /**
+* Return is word is chained by another word from beginning
+* @param {string} word
+* @return {boolean}
+*/
+    isChainedWord(word) {
+        let currNode = this.head;
+
+        for (let i = 0; i < word.length; i++) {
+            const character = word[i];
+            currNode = currNode.getChild(character);
+
+            if (!currNode.isCompletedWord) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+* Returns if there is any word in the trie that starts with the given prefix.
+* @param {string} prefix
+* @return {boolean}
+*/
+    startsWith(prefix) {
+        let currNode = this.head;
+
+        for (let i = 0; i < prefix.length; i++) {
+            const character = prefix[i];
+            currNode = currNode.getChild(character);
+
+            if (!currNode) return false;
+        }
+
+        return true;
+    }
+
+    /**
+* @param {string} word
+* @return {TrieNode}
+*/
+    getLastCharacterNode(word) {
+
+    }
 }
 
 /**
