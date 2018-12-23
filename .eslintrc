@@ -14,6 +14,7 @@
     "linebreak-style":"off",
     "no-plusplus":"off",
     "no-unused-vars":"warn",
-    "indent": ["warn", 4]
+    "indent": ["warn", 4],
+    "consistent-return":"off"
   }
 }
