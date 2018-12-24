@@ -3,3 +3,6 @@ node_modules
 coverage
 .DS_Store
 yarn.lock
+c#/leetcode/bin
+c#/leetcode/obj
+

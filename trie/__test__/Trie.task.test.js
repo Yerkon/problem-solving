@@ -15,7 +15,7 @@ import MapSum from '../MapSumPairs';
     trie.search("app");     // returns true */
 
 describe('Trie', () => {
-    xit('test', () => {
+    it('test', () => {
         const trie = new Trie();
         trie.insert('apple');
 
@@ -28,7 +28,7 @@ describe('Trie', () => {
         expect(trie.search('app')).toBe(true);
     });
 
-    xit('test 2', () => {
+    it('test 2', () => {
         const trie = new Trie();
         trie.insert('apple');
 
@@ -40,7 +40,7 @@ describe('Trie', () => {
         expect(trie.search('app')).toBe(true);
     });
 
-    xit('test 3', () => {
+    it('test 3', () => {
         const trie = new Trie();
         trie.insert('app');
         trie.insert('apple');
@@ -53,7 +53,7 @@ describe('Trie', () => {
         expect(trie.search('app')).toBe(true);
     });
 
-    xit('Longest Word in Dictionary', () => {
+    it('Longest Word in Dictionary', () => {
         let words = ['w', 'wo', 'wor', 'worl', 'world'];
 
         expect(longestWord(words)).toBe('world');
