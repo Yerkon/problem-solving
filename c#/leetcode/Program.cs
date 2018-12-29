@@ -32,6 +32,50 @@ namespace leetcode
 
     public class Solution
     {
+
+        List<int> result = new List<int>();
+
+
+        // iterative way
+        public List<int> Preorder(Node root)
+        {
+            Stack<Node> tempStack = new Stack<Node>();
+            List<int> resList = new List<int>();
+
+            if (root == null) return resList;
+
+            tempStack.Push(root);
+
+            while (tempStack.Count > 0)
+            {
+                Node currNode = tempStack.Pop();
+                resList.Add(currNode.val);
+
+                for (int i = currNode.children.Count - 1; i >= 0; i--)
+                {
+                    Node currChild = currNode.children[i];
+                    tempStack.Push(currChild);
+                }
+            }
+
+            return resList;
+        }
+
+        // recursive way
+        public IList<int> Preorder1(Node root)
+        {
+            if (root == null) return result;
+
+            result.Add(root.val);
+
+            for (int i = 0; i < root.children.Count; i++)
+            {
+                Node currNode = root.children[i];
+                this.Preorder(currNode);
+            }
+
+            return result;
+        }
         /**
         with stack
          */
@@ -105,7 +149,6 @@ namespace leetcode
 
             return listResult;
         }
-
 
         /**
         Recursive solution
