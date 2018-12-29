@@ -38,28 +38,25 @@ namespace leetcode
         public int[] Postorder(Node root)
         {
             Stack<int> stackResult = new Stack<int>();
+            Stack<Node> tempStack = new Stack<Node>();
 
             if (root == null)
             {
                 return stackResult.ToArray();
             }
 
-            Node parentNode = null;
-            Node currNode = root;
+            tempStack.Push(root);
 
-            while (currNode != null)
+            while (tempStack.Count > 0)
             {
-                if (currNode.children.Count == 0)
+                Node currNode = tempStack.Pop();
+                for (int i = 0; i < currNode.children.Count; i++)
                 {
-                    
-                }
-                else
-                {
-                    stackResult.Push(currNode.val);
-                    parentNode = currNode;
-                    currNode = currNode.children[0];
+                    Node childNode = currNode.children[i];
+                    tempStack.Push(childNode);
                 }
 
+                stackResult.Push(currNode.val);
             }
 
             return stackResult.ToArray();
