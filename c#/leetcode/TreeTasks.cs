@@ -10,7 +10,7 @@ using System.Collections.Generic;
 *     public TreeNode(int x) { val = x; }
 * }
 */
-namespace MergeTwoBinaryTrees
+namespace Trees
 {
     public class TreeNode
     {
@@ -22,12 +22,36 @@ namespace MergeTwoBinaryTrees
 
     public class Solution
     {
+        public bool IsUnivalTree(TreeNode root)
+        {
+            if (root == null) return true;
+
+            return isUnivalTraverse(root, root.val);
+        }
+
+        public bool isUnivalTraverse(TreeNode node, int value)
+        {
+            if (node == null)
+            {
+                return true;
+            }
+            else if (node != null && node.val != value)
+            {
+                return false;
+            }
+            else
+            {
+                return isUnivalTraverse(node.left, value)
+                && isUnivalTraverse(node.right, value);
+            }
+        }
+
         public TreeNode MergeTrees(TreeNode t1, TreeNode t2)
         {
             if (t1 == null && t2 == null) return null;
             else if (t1 != null) return t1;
             else if (t2 != null) return t2;
-            
+
             TreeNode mergedNode = new TreeNode(0);
             Stack<TreeNode> stack = new Stack<TreeNode>();
             stack.Push(t1);

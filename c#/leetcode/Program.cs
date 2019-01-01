@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using MergeTwoBinaryTrees;
+using Trees;
 
 namespace leetcode
 {
@@ -11,7 +11,7 @@ namespace leetcode
             // Console.WriteLine("Hello World!");
             Solution sol = new Solution();
             TreeNode[] treeArr = sol.GetMock1();
-            TreeNode merged = sol.MergeTrees(treeArr[0], treeArr[1]);
+            bool res = sol.IsUnivalTree(treeArr[0]);
             Console.WriteLine("---");
 
         }
