@@ -1,273 +1,236 @@
-
-
 using System.Collections.Generic;
-/**
-* Definition for a binary tree node.
-* public class TreeNode {
-*     public int val;
-*     public TreeNode left;
-*     public TreeNode right;
-*     public TreeNode(int x) { val = x; }
-* }
-*/
-namespace Trees
+
+namespace Tree
 {
-    public class TreeNode
+    public class Node
     {
         public int val;
-        public TreeNode left;
-        public TreeNode right;
-        public TreeNode(int x) { val = x; }
+        public IList<Node> children;
 
-        public void AddNode(int val)
+        public Node() { }
+        public Node(int _val, IList<Node> _children)
         {
-            if (val < this.val)
-            {
-                if (this.left == null)
-                {
-                    this.left = new TreeNode(val);
-                }
-                else
-                {
-                    this.left.AddNode(val);
-                }
-            }
-            else
-            {
-                if (this.right == null)
-                {
-                    this.right = new TreeNode(val);
-
-                }
-                else
-                {
-                    this.right.AddNode(val);
-                }
-            }
+            val = _val;
+            children = _children;
         }
     }
-    
+
+
     public class Solution
     {
-
-        public int FindSecondMinimumValue(TreeNode root)
+        public IList<IList<int>> LevelOrder(Node root)
         {
-            if (root == null) return -1;
-            return TraverseSecondMin(root, root.val);
+            IList<IList<int>> result = new List<IList<int>>();
+            if (root == null)
+            {
+                return result;
+            }
+
+            List<Node> nodes = new List<Node>() { root };
+
+            result.Add(nodes.ConvertAll(node => node.val));
+            BFS(result, nodes);
+
+            return result;
         }
 
-        public int TraverseSecondMin(TreeNode node, int minValue)
+        public void BFS(IList<IList<int>> result, List<Node> nodes)
         {
-            if (node == null) return -1;
-            if (node.val > minValue)
+            List<int> valuesArr = new List<int>();
+            List<Node> nodesArr = new List<Node>();
+
+            for (int i = 0; i < nodes.Count; i++)
             {
-                return node.val;
+                List<Node> currChildren = nodes[i].children as List<Node>;
+                valuesArr.AddRange((currChildren.ConvertAll(child => child.val)));
+                nodesArr.AddRange(currChildren);
             }
-            else
+
+            result.Add(valuesArr);
+            if (nodesArr.Count == 0) return;
+
+            BFS(result, nodesArr);
+        }
+
+        // iterative way
+        public List<int> Preorder(Node root)
+        {
+            Stack<Node> tempStack = new Stack<Node>();
+            List<int> resList = new List<int>();
+
+            if (root == null) return resList;
+
+            tempStack.Push(root);
+
+            while (tempStack.Count > 0)
             {
-                int leftMin = TraverseSecondMin(node.left, minValue);
-                int rightMin = TraverseSecondMin(node.right, minValue);
-                if (leftMin > minValue && (rightMin == -1 || leftMin <= rightMin))
+                Node currNode = tempStack.Pop();
+                resList.Add(currNode.val);
+
+                for (int i = currNode.children.Count - 1; i >= 0; i--)
                 {
-                    return leftMin;
+                    Node currChild = currNode.children[i];
+                    tempStack.Push(currChild);
                 }
-                else if (rightMin > minValue && (leftMin == -1 || rightMin < leftMin))
+            }
+
+            return resList;
+        }
+
+        // recursive way
+        public IList<int> Preorder1(Node root)
+        {
+            if (root == null) return result;
+
+            result.Add(root.val);
+
+            for (int i = 0; i < root.children.Count; i++)
+            {
+                Node currNode = root.children[i];
+                this.Preorder(currNode);
+            }
+
+            return result;
+        }
+        /**
+        with stack
+         */
+        public int[] Postorder(Node root)
+        {
+            Stack<int> stackResult = new Stack<int>();
+            Stack<Node> tempStack = new Stack<Node>();
+
+            if (root == null)
+            {
+                return stackResult.ToArray();
+            }
+
+            tempStack.Push(root);
+
+            while (tempStack.Count > 0)
+            {
+                Node currNode = tempStack.Pop();
+                for (int i = 0; i < currNode.children.Count; i++)
                 {
-                    return rightMin;
+                    Node childNode = currNode.children[i];
+                    tempStack.Push(childNode);
+                }
+
+                stackResult.Push(currNode.val);
+            }
+
+            return stackResult.ToArray();
+        }
+
+        /**
+        with list
+        */
+        public List<int> Postorder1(Node root)
+        {
+            List<int> listResult = new List<int>();
+
+            if (root == null)
+            {
+                return listResult;
+            }
+
+            Node parentNode = null;
+            Node currNode = root;
+
+            while (currNode != null)
+            {
+                if (currNode.children.Count == 0)
+                {
+                    // there is no child
+                    if (currNode == root)
+                    {
+                        listResult.Add(currNode.val);
+                        currNode = null;
+                        continue;
+                    }
+
+                    listResult.Add(currNode.val);
+                    parentNode.children.Remove(currNode);
+
+                    // start from beginning
+                    currNode = root;
                 }
                 else
                 {
-                    return -1;
+                    parentNode = currNode;
+                    currNode = currNode.children[0];
                 }
 
             }
 
-            //return -1;
+            return listResult;
         }
-        public TreeNode InsertIntoBST(TreeNode root, int val)
-        {
-            if (root == null) return new TreeNode(val);
 
-            if (val < root.val)
+        /**
+        Recursive solution
+         */
+        public void ProceedPostOrder(Node root, List<int> result)
+        {
+
+            foreach (var child in root.children)
             {
-                root.left = InsertIntoBST(root.left, val);
+                ProceedPostOrder(child, result);
+                result.Add(child.val);
             }
-            else
-            {
-                root.right = InsertIntoBST(root.right, val);
-            }
+        }
+
+        public Node GetTest1()
+        {
+            Node root = new Node(1, new List<Node>());
+
+            Node child1 = new Node(3, new List<Node>());
+            Node child2 = new Node(2, new List<Node>());
+            Node child3 = new Node(4, new List<Node>());
+
+            child1.children.Add(new Node(5, new List<Node>()));
+            child1.children.Add(new Node(6, new List<Node>()));
+
+            root.children = new List<Node>(){
+                child1,
+                child2,
+                child3
+            };
 
             return root;
         }
 
-
-        public TreeNode SearchBST(TreeNode root, int val)
+        public List<int> GetMock1()
         {
-            if (root == null || root.val == val) return root;
-            else if (val < root.val)
-            {
-                return SearchBST(root.left, val);
-            }
-            else
-            {
-                return SearchBST(root.right, val);
-            }
+            return new List<int>() { 5, 6, 3, 2, 4, 1 };
+        }
+        public Node getTest2()
+        {
+
+            Node root = new Node(1, new List<Node>());
+
+            Node child1 = new Node(10, new List<Node>());
+            Node child2 = new Node(3, new List<Node>());
+
+            child1.children.Add(new Node(5, new List<Node>()));
+            child1.children.Add(new Node(0, new List<Node>()));
+
+            child2.children.Add(new Node(6, new List<Node>()));
+
+
+            root.children = new List<Node>(){
+                child1,
+                child2,
+            };
+
+            return root;
         }
 
-        public bool IsUnivalTree(TreeNode root)
+        public List<int> GetMock2()
         {
-            if (root == null) return true;
-
-            return isUnivalTraverse(root, root.val);
-        }
-
-        public bool isUnivalTraverse(TreeNode node, int value)
-        {
-            if (node == null)
-            {
-                return true;
-            }
-            else if (node != null && node.val != value)
-            {
-                return false;
-            }
-            else
-            {
-                return isUnivalTraverse(node.left, value)
-                && isUnivalTraverse(node.right, value);
-            }
-        }
-
-        public TreeNode MergeTrees(TreeNode t1, TreeNode t2)
-        {
-            if (t1 == null && t2 == null) return null;
-            else if (t1 != null) return t1;
-            else if (t2 != null) return t2;
-
-            TreeNode mergedNode = new TreeNode(0);
-            Stack<TreeNode> stack = new Stack<TreeNode>();
-            stack.Push(t1);
-            stack.Push(t2);
-            stack.Push(mergedNode);
-
-            while (stack.Count > 0)
-            {
-                TreeNode currNode = stack.Pop();
-                TreeNode rightTreeNode = stack.Pop();
-                TreeNode leftTreeNode = stack.Pop();
-
-                MergeTwoNodes(leftTreeNode, rightTreeNode, currNode);
-                if (currNode == null) continue;
-
-                if (leftTreeNode?.left != null || rightTreeNode?.left != null)
-                {
-                    currNode.left = new TreeNode(0);
-                    stack.Push(leftTreeNode?.left);
-                    stack.Push(rightTreeNode?.left);
-                    stack.Push(currNode.left);
-                }
-
-                if (leftTreeNode?.right != null || rightTreeNode?.right != null)
-                {
-                    currNode.right = new TreeNode(0);
-                    stack.Push(leftTreeNode?.right);
-                    stack.Push(rightTreeNode?.right);
-                    stack.Push(currNode.right);
-                }
-            }
-
-            return mergedNode;
-        }
-
-        public TreeNode MergeTwoNodes(TreeNode t1, TreeNode t2, TreeNode resNode)
-        {
-            if (t1 != null && t2 != null)
-            {
-                resNode.val = t1.val + t2.val;
-            }
-            else if (t1 != null)
-            {
-                resNode.val = t1.val;
-            }
-            else if (t2 != null)
-            {
-                resNode.val = t2.val;
-            }
-            else
-            {
-                resNode = null;
-            }
-
-            return resNode;
-        }
-
-        /**
-        Recursive way
-         */
-        public void MergeNodes(TreeNode t1, TreeNode t2, TreeNode currNode)
-        {
-            if (t1 != null && t2 != null)
-            {
-                currNode.val = t1.val + t2.val;
-            }
-            else if (t1 != null)
-            {
-                currNode.val = t1.val;
-            }
-            else if (t2 != null)
-            {
-                currNode.val = t2.val;
-            }
-            else
-            {
-                return;
-            }
-
-            if ((t1 != null && t1.left != null) || (t2 != null && t2.left != null))
-            {
-                currNode.left = new TreeNode(0);
-                MergeNodes(t1?.left, t2?.left, currNode.left);
-            }
-            if ((t1 != null && t1.right != null) || (t2 != null && t2.right != null))
-            {
-                currNode.right = new TreeNode(0);
-                MergeNodes(t1?.right, t2?.right, currNode.right);
-            }
-        }
-
-        public TreeNode GetTest1()
-        {
-            TreeNode node = new TreeNode(3);
-            node.left = new TreeNode(4);
-            node.right = new TreeNode(5);
-
-            node.left.left = new TreeNode(5);
-            node.left.right = new TreeNode(4);
-
-            node.right.right = new TreeNode(7);
-
-            return node;
-        }
-
-        public TreeNode[] GetMock1()
-        {
-            TreeNode node1 = new TreeNode(1);
-
-            node1.left = new TreeNode(3);
-            node1.left.left = new TreeNode(5);
-            node1.right = new TreeNode(2);
-
-            TreeNode node2 = new TreeNode(2);
-            node2.left = new TreeNode(1);
-            node2.right = new TreeNode(3);
-            node2.left.right = new TreeNode(4);
-            node2.right.right = new TreeNode(7);
-
-            TreeNode[] treeArr = new TreeNode[2];
-            treeArr.SetValue(node1, 0);
-            treeArr.SetValue(node2, 1);
-
-            return treeArr;
+            return new List<int>(){
+                5,0,10,6,3,1
+            };
         }
     }
+
 }

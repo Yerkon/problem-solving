@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Trees;
+using Tree;
 
 namespace leetcode
 {
@@ -10,8 +10,7 @@ namespace leetcode
         {
             // Console.WriteLine("Hello World!");
             Solution sol = new Solution();
-            TreeNode[] treeArr = sol.GetMock1();
-            bool res = sol.IsUnivalTree(treeArr[0]);
+
             Console.WriteLine("---");
 
         }
