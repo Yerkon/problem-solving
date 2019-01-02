@@ -18,10 +18,88 @@ namespace Trees
         public TreeNode left;
         public TreeNode right;
         public TreeNode(int x) { val = x; }
-    }
 
+        public void AddNode(int val)
+        {
+            if (val < this.val)
+            {
+                if (this.left == null)
+                {
+                    this.left = new TreeNode(val);
+                }
+                else
+                {
+                    this.left.AddNode(val);
+                }
+            }
+            else
+            {
+                if (this.right == null)
+                {
+                    this.right = new TreeNode(val);
+
+                }
+                else
+                {
+                    this.right.AddNode(val);
+                }
+            }
+        }
+    }
+    
     public class Solution
     {
+
+        public int FindSecondMinimumValue(TreeNode root)
+        {
+            if (root == null) return -1;
+            return TraverseSecondMin(root, root.val);
+        }
+
+        public int TraverseSecondMin(TreeNode node, int minValue)
+        {
+            if (node == null) return -1;
+            if (node.val > minValue)
+            {
+                return node.val;
+            }
+            else
+            {
+                int leftMin = TraverseSecondMin(node.left, minValue);
+                int rightMin = TraverseSecondMin(node.right, minValue);
+                if (leftMin > minValue && (rightMin == -1 || leftMin <= rightMin))
+                {
+                    return leftMin;
+                }
+                else if (rightMin > minValue && (leftMin == -1 || rightMin < leftMin))
+                {
+                    return rightMin;
+                }
+                else
+                {
+                    return -1;
+                }
+
+            }
+
+            //return -1;
+        }
+        public TreeNode InsertIntoBST(TreeNode root, int val)
+        {
+            if (root == null) return new TreeNode(val);
+
+            if (val < root.val)
+            {
+                root.left = InsertIntoBST(root.left, val);
+            }
+            else
+            {
+                root.right = InsertIntoBST(root.right, val);
+            }
+
+            return root;
+        }
+
 
         public TreeNode SearchBST(TreeNode root, int val)
         {
