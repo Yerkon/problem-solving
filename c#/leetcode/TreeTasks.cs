@@ -22,6 +22,20 @@ namespace Trees
 
     public class Solution
     {
+
+        public TreeNode SearchBST(TreeNode root, int val)
+        {
+            if (root == null || root.val == val) return root;
+            else if (val < root.val)
+            {
+                return SearchBST(root.left, val);
+            }
+            else
+            {
+                return SearchBST(root.right, val);
+            }
+        }
+
         public bool IsUnivalTree(TreeNode root)
         {
             if (root == null) return true;
