@@ -46,9 +46,55 @@ namespace BinaryTree
             }
         }
     }
-    
+
     public class Solution
     {
+        // iterative way
+        public IList<int> InorderTraversal(TreeNode root)
+        {
+            Stack<int> stack = new Stack<int>();
+            if (root == null) return stack.ToArray();
+
+            Stack<TreeNode> tempStack = new Stack<TreeNode>();
+            Stack<TreeNode> nodesStack = new Stack<TreeNode>();
+            tempStack.Push(root);
+
+            while (tempStack.Count > 0)
+            {
+                TreeNode currNode = tempStack.Pop();
+                TreeNode prevNode = tempStack.Count > 0 ? tempStack.Peek() : null;
+
+                if (currNode?.left == prevNode || currNode?.right == prevNode)
+                {
+                    // no push to tempStack
+                }
+                else
+                {
+                    if (currNode.left != null)
+                    {
+                        tempStack.Push(currNode.left);
+                    }
+
+                    tempStack.Push(currNode);
+                    if (currNode.right != null)
+                    {
+                        tempStack.Push(currNode.right);
+                    }
+                }
+
+                currNode = tempStack.Count > 0 ? tempStack.Peek() : null;
+
+                if (nodesStack.Count > 0 && nodesStack.Peek() != currNode)
+                {
+                    stack.Push(currNode.val);
+                    nodesStack.Push(currNode);
+                }
+            }
+
+            return stack.ToArray();
+
+        }
+
         public int FindSecondMinimumValue(TreeNode root)
         {
             if (root == null) return -1;
