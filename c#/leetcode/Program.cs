@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Tree;
+using BinaryTree;
 
 namespace leetcode
 {
@@ -10,6 +10,9 @@ namespace leetcode
         {
             // Console.WriteLine("Hello World!");
             Solution sol = new Solution();
+            var root = sol.GetTest1();
+
+            var arr = sol.InorderTraversal(root);
 
             Console.WriteLine("---");
 

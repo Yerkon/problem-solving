@@ -80,6 +80,7 @@ namespace Tree
         // recursive way
         public IList<int> Preorder1(Node root)
         {
+            var result = new List<int>();
             if (root == null) return result;
 
             result.Add(root.val);

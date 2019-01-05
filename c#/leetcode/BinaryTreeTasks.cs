@@ -56,43 +56,39 @@ namespace BinaryTree
             if (root == null) return stack.ToArray();
 
             Stack<TreeNode> tempStack = new Stack<TreeNode>();
-            Stack<TreeNode> nodesStack = new Stack<TreeNode>();
             tempStack.Push(root);
 
             while (tempStack.Count > 0)
             {
-                TreeNode currNode = tempStack.Pop();
-                TreeNode prevNode = tempStack.Count > 0 ? tempStack.Peek() : null;
+                TreeNode currNode = tempStack.Peek();
 
-                if (currNode?.left == prevNode || currNode?.right == prevNode)
+                while (currNode.right != null)
                 {
-                    // no push to tempStack
-                }
-                else
-                {
-                    if (currNode.left != null)
-                    {
-                        tempStack.Push(currNode.left);
-                    }
-
-                    tempStack.Push(currNode);
-                    if (currNode.right != null)
-                    {
-                        tempStack.Push(currNode.right);
-                    }
+                    tempStack.Push(currNode.right);
+                    currNode = currNode.right;
                 }
 
-                currNode = tempStack.Count > 0 ? tempStack.Peek() : null;
+                currNode = tempStack.Pop();
 
-                if (nodesStack.Count > 0 && nodesStack.Peek() != currNode)
+                while (tempStack.Count > 0 && currNode.left == null)
                 {
                     stack.Push(currNode.val);
-                    nodesStack.Push(currNode);
+                    currNode = tempStack.Pop();
+                }
+
+                if (currNode.left != null)
+                {
+                    stack.Push(currNode.val);
+                    tempStack.Push(currNode.left);
+                }
+
+                if (tempStack.Count == 0)
+                {
+                    stack.Push(currNode.val);
                 }
             }
 
             return stack.ToArray();
-
         }
 
         public int FindSecondMinimumValue(TreeNode root)
