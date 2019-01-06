@@ -49,8 +49,42 @@ namespace BinaryTree
 
     public class Solution
     {
-        // iterative way
+
+        // iterative way with list
         public IList<int> InorderTraversal(TreeNode root)
+        {
+            List<int> list = new List<int>();
+            if (root == null) return list;
+
+            Stack<TreeNode> tempStack = new Stack<TreeNode>();
+            tempStack.Push(root);
+            TreeNode currNode = root;
+
+            while (tempStack.Count > 0 || currNode != null)
+            {
+                if (currNode != null && currNode != root)
+                {
+                    tempStack.Push(currNode);
+                }
+
+                while (currNode?.left != null)
+                {
+                    tempStack.Push(currNode.left);
+                    currNode = currNode.left;
+                }
+
+                currNode = tempStack.Pop();
+                list.Add(currNode.val);
+
+                currNode = currNode.right;
+            }
+
+            return list;
+        }
+
+
+        // iterative way with stack
+        public IList<int> InorderTraversalWithStack(TreeNode root)
         {
             Stack<int> stack = new Stack<int>();
             if (root == null) return stack.ToArray();
