@@ -50,6 +50,47 @@ namespace BinaryTree
     public class Solution
     {
 
+        public IList<IList<int>> LevelOrder(TreeNode root)
+        {
+            List<IList<int>> result = new List<IList<int>>();
+            if (root == null) return result;
+
+            List<TreeNode> list = new List<TreeNode>();
+            list.Add(root);
+
+            LevelOrderTraverse(list, result);
+
+            return result;
+        }
+
+        public void LevelOrderTraverse(List<TreeNode> list, List<IList<int>> result)
+        {
+            List<TreeNode> nodesList = new List<TreeNode>();
+            List<int> chunk = new List<int>();
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                TreeNode currNode = list[i];
+                chunk.Add(currNode.val);
+
+                if (currNode.left != null)
+                {
+                    nodesList.Add(currNode.left);
+                }
+                if (currNode.right != null)
+                {
+                    nodesList.Add(currNode.right);
+                }
+            }
+
+            result.Add(chunk);
+
+            if (nodesList.Count > 0)
+            {
+                LevelOrderTraverse(nodesList, result);
+            }
+        }
+
         // iterative way
         public IList<int> PostorderTraversal(TreeNode root)
         {
