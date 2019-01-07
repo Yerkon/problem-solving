@@ -50,6 +50,101 @@ namespace BinaryTree
     public class Solution
     {
 
+        // iterative way
+        public IList<int> PostorderTraversal(TreeNode root)
+        {
+            Stack<int> resStack = new Stack<int>();
+            Stack<TreeNode> stack = new Stack<TreeNode>();
+            if (root == null) return resStack.ToArray();
+
+            TreeNode currNode = root;
+            while (stack.Count > 0 || currNode != null)
+            {
+                while (currNode != null)
+                {
+                    resStack.Push(currNode.val);
+                    if (currNode.left != null)
+                    {
+                        stack.Push(currNode.left);
+                    }
+
+                    currNode = currNode.right;
+                }
+
+                if (stack.Count > 0)
+                    currNode = stack.Pop();
+            }
+
+
+            return resStack.ToArray();
+        }
+
+
+        /**
+        recursive way
+         */
+        public void TraversePostOrder(TreeNode node, List<int> res)
+        {
+            if (node.left != null)
+            {
+                TraversePostOrder(node.left, res);
+            }
+
+            if (node.right != null)
+            {
+                TraversePostOrder(node.right, res);
+            }
+
+            res.Add(node.val);
+        }
+        public IList<int> PreorderTraversal(TreeNode root)
+        {
+            List<int> res = new List<int>();
+            if (root == null) return res;
+
+            Stack<TreeNode> stack = new Stack<TreeNode>();
+            TreeNode currNode = root;
+
+            while (stack.Count > 0 || currNode != null)
+            {
+                while (currNode != null)
+                {
+                    res.Add(currNode.val);
+
+                    if (currNode.right != null)
+                    {
+                        stack.Push(currNode.right);
+                    }
+
+                    currNode = currNode.left;
+                }
+
+                if (stack.Count > 0)
+                {
+                    currNode = stack.Pop();
+                }
+            }
+
+            return res;
+        }
+
+        /**
+        Recursive way
+         */
+        public void TraversePreOrder(TreeNode node, List<int> res)
+        {
+            res.Add(node.val);
+
+            if (node.left != null)
+            {
+                TraversePreOrder(node.left, res);
+            }
+            if (node.right != null)
+            {
+                TraversePreOrder(node.right, res);
+            }
+        }
+
         // iterative way with list
         public IList<int> InorderTraversal(TreeNode root)
         {
@@ -57,19 +152,13 @@ namespace BinaryTree
             if (root == null) return list;
 
             Stack<TreeNode> tempStack = new Stack<TreeNode>();
-            tempStack.Push(root);
             TreeNode currNode = root;
 
             while (tempStack.Count > 0 || currNode != null)
             {
-                if (currNode != null && currNode != root)
+                while (currNode != null)
                 {
                     tempStack.Push(currNode);
-                }
-
-                while (currNode?.left != null)
-                {
-                    tempStack.Push(currNode.left);
                     currNode = currNode.left;
                 }
 
