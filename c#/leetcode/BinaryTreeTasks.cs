@@ -49,6 +49,139 @@ namespace BinaryTree
 
     public class Solution
     {
+        public TreeNode DeleteNode(TreeNode root, int key)
+        {
+            if (root == null) return null;
+
+            TreeNode parent = FindParent(root, key);
+
+            bool isLeft = false;
+            TreeNode currNode;
+
+            if (parent != null)
+            {
+                if (parent?.left?.val == key)
+                {
+                    isLeft = true;
+                    currNode = parent?.left;
+                }
+                else
+                {
+                    currNode = parent?.right;
+                }
+            }
+            else // parent null
+            {
+                if (root.val == key)
+                {
+                    currNode = root;
+                }
+                else // not found 
+                {
+                    return root;
+                }
+            }
+
+            // no child case
+            if (currNode.left == null && currNode.right == null)
+            {
+                if (isLeft)
+                {
+                    parent.left = null;
+                }
+                else
+                {
+                    parent.right = null;
+                }
+            }
+            // one child
+            else if (currNode.left == null || currNode.right == null)
+            {
+                TreeNode child = currNode.left != null ? currNode.left : currNode.right;
+                if (isLeft)
+                {
+                    parent.left = child;
+                }
+                else
+                {
+                    parent.right = child;
+                }
+            }
+
+
+            // two childs
+            else if (currNode.left != null && currNode.right != null)
+            {
+                // find successor
+                TreeNode parentSucc = FindParentSuccessor(currNode.right, currNode);
+                TreeNode succ = parentSucc.left;
+
+                if (parentSucc == currNode)
+                {
+                    succ = parentSucc.right;
+                }
+
+                currNode.val = succ.val;
+
+                if (parentSucc != currNode)
+                {
+                    if (succ.right != null)
+                    {
+                        parentSucc.left = succ.right;
+                    }
+                    else if (succ.right == null)
+                    {
+                        parentSucc.left = null;
+                    }
+                }
+                else
+                {
+                    if (succ.right != null)
+                    {
+                        currNode.right = succ.right;
+                    }
+                    else
+                    {
+                        currNode.right = null;
+                    }
+                }
+
+            }
+
+
+            return root;
+        }
+        public TreeNode FindParentSuccessor(TreeNode curr, TreeNode parent)
+        {
+            if (curr.left != null)
+            {
+                parent = curr;
+                return FindParentSuccessor(curr.left, parent);
+            }
+            else
+            {
+                return parent;
+            }
+        }
+
+        public TreeNode FindParent(TreeNode node, int key)
+        {
+            if (node == null) return null;
+
+            else if (node.left?.val == key || node.right?.val == key)
+            {
+                return node;
+            }
+            else
+            {
+                TreeNode left = FindParent(node.left, key);
+                TreeNode right = FindParent(node.right, key);
+
+                if (left != null) return left;
+                else if (right != null) return right;
+                else return null;
+            }
+        }
 
         public IList<IList<int>> LevelOrder(TreeNode root)
         {

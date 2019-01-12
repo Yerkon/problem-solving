@@ -10,11 +10,20 @@ namespace leetcode
         {
             // Console.WriteLine("Hello World!");
             Solution sol = new Solution();
-            var root = sol.GetTest1();
 
-            var arr = sol.InorderTraversal(root);
+            int[] input = new int[]{
+                5,3,6,2,4,7
+            };
 
-            Console.WriteLine("---");
+            TreeNode root = new TreeNode(input[0]);
+
+            for (int i = 1; i < input.Length; i++)
+            {
+                sol.InsertIntoBST(root, input[i]);
+            }
+
+            sol.DeleteNode(root, 6);
+            Console.WriteLine(root);
 
         }
     }
