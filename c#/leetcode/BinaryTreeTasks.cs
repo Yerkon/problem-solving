@@ -60,14 +60,14 @@ namespace BinaryTree
 
             if (parent != null)
             {
-                if (parent?.left?.val == key)
+                if (parent.left?.val == key)
                 {
                     isLeft = true;
-                    currNode = parent?.left;
+                    currNode = parent.left;
                 }
                 else
                 {
-                    currNode = parent?.right;
+                    currNode = parent.right;
                 }
             }
             else // parent null
@@ -85,26 +85,42 @@ namespace BinaryTree
             // no child case
             if (currNode.left == null && currNode.right == null)
             {
-                if (isLeft)
+                if (parent != null)
                 {
-                    parent.left = null;
+                    if (isLeft)
+                    {
+                        parent.left = null;
+                    }
+                    else
+                    {
+                        parent.right = null;
+                    }
                 }
                 else
                 {
-                    parent.right = null;
+                    root = null;
                 }
             }
+
             // one child
             else if (currNode.left == null || currNode.right == null)
             {
                 TreeNode child = currNode.left != null ? currNode.left : currNode.right;
-                if (isLeft)
+                if (parent != null)
                 {
-                    parent.left = child;
+                    if (isLeft)
+                    {
+                        parent.left = child;
+                    }
+                    else
+                    {
+                        parent.right = child;
+                    }
                 }
                 else
                 {
-                    parent.right = child;
+                    if (root.left != null) root = root.left;
+                    else root = root.right;
                 }
             }
 
@@ -145,9 +161,7 @@ namespace BinaryTree
                         currNode.right = null;
                     }
                 }
-
             }
-
 
             return root;
         }
