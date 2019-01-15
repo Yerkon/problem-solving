@@ -12,7 +12,7 @@ namespace leetcode
             Solution sol = new Solution();
 
             int[] input = new int[]{
-                5,3,6,2,4,7
+                5, 1, 10
             };
 
             TreeNode root = new TreeNode(input[0]);
@@ -22,7 +22,7 @@ namespace leetcode
                 sol.InsertIntoBST(root, input[i]);
             }
 
-            sol.DeleteNode(root, 6);
+            sol.DeleteNode(root, 5);
             Console.WriteLine(root);
 
         }

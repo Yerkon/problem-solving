@@ -49,7 +49,44 @@ namespace BinaryTree
 
     public class Solution
     {
+        /**
+        Elegant solution
+         */
         public TreeNode DeleteNode(TreeNode root, int key)
+        {
+            if (root == null)
+                return root;
+
+            if (key < root.val)
+                root.left = DeleteNode(root.left, key);
+            else if (key > root.val)
+                root.right = DeleteNode(root.right, key);
+            else
+            {
+                if (root.left == null)
+                    return root.right;
+                else if (root.right == null)
+                    return root.left;
+
+                TreeNode minNode = findMin(root.right);
+                root.val = minNode.val;
+                root.right = DeleteNode(root.right, root.val);
+            }
+
+            return root;
+        }
+
+
+        private TreeNode findMin(TreeNode node)
+        {
+            while (node.left != null)
+            {
+                node = node.left;
+            }
+            return node;
+        }
+
+        public TreeNode DeleteNode1(TreeNode root, int key)
         {
             if (root == null) return null;
 
@@ -66,20 +103,14 @@ namespace BinaryTree
                     currNode = parent.left;
                 }
                 else
-                {
                     currNode = parent.right;
-                }
             }
             else // parent null
             {
                 if (root.val == key)
-                {
                     currNode = root;
-                }
                 else // not found 
-                {
                     return root;
-                }
             }
 
             // no child case
@@ -88,13 +119,9 @@ namespace BinaryTree
                 if (parent != null)
                 {
                     if (isLeft)
-                    {
                         parent.left = null;
-                    }
                     else
-                    {
                         parent.right = null;
-                    }
                 }
                 else
                 {
@@ -109,13 +136,9 @@ namespace BinaryTree
                 if (parent != null)
                 {
                     if (isLeft)
-                    {
                         parent.left = child;
-                    }
                     else
-                    {
                         parent.right = child;
-                    }
                 }
                 else
                 {
@@ -142,24 +165,16 @@ namespace BinaryTree
                 if (parentSucc != currNode)
                 {
                     if (succ.right != null)
-                    {
                         parentSucc.left = succ.right;
-                    }
                     else if (succ.right == null)
-                    {
                         parentSucc.left = null;
-                    }
                 }
                 else
                 {
                     if (succ.right != null)
-                    {
                         currNode.right = succ.right;
-                    }
                     else
-                    {
                         currNode.right = null;
-                    }
                 }
             }
 
@@ -317,7 +332,7 @@ namespace BinaryTree
         }
 
         /**
-        Recursive way
+Recursive way
          */
         public void TraversePreOrder(TreeNode node, List<int> res)
         {
@@ -554,7 +569,7 @@ namespace BinaryTree
         }
 
         /**
-        Recursive way
+Recursive way
          */
         public void MergeNodes(TreeNode t1, TreeNode t2, TreeNode currNode)
         {
