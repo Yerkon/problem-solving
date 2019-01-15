@@ -49,6 +49,7 @@ namespace BinaryTree
 
     public class Solution
     {
+        
         /**
         Elegant solution
          */
