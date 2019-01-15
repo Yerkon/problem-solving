@@ -9,6 +9,8 @@ namespace leetcode
         static void Main(string[] args)
         {
             // Console.WriteLine("Hello World!");
+            
+            
             Solution sol = new Solution();
 
             int[] input = new int[]{
