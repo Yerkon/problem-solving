@@ -6,13 +6,29 @@ namespace StringTasks
 {
     public class Solution
     {
-        public int NFact(int n)
+        public int UniqueMorseRepresentations(string[] words)
         {
-            if (n <= 0) return 1;
-            else
+
+        }
+
+        public string ToLowerCase(string str)
+        {
+            string result = "";
+
+            foreach (char letter in str)
             {
-                return n * NFact(n - 1);
+                if (letter >= 65 && letter <= 90)
+                {
+                    char lowerLetter = (char)((int)letter + 32);
+                    result += lowerLetter;
+                }
+                else
+                {
+                    result += letter;
+                }
             }
+
+            return result;
         }
 
         public int NumUniqueEmails(string[] emails)
@@ -55,6 +71,15 @@ namespace StringTasks
 
             localName = localName.Replace(".", "");
             return localName + "@" + domain;
+        }
+
+        public int NFact(int n)
+        {
+            if (n <= 0) return 1;
+            else
+            {
+                return n * NFact(n - 1);
+            }
         }
     }
 
