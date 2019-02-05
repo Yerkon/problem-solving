@@ -4,11 +4,86 @@ using System.Linq;
 
 namespace StringTasks
 {
+    public class Point
+    {
+        public int X { get; set; }
+        public int Y { get; set; }
+
+        public void constructor()
+        {
+            X = 0;
+            Y = 0;
+        }
+
+        public void Move(char direction)
+        {
+            switch (direction)
+            {
+                case 'L':
+                    this.X--;
+                    break;
+                case 'R':
+                    this.X++;
+                    break;
+                case 'U':
+                    this.Y++;
+                    break;
+                case 'D':
+                    this.Y--;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public bool IsOrigin()
+        {
+            return this.X == 0 && this.Y == 0;
+        }
+    }
     public class Solution
     {
+        // https://leetcode.com/problems/robot-return-to-origin/
+        public bool JudgeCircle(string moves)
+        {
+            Point origin = new Point();
+            foreach (char direction in moves)
+            {
+                origin.Move(direction);
+            }
+
+            return origin.IsOrigin();
+        }
+
+
+        // https://leetcode.com/problems/unique-morse-code-words/
         public int UniqueMorseRepresentations(string[] words)
         {
+            var hash = new HashSet<string>();
+            string[] morseCodes = new string[]{
+                ".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",
+                ".-.","...","-","..-","...-",".--","-..-","-.--","--.."
+            };
 
+            foreach (string word in words)
+            {
+                string morseCode = this.getMorseCode(morseCodes, word);
+                hash.Add(morseCode);
+            }
+
+            return hash.Count;
+        }
+
+        public string getMorseCode(string[] morseCodes, string word)
+        {
+            string morseResult = "";
+
+            for (int i = 0; i < word.Length; i++)
+            {
+                morseResult += morseCodes[word[i] - 'a'];
+            }
+
+            return morseResult;
         }
 
         public string ToLowerCase(string str)

@@ -15,8 +15,8 @@ namespace leetcode
             Console.WriteLine(b);
             
             Solution sol = new Solution();
-            int res =  sol.NFact(3);
-            Console.WriteLine(res);
+            sol.UniqueMorseRepresentations(new string[]{"gin", "zen", "gig", "msg"});
+            //Console.WriteLine(res);
 
             // int[] input = new int[]{
             //     5, 1, 10
