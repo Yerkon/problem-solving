@@ -46,13 +46,13 @@ namespace StringTasks
         // https://leetcode.com/problems/robot-return-to-origin/
         public bool JudgeCircle(string moves)
         {
-            Point origin = new Point();
+            Point position = new Point();
             foreach (char direction in moves)
             {
-                origin.Move(direction);
+                position.Move(direction);
             }
 
-            return origin.IsOrigin();
+            return position.IsOrigin();
         }
 
 
