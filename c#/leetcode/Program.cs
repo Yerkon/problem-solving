@@ -9,28 +9,14 @@ namespace leetcode
         static void Main(string[] args)
         {
             // Console.WriteLine("Hello World!");
-            
+
             string a = "abc";
-            string b = a.Substring(1); 
+            string b = a.Substring(1);
             Console.WriteLine(b);
-            
+
             Solution sol = new Solution();
-            sol.UniqueMorseRepresentations(new string[]{"gin", "zen", "gig", "msg"});
-            //Console.WriteLine(res);
-
-            // int[] input = new int[]{
-            //     5, 1, 10
-            // };
-
-            // TreeNode root = new TreeNode(input[0]);
-
-            // for (int i = 1; i < input.Length; i++)
-            // {
-            //     sol.InsertIntoBST(root, input[i]);
-            // }
-
-            // sol.DeleteNode(root, 5);
-            // Console.WriteLine(root);
+            //sol.UniqueMorseRepresentations(new string[]{"gin", "zen", "gig", "msg"});
+            sol.ReverseString(new char[] { 'h', 'e', 'l', 'l', 'o' });
 
         }
     }

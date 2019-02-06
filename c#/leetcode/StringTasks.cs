@@ -1,6 +1,5 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Text;
 
 namespace StringTasks
 {
@@ -43,6 +42,61 @@ namespace StringTasks
     }
     public class Solution
     {
+
+        // https://leetcode.com/problems/reverse-string/
+        public void ReverseString(char[] s)
+        {
+            int half = s.Length / 2;
+            for (int i = 0; i < half; i++)
+            {
+                char temp = s[i];
+                s[i] = s[s.Length - 1 - i];
+                s[s.Length - 1 - i] = temp;
+            }
+        }
+
+        // https://leetcode.com/problems/reverse-words-in-a-string-iii/
+        public string ReverseWords(string s)
+        {
+            if (!s.Contains(' '))
+            {
+                return this.ReverseWord(s);
+            }
+
+            StringBuilder result = new StringBuilder();
+            StringBuilder word = new StringBuilder();
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (s[i] == ' ')
+                {
+                    result.Append(this.ReverseWord(word.ToString()));
+                    result.Append(' ');
+                    word.Clear();
+                }
+                else
+                {
+                    word.Append(s[i]);
+                }
+            }
+
+            result.Append(this.ReverseWord(word.ToString()));
+
+            return result.ToString();
+        }
+
+        public string ReverseWord(string word)
+        {
+            StringBuilder sb = new StringBuilder(word.Length);
+            for (int i = word.Length - 1; i >= 0; i--)
+            {
+                sb.Append(word[i]);
+            }
+
+            return sb.ToString();
+        }
+
+
         // https://leetcode.com/problems/robot-return-to-origin/
         public bool JudgeCircle(string moves)
         {
