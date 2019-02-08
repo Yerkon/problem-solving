@@ -1,4 +1,7 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace StringTasks
@@ -42,6 +45,89 @@ namespace StringTasks
     }
     public class Solution
     {
+        // https://leetcode.com/problems/groups-of-special-equivalent-strings/
+        public int NumSpecialEquivGroups(string[] A)
+        {
+            var list = new List<string>(A);
+            ArrayList result = new ArrayList();
+
+            while (list.Count > 0)
+            {
+                string currWord = list.ElementAt(0);
+                list.RemoveAt(0);
+
+                ArrayList chunk = new ArrayList();
+                chunk.Add(currWord);
+
+                if (currWord.Length == 1)
+                {
+                    while (list.IndexOf(currWord) > -1)
+                    {
+                        int foundIdx = list.IndexOf(currWord);
+                        chunk.Add(list.ElementAt(foundIdx));
+                        list.RemoveAt(foundIdx);
+                    }
+                }
+
+                for (int j = 0; j < currWord.Length / 2; j++) // 0, 1
+                {
+                    for (int k = currWord.Length / 2; k < currWord.Length; k++) // 2, 3
+                    {
+                        // odds or evens
+                        if (j % 2 == k % 2)
+                        {
+                            var currSb = new StringBuilder(currWord);
+                            // Console.WriteLine(j + " " + k);
+                            char temp = currSb[j];
+                            currSb[j] = currSb[k];
+                            currSb[k] = temp;
+
+                            // Console.WriteLine(currSB.ToString());
+
+                            while (list.IndexOf(currSb.ToString()) > -1)
+                            {
+                                int foundIdx = list.IndexOf(currSb.ToString());
+                                chunk.Add(list.ElementAt(foundIdx));
+                                list.RemoveAt(foundIdx);
+                            }
+                        }
+                    }
+                }
+
+                for (int i = 0; i < chunk.Count; i++)
+                {
+                    currWord = chunk[i] as string;
+                    for (int j = 0; j < currWord.Length / 2; j++) // 0, 1
+                    {
+                        for (int k = currWord.Length / 2; k < currWord.Length; k++) // 2, 3
+                        {
+                            // odds or evens
+                            if (j % 2 == k % 2)
+                            {
+                                var currSb = new StringBuilder(currWord);
+                                // Console.WriteLine(j + " " + k);
+                                char temp = currSb[j];
+                                currSb[j] = currSb[k];
+                                currSb[k] = temp;
+
+                                // Console.WriteLine(currSB.ToString());
+
+                                while (list.IndexOf(currSb.ToString()) > -1)
+                                {
+                                    int foundIdx = list.IndexOf(currSb.ToString());
+                                    chunk.Add(list.ElementAt(foundIdx));
+                                    list.RemoveAt(foundIdx);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                result.Add(chunk);
+            }
+
+            return result.Count;
+        }
 
         // https://leetcode.com/problems/reverse-string/
         public void ReverseString(char[] s)
