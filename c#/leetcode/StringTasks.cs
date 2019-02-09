@@ -43,84 +43,61 @@ namespace StringTasks
             return this.X == 0 && this.Y == 0;
         }
     }
+
+
     public class Solution
     {
-        // https://leetcode.com/problems/groups-of-special-equivalent-strings/
         public int NumSpecialEquivGroups(string[] A)
+        {
+            HashSet<string> set = new HashSet<string>();
+            foreach (string word in A)
+            {
+                int[] count = new int[52];
+                for (int i = 0; i < word.Length; i++)
+                {
+                    count[word[i] - 'a' + 26 * (i % 2)]++;
+                }
+
+                set.Add(string.Join(',', count));
+            }
+
+            return set.Count;
+        }
+
+        // https://leetcode.com/problems/groups-of-special-equivalent-strings/
+        public int NumSpecialEquivGroupsOld(string[] A)
         {
             var list = new List<string>(A);
             ArrayList result = new ArrayList();
+            ArrayList evenOdds = new ArrayList();
 
-            while (list.Count > 0)
+            for (int i = 0; i < A.Length; i++)
             {
-                string currWord = list.ElementAt(0);
-                list.RemoveAt(0);
+                string currWord = A[i];
+                evenOdds.Add(this.GetOddEvenWords(currWord));
+            }
 
-                ArrayList chunk = new ArrayList();
-                chunk.Add(currWord);
 
-                if (currWord.Length == 1)
+            while (evenOdds.Count > 0)
+            {
+                var removingList = new List<ArrayList>();
+                ArrayList currEvenOdds = evenOdds[0] as ArrayList;
+                List<ArrayList> chunk = new List<ArrayList>() { currEvenOdds };
+
+                evenOdds.RemoveAt(0);
+
+                for (int i = 0; i < evenOdds.Count; i++)
                 {
-                    while (list.IndexOf(currWord) > -1)
+                    ArrayList nextEvenOdds = evenOdds[i] as ArrayList;
+                    if (this.IsEvenOddsEqual(currEvenOdds, nextEvenOdds))
                     {
-                        int foundIdx = list.IndexOf(currWord);
-                        chunk.Add(list.ElementAt(foundIdx));
-                        list.RemoveAt(foundIdx);
+                        removingList.Add(nextEvenOdds);
                     }
                 }
 
-                for (int j = 0; j < currWord.Length / 2; j++) // 0, 1
+                foreach (ArrayList removingItm in removingList)
                 {
-                    for (int k = currWord.Length / 2; k < currWord.Length; k++) // 2, 3
-                    {
-                        // odds or evens
-                        if (j % 2 == k % 2)
-                        {
-                            var currSb = new StringBuilder(currWord);
-                            // Console.WriteLine(j + " " + k);
-                            char temp = currSb[j];
-                            currSb[j] = currSb[k];
-                            currSb[k] = temp;
-
-                            // Console.WriteLine(currSB.ToString());
-
-                            while (list.IndexOf(currSb.ToString()) > -1)
-                            {
-                                int foundIdx = list.IndexOf(currSb.ToString());
-                                chunk.Add(list.ElementAt(foundIdx));
-                                list.RemoveAt(foundIdx);
-                            }
-                        }
-                    }
-                }
-
-                for (int i = 0; i < chunk.Count; i++)
-                {
-                    currWord = chunk[i] as string;
-                    for (int j = 0; j < currWord.Length / 2; j++) // 0, 1
-                    {
-                        for (int k = currWord.Length / 2; k < currWord.Length; k++) // 2, 3
-                        {
-                            // odds or evens
-                            if (j % 2 == k % 2)
-                            {
-                                var currSb = new StringBuilder(currWord);
-                                // Console.WriteLine(j + " " + k);
-                                char temp = currSb[j];
-                                currSb[j] = currSb[k];
-                                currSb[k] = temp;
-
-                                // Console.WriteLine(currSB.ToString());
-
-                                while (list.IndexOf(currSb.ToString()) > -1)
-                                {
-                                    int foundIdx = list.IndexOf(currSb.ToString());
-                                    chunk.Add(list.ElementAt(foundIdx));
-                                    list.RemoveAt(foundIdx);
-                                }
-                            }
-                        }
-                    }
+                    evenOdds.Remove(removingItm);
                 }
 
                 result.Add(chunk);
@@ -128,6 +105,57 @@ namespace StringTasks
 
             return result.Count;
         }
+
+        public bool IsEvenOddsEqual(ArrayList currEvenOdds, ArrayList nextEvenOdds)
+        {
+            List<char> currEvens = currEvenOdds[0] as List<char>;
+            List<char> currOdds = currEvenOdds[1] as List<char>;
+
+            List<char> nextEvens = nextEvenOdds[0] as List<char>;
+            List<char> nextOdds = nextEvenOdds[1] as List<char>;
+
+            if (currEvens.Count != nextEvens.Count || currOdds.Count != nextOdds.Count)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < currEvens.Count; i++)
+            {
+                if (currEvens[i] != nextEvens[i]) return false;
+            }
+
+            for (int i = 0; i < currOdds.Count; i++)
+            {
+                if (currOdds[i] != nextOdds[i]) return false;
+            }
+
+            return true;
+        }
+
+        public ArrayList GetOddEvenWords(string currWord)
+        {
+            var result = new ArrayList();
+            var evens = new List<char>();
+            var odds = new List<char>();
+
+            for (int i = 0; i < currWord.Length; i++)
+            {
+                if (i % 2 == 0)
+                    evens.Add(currWord[i]);
+                else
+                    odds.Add(currWord[i]);
+            }
+
+            evens.Sort();
+            odds.Sort();
+
+            result.Add(evens);
+            result.Add(odds);
+
+            return result;
+        }
+
+
 
         // https://leetcode.com/problems/reverse-string/
         public void ReverseString(char[] s)
