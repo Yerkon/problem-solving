@@ -47,6 +47,34 @@ namespace StringTasks
 
     public class Solution
     {
+
+        // https://leetcode.com/problems/reorder-log-files/
+        public string[] ReorderLogFiles(string[] logs)
+        {
+            List<string> digitLogs = new List<string>();
+            List<string> letterLogs = new List<string>();
+
+            foreach (string log in logs)
+            {
+                string[] words = log.Split(' ');
+                if (char.IsDigit(words[1][0]))
+                    digitLogs.Add(log);
+                else
+                    letterLogs.Add(log);
+            }
+
+            letterLogs.Sort((string a, string b) =>
+            {
+                string aComp = a.Substring(a.IndexOf(' '));
+                string bComp = b.Substring(b.IndexOf(' '));
+                return string.Compare(aComp, bComp);
+            });
+
+            letterLogs.AddRange(digitLogs);
+
+            return letterLogs.ToArray();
+        }
+
         public int NumSpecialEquivGroups(string[] A)
         {
             HashSet<string> set = new HashSet<string>();
