@@ -47,6 +47,87 @@ namespace StringTasks
 
     public class Solution
     {
+        // time: O(N^2)... can be decreased to O(N)
+        // https://leetcode.com/problems/reverse-only-letters/
+        public string ReverseOnlyLetters(string S)
+        {
+            StringBuilder reversed = new StringBuilder();
+
+            for (int i = S.Length - 1; i >= 0; i--)
+            {
+                if ((S[i] >= 'A' && S[i] <= 'Z') || (S[i] >= 'a' && S[i] <= 'z'))
+                {
+                    reversed.Append(S[i]);
+                }
+            }
+
+            for (int i = 0; i < S.Length; i++)
+            {
+                 if (!(S[i] >= 'A' && S[i] <= 'Z') && !(S[i] >= 'a' && S[i] <= 'z'))
+                {
+                    reversed.Insert(i, S[i]);
+                }
+            }
+
+            return reversed.ToString();
+        }
+        // https://leetcode.com/problems/longest-uncommon-subsequence-i/
+        public int FindLUSlength(string a, string b)
+        {
+            if (a.Length > b.Length) return a.Length;
+            else if (b.Length > a.Length) return b.Length;
+
+            else
+            {
+                // the same length
+                for (int i = 0; i < a.Length; i++)
+                {
+                    if (a[i] != b[i])
+                    {
+                        return a.Length;
+                    }
+                }
+
+                return -1;
+            }
+        }
+
+        // https://leetcode.com/problems/goat-latin/
+        public string ToGoatLatin(string S)
+        {
+            if (S.Length == 0) return S;
+
+            StringBuilder postfix = new StringBuilder("a");
+            StringBuilder result = new StringBuilder();
+            string[] wordArr = S.Split(' ');
+
+            foreach (string word in wordArr)
+            {
+                if ("aeiouAEIOU".IndexOf(word[0]) >= 0)
+                {
+                    result.Append(word)
+                        .Append("ma")
+                        .Append(postfix)
+                        .Append(" ");
+                }
+                else
+                {
+                    string first = word.Substring(0, 1);
+                    string others = word.Substring(1);
+
+                    result.Append(others)
+                        .Append(first)
+                        .Append("ma")
+                        .Append(postfix)
+                        .Append(" ");
+                }
+
+                postfix.Append('a');
+            }
+
+            return result.ToString().TrimEnd();
+        }
+
 
         // https://leetcode.com/problems/reorder-log-files/
         public string[] ReorderLogFiles(string[] logs)
@@ -182,7 +263,6 @@ namespace StringTasks
 
             return result;
         }
-
 
 
         // https://leetcode.com/problems/reverse-string/
