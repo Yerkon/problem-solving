@@ -6,70 +6,136 @@ using System.Text;
 
 namespace StringTasks
 {
-    public class Point
-    {
-        public int X { get; set; }
-        public int Y { get; set; }
-
-        public void constructor()
-        {
-            X = 0;
-            Y = 0;
-        }
-
-        public void Move(char direction)
-        {
-            switch (direction)
-            {
-                case 'L':
-                    this.X--;
-                    break;
-                case 'R':
-                    this.X++;
-                    break;
-                case 'U':
-                    this.Y++;
-                    break;
-                case 'D':
-                    this.Y--;
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        public bool IsOrigin()
-        {
-            return this.X == 0 && this.Y == 0;
-        }
-    }
-
-
     public class Solution
     {
-        // time: O(N^2)... can be decreased to O(N)
+
+        // https://leetcode.com/problems/detect-capital/ 
+        public bool DetectCapitalUse(string word)
+        {
+            if (word.Length == 1) return true;
+
+            bool isUpper = false;
+            if (char.IsUpper(word[0]) && char.IsUpper(word[1]))
+            {
+                isUpper = true;
+            }
+            else if (!char.IsUpper(word[0]) && char.IsUpper(word[1]))
+            {
+                return false;
+            }
+
+            for (int i = 2; i < word.Length; i++)
+            {
+                if (
+                    (isUpper && !char.IsUpper(word[i]))
+                    || (!isUpper && char.IsUpper(word[i]))
+                    )
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        // https://leetcode.com/problems/rotated-digits/
+        public int RotatedDigits(int N)
+        {
+            int count = 0;
+
+            for (int i = 1; i <= N; i++)
+            {
+                if (this.IsGoodNumber(i))
+                {
+                    count++;
+                }
+            }
+
+            return count;
+        }
+
+        public bool IsGoodNumber(int num)
+        {
+            return this.IsValidNumber(num) && this.GetRotatedNumber(num) != num;
+        }
+
+        public int GetRotatedNumber(int num)
+        {
+            string numStr = num.ToString();
+            StringBuilder sb = new StringBuilder();
+
+            foreach (char n in numStr)
+            {
+                switch (n)
+                {
+                    case '0':
+                    case '1':
+                    case '8':
+                        sb.Append(n);
+                        break;
+                    case '2':
+                        sb.Append('5');
+                        break;
+                    case '5':
+                        sb.Append('2');
+                        break;
+                    case '6':
+                        sb.Append('9');
+                        break;
+                    case '9':
+                        sb.Append('6');
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            return int.Parse(sb.ToString());
+        }
+
+        public bool IsValidNumber(int num)
+        {
+            string numStr = num.ToString();
+
+            foreach (char n in numStr)
+            {
+                if ("0182569".IndexOf(n) < 0)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+
         // https://leetcode.com/problems/reverse-only-letters/
         public string ReverseOnlyLetters(string S)
         {
-            StringBuilder reversed = new StringBuilder();
+            Stack<char> stack = new Stack<char>();
+            StringBuilder sb = new StringBuilder();
 
-            for (int i = S.Length - 1; i >= 0; i--)
+            for (int i = 0; i < S.Length; i++)
             {
-                if ((S[i] >= 'A' && S[i] <= 'Z') || (S[i] >= 'a' && S[i] <= 'z'))
+                if (char.IsLetter(S[i]))
                 {
-                    reversed.Append(S[i]);
+                    stack.Push(S[i]);
                 }
             }
 
             for (int i = 0; i < S.Length; i++)
             {
-                 if (!(S[i] >= 'A' && S[i] <= 'Z') && !(S[i] >= 'a' && S[i] <= 'z'))
+                if (!char.IsLetter(S[i]))
                 {
-                    reversed.Insert(i, S[i]);
+                    sb.Append(S[i]);
+                }
+                else
+                {
+                    sb.Append(stack.Pop());
                 }
             }
 
-            return reversed.ToString();
+            return sb.ToString();
         }
         // https://leetcode.com/problems/longest-uncommon-subsequence-i/
         public int FindLUSlength(string a, string b)
@@ -433,5 +499,45 @@ namespace StringTasks
             }
         }
     }
+
+
+    public class Point
+    {
+        public int X { get; set; }
+        public int Y { get; set; }
+
+        public void constructor()
+        {
+            X = 0;
+            Y = 0;
+        }
+
+        public void Move(char direction)
+        {
+            switch (direction)
+            {
+                case 'L':
+                    this.X--;
+                    break;
+                case 'R':
+                    this.X++;
+                    break;
+                case 'U':
+                    this.Y++;
+                    break;
+                case 'D':
+                    this.Y--;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public bool IsOrigin()
+        {
+            return this.X == 0 && this.Y == 0;
+        }
+    }
+
 
 }
