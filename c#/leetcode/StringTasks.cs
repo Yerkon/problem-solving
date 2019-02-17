@@ -14,10 +14,10 @@ namespace StringTasks
         {
             int count = 0;
             int length = 2;
-
+         
             while (length <= s.Length)
             {
-                for (int i = 0; i < s.Length; i++)
+                for (int i = 0; i < s.Length - length + 1; i++)
                 {
                     int startIdx = i;
                     int endIdx = startIdx + length - 1;
@@ -37,21 +37,24 @@ namespace StringTasks
         {
             if (endIdx >= s.Length) return false;
 
+            // int middle = (endIdx + startIdx) / 2;            
             int first = s[startIdx];
             int next = s[endIdx];
-
+         
             while (startIdx < endIdx)
             {
                 if (s[startIdx] == s[endIdx] || s[startIdx] == next || s[endIdx] == first)
                 {
                     return false;
                 }
+
                 startIdx++;
                 endIdx--;
-            }
+            }           
 
             return true;
         }
+
 
         // https://leetcode.com/problems/detect-capital/ 
         public bool DetectCapitalUse(string word)
