@@ -9,6 +9,47 @@ namespace StringTasks
     public class Solution
     {
 
+        // https://leetcode.com/problems/count-binary-substrings/
+        public int CountBinarySubstrings(string s)
+        {
+            int count = 0;
+            int length = 2;
+
+            while (length <= s.Length)
+            {
+                for (int i = 0; i < s.Length; i++)
+                {
+                    if (isContigious(s, i, length)) count++;
+                }
+
+                length += 2;
+            }
+
+            return count;
+        }
+
+        public bool isContigious(string s, int start, int length)
+        {
+            int count = 0;
+            length = start + length;
+
+            if (length > s.Length) return false;
+
+            for (int i = start; i < length; i++)
+            {
+                if (s[i] == '0') count--;
+                else count++;
+
+                // if continious interrupted in somewhere middle of check
+                if (count == 0 && i < length - 1)
+                {
+                    return false;
+                }
+            }
+
+            return count == 0;
+        }
+
         // https://leetcode.com/problems/detect-capital/ 
         public bool DetectCapitalUse(string word)
         {
