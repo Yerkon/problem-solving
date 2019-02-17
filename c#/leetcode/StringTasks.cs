@@ -19,7 +19,12 @@ namespace StringTasks
             {
                 for (int i = 0; i < s.Length; i++)
                 {
-                    if (isContigious(s, i, length)) count++;
+                    int startIdx = i;
+                    int endIdx = startIdx + length - 1;
+                    if (isContigious(s, startIdx, endIdx))
+                    {
+                        count++;
+                    }
                 }
 
                 length += 2;
@@ -28,26 +33,24 @@ namespace StringTasks
             return count;
         }
 
-        public bool isContigious(string s, int start, int length)
+        public bool isContigious(string s, int startIdx, int endIdx)
         {
-            int count = 0;
-            length = start + length;
+            if (endIdx >= s.Length) return false;
 
-            if (length > s.Length) return false;
+            int first = s[startIdx];
+            int next = s[endIdx];
 
-            for (int i = start; i < length; i++)
+            while (startIdx < endIdx)
             {
-                if (s[i] == '0') count--;
-                else count++;
-
-                // if continious interrupted in somewhere middle of check
-                if (count == 0 && i < length - 1)
+                if (s[startIdx] == s[endIdx] || s[startIdx] == next || s[endIdx] == first)
                 {
                     return false;
                 }
+                startIdx++;
+                endIdx--;
             }
 
-            return count == 0;
+            return true;
         }
 
         // https://leetcode.com/problems/detect-capital/ 
