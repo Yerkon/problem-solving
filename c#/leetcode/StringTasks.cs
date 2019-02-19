@@ -13,25 +13,57 @@ namespace StringTasks
         public int CountBinarySubstrings(string s)
         {
             int count = 0;
-            int length = 2;
-         
-            while (length <= s.Length)
-            {
-                for (int i = 0; i < s.Length - length + 1; i++)
-                {
-                    int startIdx = i;
-                    int endIdx = startIdx + length - 1;
-                    if (isContigious(s, startIdx, endIdx))
-                    {
-                        count++;
-                    }
-                }
+            int zeroCount = 0;
+            int oneCount = 0;
+            bool isOneCounting = false;
 
-                length += 2;
+            for (int i = 0; i < s.Length; i++)
+            {
+                CountContiguous(s, i, ref count, ref isOneCounting, ref zeroCount, ref oneCount);
             }
+
+            count += Math.Min(zeroCount, oneCount);
+            zeroCount = 0;
+            oneCount = 0;
+
+            for (int i = s.Length - 1; i >= 0; i--)
+            {
+                CountContiguous(s, i, ref count, ref isOneCounting, ref zeroCount, ref oneCount);
+            }
+            
+            count += Math.Min(zeroCount, oneCount);
 
             return count;
         }
+
+        public void CountContiguous(
+            string s,
+            int i,
+            ref int count,
+            ref bool isOneCounting,
+            ref int zeroCount,
+            ref int oneCount)
+        {
+
+            if (s[i] == '0')
+            {
+                // count contiguous
+                if (isOneCounting)
+                {
+                    count += Math.Min(zeroCount, oneCount);
+                    zeroCount = 0;
+                    oneCount = 0;
+                    isOneCounting = false;
+                }
+                zeroCount++;
+            }
+            else
+            {
+                isOneCounting = true;
+                oneCount++;
+            }
+        }
+
 
         public bool isContigious(string s, int startIdx, int endIdx)
         {
@@ -40,7 +72,7 @@ namespace StringTasks
             // int middle = (endIdx + startIdx) / 2;            
             int first = s[startIdx];
             int next = s[endIdx];
-         
+
             while (startIdx < endIdx)
             {
                 if (s[startIdx] == s[endIdx] || s[startIdx] == next || s[endIdx] == first)
@@ -50,7 +82,7 @@ namespace StringTasks
 
                 startIdx++;
                 endIdx--;
-            }           
+            }
 
             return true;
         }
