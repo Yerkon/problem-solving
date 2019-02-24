@@ -2,6 +2,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 /**
 * Definition for a binary tree node.
 * public class TreeNode {
@@ -27,7 +28,29 @@ namespace BinaryTree
         // https://leetcode.com/problems/construct-string-from-binary-tree/
         public string Tree2str(TreeNode t)
         {
+            if (t == null) return "";
+            StringBuilder sb = new StringBuilder();
+            PreOrderToStr(t, sb, false);
 
+            sb.Remove(0, 1);
+            sb.Remove(sb.Length - 1, 1);
+
+            return sb.ToString();
+        }
+
+        public void PreOrderToStr(TreeNode node, StringBuilder sb, bool writeLeft)
+        {
+            if (node != null)
+            {
+                sb.Append("(").Append(node.val);
+                PreOrderToStr(node.left, sb, node.right != null);
+                PreOrderToStr(node.right, sb, false);
+                sb.Append(")");
+            }
+            else if (writeLeft == true)
+            {
+                sb.Append("()");
+            }
         }
 
         /**
