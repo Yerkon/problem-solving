@@ -19,37 +19,17 @@ namespace BinaryTree
         public TreeNode left;
         public TreeNode right;
         public TreeNode(int x) { val = x; }
-
-        public void AddNode(int val)
-        {
-            if (val < this.val)
-            {
-                if (this.left == null)
-                {
-                    this.left = new TreeNode(val);
-                }
-                else
-                {
-                    this.left.AddNode(val);
-                }
-            }
-            else
-            {
-                if (this.right == null)
-                {
-                    this.right = new TreeNode(val);
-
-                }
-                else
-                {
-                    this.right.AddNode(val);
-                }
-            }
-        }
     }
 
     public class Solution
-    {        
+    {
+
+        // https://leetcode.com/problems/construct-string-from-binary-tree/
+        public string Tree2str(TreeNode t)
+        {
+
+        }
+
         /**
         Elegant solution
          */
