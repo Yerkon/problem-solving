@@ -22,11 +22,84 @@ namespace BinaryTree
         public TreeNode(int x) { val = x; }
     }
 
+    public class SimpleObj
+    {
+        public TreeNode node { get; set; }
+        public string remaining { get; set; }
+
+        public SimpleObj(TreeNode node, string rem)
+        {
+            this.node = node;
+            this.remaining = rem;
+        }
+    }
+
     public class Solution
     {
-
         // https://leetcode.com/problems/construct-string-from-binary-tree/
+        // iterative way
         public string Tree2str(TreeNode t)
+        {
+            if (t == null) return "";
+            StringBuilder sb = new StringBuilder();
+            Dictionary<TreeNode, StringBuilder> dic = new Dictionary<TreeNode, StringBuilder>();
+
+            Stack<SimpleObj> stack = new Stack<SimpleObj>();
+
+            stack.Push(new SimpleObj(t, ""));
+
+            while (stack.Count > 0)
+            {
+                SimpleObj currObj = stack.Pop();
+
+                sb.Append("(" + currObj.node.val);
+
+
+
+                if (currObj.node.right != null)
+                {
+
+                    if (currObj.node.left == null)
+                    {
+                        sb.Append("()");
+                    }
+
+                    SimpleObj obj = new SimpleObj(currObj.node.right, currObj.remaining + ")");
+                    stack.Push(obj);
+                }
+                if (currObj.node.left != null)
+                {
+
+                    if (currObj.node.right == null)
+                    {
+                        SimpleObj obj = new SimpleObj(currObj.node.left, currObj.remaining + ")");
+                        stack.Push(obj);
+                    }
+                    else
+                    {
+                        SimpleObj obj = new SimpleObj(currObj.node.left, "");
+                        stack.Push(obj);
+                    }
+
+                }
+
+                if (currObj.node.left == null && currObj.node.right == null)
+                {
+                    // when no childs
+                    sb.Append(")").Append(currObj.remaining);
+                }
+            }
+
+            sb.Remove(0, 1);
+            sb.Remove(sb.Length - 1, 1);
+
+            return sb.ToString();
+        }
+
+        // [1,2,3,4, 5, null, null, 6, 7, null, null, null, null, 1, 3]
+        // https://leetcode.com/problems/construct-string-from-binary-tree/
+        // recursive way
+        public string Tree2strRecursive(TreeNode t)
         {
             if (t == null) return "";
             StringBuilder sb = new StringBuilder();
