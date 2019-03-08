@@ -36,6 +36,40 @@ namespace BinaryTree
 
     public class Solution
     {
+
+        // https://leetcode.com/problems/ransom-note/
+        public bool CanConstruct(string ransomNote, string magazine)
+        {
+            Dictionary<char, int> dic = new Dictionary<char, int>();
+
+            for (int i = 0; i < magazine.Length; i++)
+            {
+                if (dic.ContainsKey(magazine[i]))
+                {
+                    dic[magazine[i]]++;
+                }
+                else
+                {
+                    dic.Add(magazine[i], 1);
+                }
+            }
+
+            for (int i = 0; i < ransomNote.Length; i++)
+            {
+
+                if (!dic.ContainsKey(ransomNote[i]) || dic[ransomNote[i]] <= 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    dic[ransomNote[i]]--;
+                }
+            }
+
+            return true;
+        }
+
         // https://leetcode.com/problems/construct-string-from-binary-tree/
         // iterative way
         public string Tree2str(TreeNode t)
@@ -127,7 +161,7 @@ namespace BinaryTree
         }
 
         /**
-        Elegant solution
+Elegant solution
          */
         public TreeNode DeleteNode(TreeNode root, int key)
         {
@@ -361,7 +395,7 @@ namespace BinaryTree
 
 
         /**
-        recursive way
+recursive way
          */
         public void TraversePostOrder(TreeNode node, List<int> res)
         {
