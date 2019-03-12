@@ -15,7 +15,7 @@ namespace StringTasks
             StringBuilder sb = new StringBuilder();
             int skipCount = 0;
             bool isSkip = false;
-            int it = k >= s.Length ? s.Length : k;
+            int it = Math.Min(k, s.Length);
 
             for (int i = 0; i < s.Length; i++)
             {
@@ -26,7 +26,7 @@ namespace StringTasks
 
                     if (isSkip == false)
                     {
-                        it = (it + k * 2 - 1) >= s.Length ? s.Length : it + k * 2;
+                        it = Math.Min(s.Length, it + k * 2);
                     }
                 }
 
