@@ -8,7 +8,50 @@ namespace StringTasks
 {
     public class Solution
     {
+        // https://leetcode.com/problems/first-unique-character-in-a-string/
+        public int FirstUniqChar(string s)
+        {
 
+            Dictionary<char, int> dic = new Dictionary<char, int>();
+
+            foreach (char letter in s)
+            {
+                dic[letter] = dic.GetValueOrDefault(letter, 0) + 1;
+            }
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (dic[s[i]] == 1) return i;
+            }
+
+            return -1;
+        }
+
+        // https://leetcode.com/problems/ransom-note/
+        public bool CanConstruct(string ransomNote, string magazine)
+        {
+            Dictionary<char, int> dic = new Dictionary<char, int>();
+
+            foreach (char letter in magazine)
+            {
+                dic[letter] = dic.GetValueOrDefault(letter, 0) + 1;
+            }
+
+            for (int i = 0; i < ransomNote.Length; i++)
+            {
+
+                if (!dic.ContainsKey(ransomNote[i]) || dic[ransomNote[i]] <= 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    dic[ransomNote[i]]--;
+                }
+            }
+
+            return true;
+        }
         // https://leetcode.com/problems/count-binary-substrings/
         public int CountBinarySubstrings(string s)
         {
@@ -30,7 +73,7 @@ namespace StringTasks
             {
                 CountContiguous(s, i, ref count, ref isOneCounting, ref zeroCount, ref oneCount);
             }
-            
+
             count += Math.Min(zeroCount, oneCount);
 
             return count;
