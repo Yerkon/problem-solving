@@ -8,6 +8,43 @@ namespace StringTasks
 {
     public class Solution
     {
+        // https://leetcode.com/problems/reverse-string-ii/
+        public string ReverseStr(string s, int k)
+        {
+            StringBuilder sb = new StringBuilder();
+            int skipCount = 0;
+            bool isSkip = false;
+            int it = k >= s.Length ? s.Length : k;
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (skipCount == k)
+                {
+                    skipCount = 0;
+                    isSkip = !isSkip;
+
+                    if (isSkip == false)
+                    {
+                        it = (it + k * 2 - 1) >= s.Length ? s.Length : it + k * 2;
+                    }
+                }
+
+                if (isSkip)
+                {
+                    sb.Append(s[i]);
+                }
+                else
+                {
+                    // reversed
+                    char currLetter = s[it - 1 - skipCount];
+                    sb.Append(currLetter);
+                }
+
+                skipCount++;
+            }
+
+            return sb.ToString();
+        }
 
         // https://leetcode.com/problems/count-binary-substrings/
         public int CountBinarySubstrings(string s)
@@ -30,7 +67,7 @@ namespace StringTasks
             {
                 CountContiguous(s, i, ref count, ref isOneCounting, ref zeroCount, ref oneCount);
             }
-            
+
             count += Math.Min(zeroCount, oneCount);
 
             return count;
