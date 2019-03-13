@@ -8,6 +8,67 @@ namespace StringTasks
 {
     public class Solution
     {
+        // https://leetcode.com/problems/long-pressed-name/
+        public bool IsLongPressedName(string name, string typed)
+        {
+            if (name.Length > typed.Length) return false;
+
+            int i = 0, j = 0;
+            char prevLetter = name[i];
+
+            while (i < name.Length && j < typed.Length)
+            {
+                if (name[i] == typed[j])
+                {
+                    prevLetter = name[i];
+                    i++; j++;
+                }
+                else
+                {
+                    if (typed[j] == prevLetter) j++;
+                    else return false;
+                }
+            }
+
+            // some letter of "name" doesn't exist in "typed" string
+            if (i < name.Length) return false;
+
+            // check last typed letters with "prevLetter" of name string
+            if (j < typed.Length)
+            {
+                while (j < typed.Length)
+                {
+                    if (prevLetter == typed[j]) j++;
+                    else return false;
+                }
+            }
+
+            return true;
+        }
+
+        // https://leetcode.com/problems/student-attendance-record-i/
+        public bool CheckRecord(string s)
+        {
+            int lateCount = 0;
+            int absentCount = 0;
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (s[i] == 'L') lateCount++;
+                else
+                {
+                    if (s[i] == 'A') absentCount++;
+
+                    lateCount = 0;
+                }
+
+
+                if (lateCount > 2 || absentCount > 1) return false;
+            }
+
+            return true;
+        }
+
 
         // https://leetcode.com/problems/reverse-string-ii/
         public string ReverseStr(string s, int k)
