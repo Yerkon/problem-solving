@@ -8,13 +8,73 @@ namespace StringTasks
 {
     public class Solution
     {
+        // https://leetcode.com/problems/add-strings/
+        public string AddStrings(string num1, string num2)
+        {
+            int i = num1.Length - 1;
+            int j = num2.Length - 1;
+
+            StringBuilder sb = new StringBuilder();
+            int count = 0;
+
+            while (i >= 0 && j >= 0)
+            {
+                int a = (int)Char.GetNumericValue(num1[i]);
+                int b = (int)Char.GetNumericValue(num2[j]);
+
+                int sum = a + b + count;
+                count = 0;
+
+                if (sum > 9)
+                {
+                    sb.Insert(0, sum - 10);
+                    count++;
+                }
+                else
+                {
+                    sb.Insert(0, sum);
+                }
+
+                i--;
+                j--;
+            }
+
+            this.SumRemaining(i, sb, ref count, num1);
+            this.SumRemaining(j, sb, ref count, num2);
+
+            if (count > 0) sb.Insert(0, count);
+
+            return sb.ToString();
+        }
+
+        public void SumRemaining(int it, StringBuilder sb, ref int count, string remain)
+        {
+            while (it >= 0)
+            {
+                int a = (int)Char.GetNumericValue(remain[it]);
+                int sum = a + count;
+                count = 0;
+
+                if (sum > 9)
+                {
+                    sb.Insert(0, sum - 10);
+                    count++;
+                }
+                else
+                {
+                    sb.Insert(0, sum);
+                }
+
+                it--;
+            }
+        }
+
+
         // https://leetcode.com/problems/long-pressed-name/
         public bool IsLongPressedName(string name, string typed)
         {
-            if (name.Length > typed.Length) return false;
-
             int i = 0, j = 0;
-            char prevLetter = name[i];
+            char prevLetter = name.ElementAtOrDefault(i);
 
             while (i < name.Length && j < typed.Length)
             {
@@ -30,12 +90,11 @@ namespace StringTasks
                 }
             }
 
-            // some letter of "name" doesn't exist in "typed" string
             if (i < name.Length) return false;
 
-            // check last typed letters with "prevLetter" of name string
             if (j < typed.Length)
             {
+                // check last typed letters with "prevLetter" of name string
                 while (j < typed.Length)
                 {
                     if (prevLetter == typed[j]) j++;
@@ -45,7 +104,6 @@ namespace StringTasks
 
             return true;
         }
-
         // https://leetcode.com/problems/student-attendance-record-i/
         public bool CheckRecord(string s)
         {
