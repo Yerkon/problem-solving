@@ -8,8 +8,25 @@ namespace StringTasks
 {
     public class Solution
     {
+
         // https://leetcode.com/problems/add-strings/
         public string AddStrings(string num1, string num2)
+        {
+            StringBuilder sb = new StringBuilder();
+            int carry = 0;
+
+            for (int i = num1.Length - 1, j = num2.Length - 1; i >= 0 || j >= 0 || carry == 1; i--, j--)
+            {
+                int a = i < 0 ? 0 : (int)Char.GetNumericValue(num1[i]);
+                int b = j < 0 ? 0 : (int)Char.GetNumericValue(num2[j]);
+                sb.Insert(0, (a + b + carry) % 10);
+                carry = (a + b + carry) / 10;
+            }
+
+            return sb.ToString();
+        }
+        // https://leetcode.com/problems/add-strings/
+        public string AddStringsOld(string num1, string num2)
         {
             int i = num1.Length - 1;
             int j = num2.Length - 1;
