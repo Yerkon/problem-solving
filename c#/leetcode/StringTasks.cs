@@ -9,6 +9,50 @@ namespace StringTasks
     public class Solution
     {
 
+        // https://leetcode.com/problems/most-common-word/
+        public string MostCommonWord(string paragraph, string[] banned)
+        {
+            StringBuilder sb = new StringBuilder();
+            List<string> paragraphList = new List<string>();
+
+            for (int i = 0; i < paragraph.Length; i++)
+            {
+                if (char.IsLetter(paragraph[i]))
+                {
+                    sb.Append(paragraph[i]);
+                }
+                else
+                {
+                    if (sb.Length > 0)
+                    {
+                        paragraphList.Add(sb.ToString());
+                        sb.Clear();
+                    }
+                }
+            }
+
+            if (sb.Length > 0) paragraphList.Add(sb.ToString());
+
+            Dictionary<string, int> wordCounts = new Dictionary<string, int>();
+            int count = 0;
+            string mostCommonWord = "";
+
+            foreach (string word in paragraphList)
+            {
+                string formatted = word.ToLower();
+                wordCounts[formatted] = wordCounts.GetValueOrDefault(formatted, 0) + 1;
+
+                if (!banned.Contains(formatted) && wordCounts[formatted] > count)
+                {
+                    count = wordCounts[formatted];
+                    mostCommonWord = formatted;
+                }
+            }
+
+            return mostCommonWord;
+        }
+
+
         // https://leetcode.com/problems/add-strings/
         public string AddStrings(string num1, string num2)
         {
