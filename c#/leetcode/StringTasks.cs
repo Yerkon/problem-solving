@@ -9,29 +9,105 @@ namespace StringTasks
     public class Solution
     {
 
+        // https://leetcode.com/problems/count-and-say/
+        public string CountAndSay(int n)
+        {
+            StringBuilder sb = new StringBuilder("1");
+            return this.CountAndSayRec(n, 1, sb);
+        }
+
+        public string CountAndSayRec(int n, int it, StringBuilder result)
+        {
+            if (it == n) return result.ToString();
+
+            else
+            {
+                StringBuilder sb = new StringBuilder();
+                int count = 1;
+                for (int i = 0; i < result.Length - 1; i++)
+                {
+                    if (result[i] == result[i + 1])
+                    {
+                        count++;
+                    }
+                    else
+                    {
+                        if (count > 1) // continuous
+                        {
+                            string res = count.ToString() + result[i];
+                            sb.Append(res);
+                            count = 1;
+                        }
+                        else
+                        {
+                            // not continuous
+                            string res = "1" + result[i];
+                            sb.Append(res);
+                        }
+                    }
+                }
+
+                // last number
+                string rem = count.ToString() + result[result.Length - 1];
+                sb.Append(rem);
+                count = 1;
+
+                return this.CountAndSayRec(n, ++it, sb);
+            }
+        }
+
+        // https://leetcode.com/problems/reverse-vowels-of-a-string/
+        public string ReverseVowels(string s)
+        {
+            StringBuilder resultSb = new StringBuilder();
+            StringBuilder vowelsSb = new StringBuilder();
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (this.isVowel(s[i])) vowelsSb.Append(s[i]);
+            }
+
+            int it = vowelsSb.Length - 1;
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (!this.isVowel(s[i]))
+                {
+                    resultSb.Append(s[i]);
+                }
+                else
+                {
+                    resultSb.Append(vowelsSb[it--]);
+                }
+            }
+
+            return resultSb.ToString();
+        }
+
+        public bool isVowel(char c)
+        {
+            return "aeiouAEIOU".IndexOf(c) >= 0;
+        }
+
         // https://leetcode.com/problems/most-common-word/
         public string MostCommonWord(string paragraph, string[] banned)
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder wordSb = new StringBuilder();
             List<string> paragraphList = new List<string>();
 
             for (int i = 0; i < paragraph.Length; i++)
             {
                 if (char.IsLetter(paragraph[i]))
                 {
-                    sb.Append(paragraph[i]);
+                    wordSb.Append(paragraph[i]);
                 }
-                else
+                else if (wordSb.Length > 0)
                 {
-                    if (sb.Length > 0)
-                    {
-                        paragraphList.Add(sb.ToString());
-                        sb.Clear();
-                    }
+                    paragraphList.Add(wordSb.ToString().ToLower());
+                    wordSb.Clear();
                 }
             }
 
-            if (sb.Length > 0) paragraphList.Add(sb.ToString());
+            if (wordSb.Length > 0) paragraphList.Add(wordSb.ToString().ToLower());
 
             Dictionary<string, int> wordCounts = new Dictionary<string, int>();
             int count = 0;
@@ -39,13 +115,12 @@ namespace StringTasks
 
             foreach (string word in paragraphList)
             {
-                string formatted = word.ToLower();
-                wordCounts[formatted] = wordCounts.GetValueOrDefault(formatted, 0) + 1;
+                wordCounts[word] = wordCounts.GetValueOrDefault(word, 0) + 1;
 
-                if (!banned.Contains(formatted) && wordCounts[formatted] > count)
+                if (!banned.Contains(word) && wordCounts[word] > count)
                 {
-                    count = wordCounts[formatted];
-                    mostCommonWord = formatted;
+                    count = wordCounts[word];
+                    mostCommonWord = word;
                 }
             }
 
