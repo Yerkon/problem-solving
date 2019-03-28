@@ -9,6 +9,11 @@ namespace StringTasks
     public class Solution
     {
 
+        // https://leetcode.com/problems/repeated-substring-pattern/
+        public bool RepeatedSubstringPattern(string s)
+        {
+
+        }
         // https://leetcode.com/problems/count-and-say/
         public string CountAndSay(int n)
         {
@@ -32,18 +37,9 @@ namespace StringTasks
                     }
                     else
                     {
-                        if (count > 1) // continuous
-                        {
-                            string res = count.ToString() + result[i];
-                            sb.Append(res);
-                            count = 1;
-                        }
-                        else
-                        {
-                            // not continuous
-                            string res = "1" + result[i];
-                            sb.Append(res);
-                        }
+                        string res = count.ToString() + result[i];
+                        sb.Append(res);
+                        count = 1;
                     }
                 }
 
