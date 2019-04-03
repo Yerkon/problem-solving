@@ -12,8 +12,27 @@ namespace StringTasks
         // https://leetcode.com/problems/repeated-substring-pattern/
         public bool RepeatedSubstringPattern(string s)
         {
+            int divider = 2;
+            while (divider <= s.Length)
+            {
+                if (s.Length % divider == 0)
+                {
+                    string chunk = s.Substring(0, s.Length / divider);
+                    StringBuilder resultSb = new StringBuilder();
 
+                    while (resultSb.Length != s.Length)
+                    {
+                        resultSb.Append(chunk);
+                    }
+
+                    if (resultSb.ToString() == s) return true;
+                }
+                divider++;
+            }
+
+            return false;
         }
+        
         // https://leetcode.com/problems/count-and-say/
         public string CountAndSay(int n)
         {
