@@ -16,26 +16,27 @@ namespace StringTasks
 
             for (int i = a.Length - 1, j = b.Length - 1; i >= 0 || j >= 0; i--, j--)
             {
-                double currA = i >= 0 ? Char.GetNumericValue(a[i]) : 0;
-                double currB = j >= 0 ? Char.GetNumericValue(b[j]) : 0;
+                int currA = i >= 0 ? (int)Char.GetNumericValue(a[i]) : 0;
+                int currB = j >= 0 ? (int)Char.GetNumericValue(b[j]) : 0;
 
-                double sum = currA + currB + carry;
-                if (sum > 2)
-                {
-                    carry = 1;
-                    sum = 1;
-                }
-                else if (sum == 2)
-                {
-                    carry = 1;
-                    sum = 0;
-                }
-                else
-                {
-                    carry = 0;
-                }
+                int sum = currA + currB + carry;
+                // if (sum > 2)
+                // {
+                //     carry = 1;
+                //     sum = 1;
+                // }
+                // else if (sum == 2)
+                // {
+                //     carry = 1;
+                //     sum = 0;
+                // }
+                // else
+                // {
+                //     carry = 0;
+                // }
 
-                resultSb.Insert(0, sum);
+                resultSb.Insert(0, sum % 2);
+                carry = sum / 2;
             }
 
             if (carry == 1) resultSb.Insert(0, "1");
