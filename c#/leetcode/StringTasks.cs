@@ -8,6 +8,40 @@ namespace StringTasks
 {
     public class Solution
     {
+        // https://leetcode.com/problems/add-binary/
+        public string AddBinary(string a, string b)
+        {
+            int rem = 0;
+            StringBuilder resultSb = new StringBuilder();
+
+            for (int i = a.Length - 1, j = b.Length - 1; i >= 0 || j >= 0; i--, j--)
+            {
+                double currA = i >= 0 ? Char.GetNumericValue(a[i]) : 0;
+                double currB = j >= 0 ? Char.GetNumericValue(b[j]) : 0;
+
+                double sum = currA + currB + rem;
+                if (sum > 2)
+                {
+                    rem = 1;
+                    sum = 1;
+                }
+                else if (sum == 2)
+                {
+                    rem = 1;
+                    sum = 0;
+                }
+                else
+                {
+                    rem = 0;
+                }
+
+                resultSb.Insert(0, sum);
+            }
+
+            if (rem == 1) resultSb.Insert(0, "1");
+
+            return resultSb.ToString();
+        }
 
         // https://leetcode.com/problems/repeated-substring-pattern/
         public bool RepeatedSubstringPattern(string s)
@@ -32,7 +66,7 @@ namespace StringTasks
 
             return false;
         }
-        
+
         // https://leetcode.com/problems/count-and-say/
         public string CountAndSay(int n)
         {
