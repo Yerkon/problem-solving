@@ -11,8 +11,8 @@ namespace StringTasks
         // https://leetcode.com/problems/string-compression/
         public int Compress(char[] chars)
         {
+            int it = 0;
             int count = 1;
-            string resultStr = "";
 
             for (int i = 0; i < chars.Length - 1; i++)
             {
@@ -22,21 +22,30 @@ namespace StringTasks
                 }
                 else
                 {
-                    resultStr += chars[i] + (count > 1 ? count.ToString() : "");
+                    string countStr = count > 1 ? count.ToString() : "";
+                    chars[it] = chars[i];
+
+                    for (int j = 0; j < countStr.Length; j++)
+                    {
+                        chars[++it] = countStr[j];
+                    }
+
                     count = 1;
+                    it++;
                 }
             }
 
             // last one
-            resultStr += chars[chars.Length - 1] + (count > 1 ? count.ToString() : "");
-
-            // change input arrray(in place)
-            for (int i = 0; i < resultStr.Length; i++)
+            string countStr1 = count > 1 ? count.ToString() : "";
+            chars[it] = chars[chars.Length - 1];
+            for (int j = 0; j < countStr1.Length; j++)
             {
-                chars[i] = resultStr[i];
+                chars[++it] = countStr1[j];
             }
 
-            return resultStr.Length;
+            it++;
+
+            return it;
         }
 
         // https://leetcode.com/problems/add-binary/
