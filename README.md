@@ -1,5 +1,5 @@
-# leetcode
-Leetcode problem solutions
+# Problem solutions[Leetcode]
+
 
 Currently problems is solving in C# language using **.Net Core**. To build and run example move to inner folder {Worspace}/c#/leetcode and then:
 
