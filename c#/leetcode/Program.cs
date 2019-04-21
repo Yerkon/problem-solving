@@ -9,7 +9,7 @@ namespace leetcode
         static void Main(string[] args)
         {
             Solution sol = new Solution();
-            sol.AddBinary("11", "00");
+            sol.Compress(new char[] { 'a', 'b' });
             //Console.WriteLine(result);
         }
     }

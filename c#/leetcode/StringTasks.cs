@@ -8,6 +8,37 @@ namespace StringTasks
 {
     public class Solution
     {
+        // https://leetcode.com/problems/string-compression/
+        public int Compress(char[] chars)
+        {
+            int count = 1;
+            string resultStr = "";
+
+            for (int i = 0; i < chars.Length - 1; i++)
+            {
+                if (chars[i] == chars[i + 1])
+                {
+                    count++;
+                }
+                else
+                {
+                    resultStr += chars[i] + (count > 1 ? count.ToString() : "");
+                    count = 1;
+                }
+            }
+
+            // last one
+            resultStr += chars[chars.Length - 1] + (count > 1 ? count.ToString() : "");
+
+            // change input arrray(in place)
+            for (int i = 0; i < resultStr.Length; i++)
+            {
+                chars[i] = resultStr[i];
+            }
+
+            return resultStr.Length;
+        }
+
         // https://leetcode.com/problems/add-binary/
         public string AddBinary(string a, string b)
         {
