@@ -14,17 +14,12 @@ namespace StringTasks
             int it = 0;
             int count = 1;
 
-            for (int i = 0; i < chars.Length - 1; i++)
+            for (int i = 0; i < chars.Length; i++)
             {
-                if (chars[i] == chars[i + 1])
-                {
-                    count++;
-                }
-                else
+                if (i + 1 == chars.Length || chars[i] != chars[i + 1])
                 {
                     string countStr = count > 1 ? count.ToString() : "";
                     chars[it] = chars[i];
-
                     for (int j = 0; j < countStr.Length; j++)
                     {
                         chars[++it] = countStr[j];
@@ -33,17 +28,11 @@ namespace StringTasks
                     count = 1;
                     it++;
                 }
+                else
+                {
+                    count++;
+                }
             }
-
-            // last one
-            string countStr1 = count > 1 ? count.ToString() : "";
-            chars[it] = chars[chars.Length - 1];
-            for (int j = 0; j < countStr1.Length; j++)
-            {
-                chars[++it] = countStr1[j];
-            }
-
-            it++;
 
             return it;
         }
