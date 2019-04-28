@@ -8,6 +8,28 @@ namespace StringTasks
 {
     public class Solution
     {
+
+        // https://leetcode.com/problems/number-of-segments-in-a-string/
+        public int CountSegments(string s)
+        {
+            int segments = 0;
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (s[i] != ' ')
+                {
+                    while (s[i] != ' ' && i + 1 != s.Length)
+                    {
+                        i++;
+                    }
+
+                    segments++;
+                }
+            }
+
+            return segments;
+        }
+
         // https://leetcode.com/problems/string-compression/
         public int Compress(char[] chars)
         {
