@@ -9,6 +9,55 @@ namespace StringTasks
     public class Solution
     {
 
+        // "cupuufxoohdfpgjdmysgvhmvffcnqxjjxqncffvmhvgsymdjgpfdhooxfuupucu"
+        // "cupuufxoohdfpgjdmysgvhmvffcnqxjjxqncffvmhvgsymdjgpfdhooxfuupucu"
+        // https://leetcode.com/problems/valid-palindrome-ii/
+        public bool ValidPalindrome(string s)
+        {
+            if (this.GetMismatchCount(s) <= 1) return true;
+            else
+            {
+                var reversed = new string(s.Reverse().ToArray());
+                return this.GetMismatchCount(reversed) <= 1;
+            }
+        }
+
+        public int GetMismatchCount(string s)
+        {
+            int mismatchCount = 0;
+            int start = 0;
+            int end = s.Length - 1;
+
+            while (start < end)
+            {
+                if (s[start] != s[end])
+                {
+                    mismatchCount++;
+
+                    if (mismatchCount > 1) return mismatchCount;
+
+                    if (s[start + 1] == s[end])
+                    {
+                        start++;
+                        continue;
+                    }
+                    else if (s[end - 1] == s[start])
+                    {
+                        end--;
+                        continue;
+                    }
+                }
+                else
+                {
+                    start++;
+                    end--;
+                }
+
+            }
+
+            return mismatchCount;
+        }
+
         // https://leetcode.com/problems/number-of-segments-in-a-string/
         public int CountSegments(string s)
         {

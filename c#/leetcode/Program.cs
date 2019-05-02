@@ -9,7 +9,7 @@ namespace leetcode
         static void Main(string[] args)
         {
             Solution sol = new Solution();
-            sol.Compress(new char[] { 'a', 'b' });
+            sol.ValidPalindrome("cuppucu");
             //Console.WriteLine(result);
         }
     }
