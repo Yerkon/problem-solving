@@ -9,7 +9,55 @@ namespace StringTasks
     public class Solution
     {
 
-        // "cupuufxoohdfpgjdmysgvhmvffcnqxjjxqncffvmhvgsymdjgpfdhooxfuupucu"
+        // ["aaa","aa","aaa"]
+        // out: "aa"
+         // https://leetcode.com/problems/longest-common-prefix/
+        public string LongestCommonPrefix(string[] strs)
+        {
+            List<char> letters = new List<char>();
+            List<int> letterCount = new List<int>();
+
+            for (int i = 0; i < strs.Length; i++)
+            {
+                string word = strs[i];
+
+                for (int j = 0; j < word.Length; j++)
+                {
+                    // not exist in this index
+                    if (letters.ElementAtOrDefault(j) == 0)
+                    {
+                        letters.Insert(j, word[j]);
+                        letterCount.Insert(j, letterCount.ElementAtOrDefault(j) + 1);
+                    }
+                    else
+                    {
+                        // exist
+                        // and equal
+                        if (letters.ElementAt(j) == word[j])
+                        {
+                            letterCount[j] = letterCount.ElementAtOrDefault(j) + 1;
+                        }
+;
+                    }
+                }
+            }
+
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < letterCount.Count; i++)
+            {
+                if (letterCount[i] == strs.Length)
+                {
+                    sb.Append(letters[i]);
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            return sb.ToString();
+        }
+
         // "cupuufxoohdfpgjdmysgvhmvffcnqxjjxqncffvmhvgsymdjgpfdhooxfuupucu"
         // https://leetcode.com/problems/valid-palindrome-ii/
         public bool ValidPalindrome(string s)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using StringTasks;
 
 namespace leetcode
@@ -9,8 +10,8 @@ namespace leetcode
         static void Main(string[] args)
         {
             Solution sol = new Solution();
-            sol.ValidPalindrome("cuppucu");
-            //Console.WriteLine(result);
+
+            sol.LongestCommonPrefix(new string[] { "aaa","aa","aaa" });
         }
     }
 
