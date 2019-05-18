@@ -1,3 +1,1 @@
-const numSpecialEquivGroups = function (A) {
-
-};
+const numSpecialEquivGroups = function(A) {};

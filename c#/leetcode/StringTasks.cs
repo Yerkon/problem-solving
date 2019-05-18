@@ -8,10 +8,29 @@ namespace StringTasks
 {
     public class Solution
     {
+        // https://leetcode.com/problems/length-of-last-word/
+        public int LengthOfLastWord(string s)
+        {
+            int count = 0;
+            bool isCountStart = false;
+
+            for (int i = s.Length - 1; i >= 0; i--)
+            {
+                if (s[i] == ' ' && isCountStart == true) break;
+
+                if (s[i] != ' ')
+                {
+                    isCountStart = true;
+                    count++;
+                }
+            }
+
+            return count;
+        }
 
         // ["aaa","aa","aaa"]
         // out: "aa"
-         // https://leetcode.com/problems/longest-common-prefix/
+        // https://leetcode.com/problems/longest-common-prefix/
         public string LongestCommonPrefix(string[] strs)
         {
             List<char> letters = new List<char>();
@@ -37,7 +56,6 @@ namespace StringTasks
                         {
                             letterCount[j] = letterCount.ElementAtOrDefault(j) + 1;
                         }
-;
                     }
                 }
             }
