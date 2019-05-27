@@ -16,7 +16,7 @@ namespace StringTasks
              ) return -1;
 
             StringBuilder sbA = new StringBuilder(A);
-            int count = 0;
+            int count = 1;
             string chunk = A;
 
             // B should be subst of A
@@ -26,21 +26,10 @@ namespace StringTasks
                 count++;
             }
 
-            while (sbA.Length <= B.Length * 2 && !sbA.ToString().Contains(B))
-            {
-                sbA.Append(chunk);
-                count++;
-            }
+            if (sbA.ToString().Contains(B)) return count;
+            if (sbA.Append(chunk).ToString().Contains(B)) return ++count;
 
-            // B length can be smaller than A
-            if (sbA.Length > B.Length && count == 0 && !sbA.ToString().Contains(B))
-            {
-                sbA.Append(A);
-                count++;
-            }
-
-
-            return sbA.ToString().Contains(B) ? ++count : -1;
+            return -1;
         }
 
         // https://leetcode.com/problems/implement-strstr/
