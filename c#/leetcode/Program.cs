@@ -9,9 +9,11 @@ namespace leetcode
     {
         static void Main(string[] args)
         {
-            Solution sol = new Solution();
+            //Solution sol = new Solution();
 
-            sol.LongestCommonPrefix(new string[] { "aaa","aa","aaa" });
+            StrTasks2 sol = new StrTasks2();
+            sol.IsPalindrome("  s  1  ");
+          
         }
     }
 

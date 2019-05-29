@@ -8,6 +8,78 @@ namespace StringTasks
 {
     public class StrTasks2
     {
+        // https://leetcode.com/problems/valid-palindrome/
+        public bool IsPalindromeWithFor(string s)
+        {
+            s = s.ToLower().Trim();
+            if (s.Length == 0) return true;
+
+            bool isValid = true;
+
+            for (int i = 0, j = s.Length - 1; i < j && isValid;)
+            {
+                if (!char.IsLetterOrDigit(s[i]))
+                {
+                    i++;
+                    continue;
+                }
+                if (!char.IsLetterOrDigit(s[j]))
+                {
+                    j--;
+                    continue;
+                }
+
+                if (s[i] == s[j])
+                {
+                    i++;
+                    j--;
+                }
+                else
+                {
+                    isValid = false;
+                }
+            }
+
+            return isValid;
+        }
+
+        // https://leetcode.com/problems/valid-palindrome/
+        public bool IsPalindrome(string s)
+        {
+            s = s.ToLower().Trim();
+            if (s.Length == 0) return true;
+
+            int i = 0;
+            int j = s.Length - 1;
+            bool isValid = true;
+
+            while (i < j && isValid)
+            {
+                if (!char.IsLetterOrDigit(s[i]))
+                {
+                    i++;
+                    continue;
+                }
+                if (!char.IsLetterOrDigit(s[j]))
+                {
+                    j--;
+                    continue;
+                }
+
+                if (s[i] == s[j])
+                {
+                    i++;
+                    j--;
+                }
+                else
+                {
+                    isValid = false;
+                }
+            }
+
+            return isValid;
+        }
+
         // https://leetcode.com/problems/repeated-string-match/
         public int RepeatedStringMatch(string A, string B)
         {
