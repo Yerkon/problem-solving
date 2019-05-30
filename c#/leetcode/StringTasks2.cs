@@ -6,8 +6,64 @@ using System.Text;
 
 namespace StringTasks
 {
+
     public class StrTasks2
     {
+        // "abab"
+        // "abab"
+
+        // https://leetcode.com/problems/buddy-strings/
+        public bool BuddyStrings(string A, string B)
+        {
+            if (A.Length != B.Length || A.Length == 0) return false;
+
+            int mismatch = 0;
+            bool isAllEqual = true;
+            List<char> aList = new List<char>();
+            List<char> bList = new List<char>();
+            Dictionary<char, int> dic = new Dictionary<char, int>();
+            int count = 0;
+
+            for (int i = 0; i < A.Length; i++)
+            {
+                dic[A[i]] = dic.GetValueOrDefault(A[i], 0) + 1;
+                count = Math.Max(count, dic[A[i]]);
+                if (A[i] != B[i])
+                {
+                    aList.Add(A[i]);
+                    bList.Add(B[i]);
+                    mismatch++;
+                }
+
+                if (isAllEqual && A[i] != A[0])
+                {
+                    isAllEqual = false;
+                }
+            }
+
+            if (mismatch == 2)
+            {
+                if (aList[0] == bList[1] && aList[1] == bList[0]) return true;
+                else return false;
+            }
+
+            return isAllEqual || (count > 1 && mismatch == 0);
+        }
+
+        public bool isArrEqual(char[] a, string b)
+        {
+            bool isEqual = true;
+            for (int i = 0; i < a.Length; i++)
+            {
+                if (a[i] != b[i])
+                {
+                    isEqual = false;
+                    break;
+                }
+            }
+
+            return isEqual;
+        }
         // https://leetcode.com/problems/valid-palindrome/
         public bool IsPalindromeWithFor(string s)
         {

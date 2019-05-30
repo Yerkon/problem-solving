@@ -12,7 +12,7 @@ namespace leetcode
             //Solution sol = new Solution();
 
             StrTasks2 sol = new StrTasks2();
-            sol.IsPalindrome("  s  1  ");
+            sol.BuddyStrings("aaabc", "aaacb");
           
         }
     }
