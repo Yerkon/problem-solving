@@ -12,10 +12,10 @@ namespace leetcode
             //Solution sol = new Solution();
 
             StrTasks2 sol = new StrTasks2();
-            sol.BuddyStrings("aaabc", "aaacb");
+          //  sol.FlipAndInvertImage(new int[][] {[[1, 1, 0],[1, 0, 1],[0, 0, 0]]});
           
         }
-    }
+}
 
 }
 

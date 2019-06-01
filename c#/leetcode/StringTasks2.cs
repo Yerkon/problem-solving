@@ -9,9 +9,6 @@ namespace StringTasks
 
     public class StrTasks2
     {
-        // "abab"
-        // "abab"
-
         // https://leetcode.com/problems/buddy-strings/
         public bool BuddyStrings(string A, string B)
         {
