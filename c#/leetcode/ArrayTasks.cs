@@ -6,9 +6,61 @@ using System.Text;
 
 namespace ArrayTasks
 {
-
     public class ArrayTasks
     {
+        // https://leetcode.com/problems/sort-array-by-parity-ii/
+        public int[] SortArrayByParityII(int[] A)
+        {
+            int[] result = new int[A.Length];
+            int[] tempArr = new int[A.Length];
+            int tempIt = 0;
+
+            for (int i = 0; i < A.Length; i++)
+            {
+                if (A[i] % 2 == 0)
+                {
+                    tempArr[tempIt++] = A[i];
+                }
+            }
+
+            for (int i = 0; i < A.Length; i++)
+            {
+                if (A[i] % 2 == 1)
+                {
+                    tempArr[tempIt++] = A[i];
+                }
+            }
+
+            int evenIt = 0;
+            int oddIt = tempArr.Length / 2;
+
+            for (int i = 0; i < result.Length; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    result[i] = tempArr[evenIt++];
+                }
+                else
+                {
+                    result[i] = tempArr[oddIt++];
+                }
+            }
+             
+            return result;
+        }
+
+        // https://leetcode.com/problems/squares-of-a-sorted-array/
+        public int[] SortedSquares(int[] A)
+        {
+            for (int i = 0; i < A.Length; i++)
+            {
+                A[i] = A[i] * A[i];
+            }
+
+            Array.Sort(A);
+
+            return A;
+        }
         // https://leetcode.com/problems/sort-array-by-parity/
         public int[] SortArrayByParity(int[] A)
         {
