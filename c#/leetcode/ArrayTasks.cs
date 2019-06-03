@@ -6,10 +6,91 @@ using System.Text;
 
 namespace ArrayTasks
 {
-    public class ArrayTasks
+    public class Solution
     {
+        // https://leetcode.com/problems/find-common-characters/
+        public IList<string> CommonChars(string[] A)
+        {
+            List<string> commonList = new List<string>();
+            if (A.Length == 0) return commonList;
+
+            Dictionary<char, int> mainDic = new Dictionary<char, int>();
+
+            for (int i = 0; i < A[0].Length; i++)
+            {
+                string firstWord = A[0];
+                mainDic[firstWord[i]] = mainDic.GetValueOrDefault(firstWord[i], 0) + 1;
+            }
+
+            for (int i = 0; i < A.Length; i++)
+            {
+                Dictionary<char, int> wordDic = new Dictionary<char, int>();
+                string word = A[i];
+
+                for (int j = 0; j < word.Length; j++)
+                {
+                    wordDic[word[j]] = wordDic.GetValueOrDefault(word[j], 0) + 1;
+                }
+
+                for (int j = 0; j < mainDic.Keys.Count; j++)
+                {
+                    char letterKey = mainDic.Keys.ElementAt(j);
+                    if (mainDic[letterKey] > wordDic.GetValueOrDefault(letterKey, 0))
+                    {
+                        mainDic[letterKey] = wordDic.GetValueOrDefault(letterKey, 0);
+                    }
+                }
+
+            }
+
+            foreach (var letterKey in mainDic.Keys)
+            {
+                for (int i = 0; i < mainDic[letterKey]; i++)
+                {
+                    commonList.Add(letterKey.ToString());
+                }
+            }
+
+            return commonList;
+        }
+
+        // https://leetcode.com/problems/fibonacci-number/
+        public int Fib(int N)
+        {
+            if (N == 0) return 0;
+            if (N == 1) return 1;
+
+            return Fib(N - 1) + Fib(N - 2);
+        }
+
+        // in place
         // https://leetcode.com/problems/sort-array-by-parity-ii/
         public int[] SortArrayByParityII(int[] A)
+        {
+            for (int i = 0, it = 0; i < A.Length && it < A.Length;)
+            {
+                if (it % 2 == A[i] % 2)
+                {
+                    if (it != i)
+                    {
+                        int temp = A[it];
+                        A[it] = A[i];
+                        A[i] = temp;
+
+                        i = it;
+                    }
+
+                    it++;
+                    i++;
+                }
+
+                i++;
+            }
+
+            return A;
+        }
+        // https://leetcode.com/problems/sort-array-by-parity-ii/
+        public int[] SortArrayByParityII1(int[] A)
         {
             int[] result = new int[A.Length];
             int[] tempArr = new int[A.Length];
@@ -45,7 +126,7 @@ namespace ArrayTasks
                     result[i] = tempArr[oddIt++];
                 }
             }
-             
+
             return result;
         }
 

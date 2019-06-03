@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using StringTasks;
+using ArrayTasks;
 
 namespace leetcode
 {
@@ -10,12 +10,14 @@ namespace leetcode
         static void Main(string[] args)
         {
             //Solution sol = new Solution();
+            Solution sol = new Solution();
+            sol.CommonChars(new string[] { "bella", "label", "roller" });
+           //   sol.CommonChars(new string[] { "cool","lock","cook" });
 
-            StrTasks2 sol = new StrTasks2();
-          //  sol.FlipAndInvertImage(new int[][] {[[1, 1, 0],[1, 0, 1],[0, 0, 0]]});
-          
+            //  sol.FlipAndInvertImage(new int[][] {[[1, 1, 0],[1, 0, 1],[0, 0, 0]]});
+
         }
-}
+    }
 
 }
 
