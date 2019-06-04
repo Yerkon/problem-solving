@@ -11,10 +11,7 @@ namespace leetcode
         {
             //Solution sol = new Solution();
             Solution sol = new Solution();
-            sol.CommonChars(new string[] { "bella", "label", "roller" });
-           //   sol.CommonChars(new string[] { "cool","lock","cook" });
-
-            //  sol.FlipAndInvertImage(new int[][] {[[1, 1, 0],[1, 0, 1],[0, 0, 0]]});
+            sol.Transpose(new int[][] { new int[] { 1, 2, 3 }, new int[] { 4, 5, 6 } });
 
         }
     }

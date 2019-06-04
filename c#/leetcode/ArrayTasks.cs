@@ -8,8 +8,67 @@ namespace ArrayTasks
 {
     public class Solution
     {
+        // https://leetcode.com/problems/transpose-matrix/
+        public int[][] Transpose(int[][] A)
+        {
+            int[][] result = new int[A[0].Length][];
+
+            Console.WriteLine(A[0].Length);
+            for (int i = 0; i < A[0].Length; i++)
+            {
+                result[i] = new int[A.Length];
+
+                for (int j = 0; j < result[i].Length; j++)
+                {
+                    //  Console.Write(i + "" + j + " ");
+                    result[i][j] = A[j][i];
+                }
+                //  Console.WriteLine();
+
+            }
+
+            return result;
+        }
+
         // https://leetcode.com/problems/find-common-characters/
         public IList<string> CommonChars(string[] A)
+        {
+            List<string> commonList = new List<string>();
+            if (A.Length == 0) return commonList;
+
+            int[] count = new int[26];
+            Array.Fill(count, int.MaxValue);
+
+            for (int i = 0; i < A.Length; i++)
+            {
+                int[] currArr = new int[26];
+                string word = A[i];
+
+                for (int j = 0; j < word.Length; j++)
+                {
+                    currArr[word[j] - 'a']++;
+                }
+
+                for (int j = 0; j < 26; j++)
+                {
+                    count[j] = Math.Min(count[j], currArr[j]);
+                }
+            }
+
+            for (char c = 'a'; c <= 'z'; c++)
+            {
+                while (count[c - 'a'] > 0)
+                {
+                    commonList.Add(c + "");
+                    count[c - 'a']--;
+                }
+            }
+
+            return commonList;
+        }
+
+        // https://leetcode.com/problems/find-common-characters/
+        public IList<string> CommonChars1(string[] A)
         {
             List<string> commonList = new List<string>();
             if (A.Length == 0) return commonList;
@@ -22,7 +81,7 @@ namespace ArrayTasks
                 mainDic[firstWord[i]] = mainDic.GetValueOrDefault(firstWord[i], 0) + 1;
             }
 
-            for (int i = 0; i < A.Length; i++)
+            for (int i = 1; i < A.Length; i++)
             {
                 Dictionary<char, int> wordDic = new Dictionary<char, int>();
                 string word = A[i];
@@ -35,10 +94,7 @@ namespace ArrayTasks
                 for (int j = 0; j < mainDic.Keys.Count; j++)
                 {
                     char letterKey = mainDic.Keys.ElementAt(j);
-                    if (mainDic[letterKey] > wordDic.GetValueOrDefault(letterKey, 0))
-                    {
-                        mainDic[letterKey] = wordDic.GetValueOrDefault(letterKey, 0);
-                    }
+                    mainDic[letterKey] = Math.Min(mainDic[letterKey], wordDic.GetValueOrDefault(letterKey, 0));
                 }
 
             }
