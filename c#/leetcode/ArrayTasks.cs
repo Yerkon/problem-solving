@@ -8,23 +8,46 @@ namespace ArrayTasks
 {
     public class Solution
     {
+        // todo: solve time limit
+        // https://leetcode.com/problems/sum-of-even-numbers-after-queries/
+        public int[] SumEvenAfterQueries(int[] A, int[][] queries)
+        {
+            int[] ans = new int[queries.Length];
+
+            for (int r = 0; r < queries.Length; r++)
+            {
+                int[] queryRow = queries[r];
+                A[queryRow[1]] += queryRow[0];
+
+                int evensSum = 0;
+                for (int i = 0; i < A.Length; i++)
+                {
+                    if (A[i] % 2 == 0)
+                    {
+                        evensSum += A[i];
+                    }
+                }
+
+                ans[r] = evensSum;
+            }
+
+            return ans;
+        }
+
         // https://leetcode.com/problems/transpose-matrix/
         public int[][] Transpose(int[][] A)
         {
-            int[][] result = new int[A[0].Length][];
+            int C = A[0].Length, R = A.Length;
+            int[][] result = new int[C][];
 
-            Console.WriteLine(A[0].Length);
-            for (int i = 0; i < A[0].Length; i++)
+            for (int c = 0; c < C; c++)
             {
-                result[i] = new int[A.Length];
+                result[c] = new int[R];
 
-                for (int j = 0; j < result[i].Length; j++)
+                for (int r = 0; r < R; r++)
                 {
-                    //  Console.Write(i + "" + j + " ");
-                    result[i][j] = A[j][i];
+                    result[c][r] = A[r][c];
                 }
-                //  Console.WriteLine();
-
             }
 
             return result;
