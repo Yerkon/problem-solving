@@ -8,27 +8,49 @@ namespace ArrayTasks
 {
     public class Solution
     {
-        // todo: solve time limit
+        // https://leetcode.com/problems/toeplitz-matrix/
+        public bool IsToeplitzMatrix(int[][] matrix)
+        {
+            for (int r = 0; r < matrix.Length - 1; r++)
+            {
+                int[] row = matrix[r];
+
+                for (int c = 0; c < row.Length - 1; c++)
+                {
+                    if (matrix[r][c] != matrix[r + 1][c + 1]) return false;
+                }
+            }
+
+            return true;
+        }
+
+        // Time limit:  O(A.length) + O(queryes.length)) 
         // https://leetcode.com/problems/sum-of-even-numbers-after-queries/
         public int[] SumEvenAfterQueries(int[] A, int[][] queries)
         {
             int[] ans = new int[queries.Length];
+            int evens = A.Sum(val => val % 2 == 0 ? val : 0);
 
             for (int r = 0; r < queries.Length; r++)
             {
                 int[] queryRow = queries[r];
-                A[queryRow[1]] += queryRow[0];
+                int index = queryRow[1], val = queryRow[0];
 
-                int evensSum = 0;
-                for (int i = 0; i < A.Length; i++)
+                if (A[index] % 2 == 0)
                 {
-                    if (A[i] % 2 == 0)
-                    {
-                        evensSum += A[i];
-                    }
+                    int rem = evens - A[index];
+                    A[index] += val;
+
+                    evens = A[index] % 2 == 0 ? rem + A[index] : rem;
+                }
+                else
+                {
+                    // odd becomes even
+                    A[index] += val;
+                    if (A[index] % 2 == 0) evens += A[index];
                 }
 
-                ans[r] = evensSum;
+                ans[r] = evens;
             }
 
             return ans;
