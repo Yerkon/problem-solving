@@ -8,6 +8,36 @@ namespace ArrayTasks
 {
     public class Solution
     {
+        // https://leetcode.com/problems/reshape-the-matrix/
+        public int[][] MatrixReshape(int[][] nums, int r, int c)
+        {
+            int R = nums.Length, C = nums[0].Length;
+            if (R * C != r * c) return nums;
+
+            int[][] ans = new int[r][];
+
+            int rIt = 0, cIt = 0;
+
+            for (int i = 0; i < r; i++)
+            {
+                ans[i] = new int[c];
+
+                for (int j = 0; j < c; j++)
+                {
+                    ans[i][j] = nums[rIt][cIt];
+                    cIt++;
+
+                    if (cIt == C)
+                    {
+                        cIt = 0;
+                        rIt++;
+                    }
+                }
+            }
+
+            return ans;
+        }
+
         // https://leetcode.com/problems/toeplitz-matrix/
         public bool IsToeplitzMatrix(int[][] matrix)
         {
