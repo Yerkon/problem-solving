@@ -9,7 +9,32 @@ namespace ArrayTasks
     public class Solution
     {
         // https://leetcode.com/problems/reshape-the-matrix/
-        public int[][] MatrixReshape(int[][] nums, int r, int c)
+            public int[][] MatrixReshape(int[][] nums, int r, int c)
+            {
+                int R = nums.Length, C = nums[0].Length, count = 0;
+                if (R * C != r * c) return nums;
+
+                int[][] ans = new int[r][];
+
+                for (int i = 0; i < r; i++)
+                {
+                    ans[i] = new int[c];
+                }
+
+                for (int i = 0; i < nums.Length; i++)
+                {
+                    for (int j = 0; j < nums[0].Length; j++)
+                    {
+                        ans[count / c][count % c] = nums[i][j];
+                        count++;
+                    }
+                }
+            
+                return ans;
+            }
+
+        // https://leetcode.com/problems/reshape-the-matrix/
+        public int[][] MatrixReshape1(int[][] nums, int r, int c)
         {
             int R = nums.Length, C = nums[0].Length;
             if (R * C != r * c) return nums;
