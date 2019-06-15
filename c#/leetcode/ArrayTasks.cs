@@ -8,30 +8,88 @@ namespace ArrayTasks
 {
     public class Solution
     {
-        // https://leetcode.com/problems/reshape-the-matrix/
-            public int[][] MatrixReshape(int[][] nums, int r, int c)
+        // https://leetcode.com/problems/fair-candy-swap/
+        public int[] FairCandySwap(int[] A, int[] B)
+        {
+            int aSum = 0, bSum = 0, delta = 0;
+            int[] ans = new int[2];
+
+            aSum = A.Sum();
+            bSum = B.Sum();
+            delta = (bSum - aSum) / 2;
+
+            HashSet<int> setB = new HashSet<int>();
+            Array.ForEach(B, val => setB.Add(val));
+
+            foreach (int a in A)
             {
-                int R = nums.Length, C = nums[0].Length, count = 0;
-                if (R * C != r * c) return nums;
-
-                int[][] ans = new int[r][];
-
-                for (int i = 0; i < r; i++)
+                 if (setB.Contains(a + delta))
                 {
-                    ans[i] = new int[c];
+                    return new int[] { a, a + delta };
                 }
-
-                for (int i = 0; i < nums.Length; i++)
-                {
-                    for (int j = 0; j < nums[0].Length; j++)
-                    {
-                        ans[count / c][count % c] = nums[i][j];
-                        count++;
-                    }
-                }
-            
-                return ans;
             }
+          
+            return ans;
+        }
+
+        // https://leetcode.com/problems/fair-candy-swap/
+        public int[] FairCandySwap1(int[] A, int[] B)
+        {
+            int aSum = 0, bSum = 0, avg = 0;
+            int[] ans = new int[2];
+
+            aSum = A.Sum();
+            bSum = B.Sum();
+            avg = (aSum + bSum) / 2;
+
+            for (int i = 0; i < A.Length; i++)
+            {
+                aSum -= A[i];
+                for (int j = 0; j < B.Length; j++)
+                {
+                    aSum += B[j];
+
+                    if (aSum == avg)
+                    {
+                        ans[0] = A[i];
+                        ans[1] = B[j];
+
+                        return ans;
+                    }
+
+                    aSum -= B[j];
+                }
+
+                aSum += A[i];
+            }
+
+            return ans;
+        }
+
+        // https://leetcode.com/problems/reshape-the-matrix/
+        public int[][] MatrixReshape(int[][] nums, int r, int c)
+        {
+            int R = nums.Length, C = nums[0].Length, count = 0;
+            if (R * C != r * c) return nums;
+
+            int[][] ans = new int[r][];
+
+            for (int i = 0; i < r; i++)
+            {
+                ans[i] = new int[c];
+            }
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                for (int j = 0; j < nums[0].Length; j++)
+                {
+                    ans[count / c][count % c] = nums[i][j];
+                    count++;
+                }
+            }
+
+            return ans;
+        }
 
         // https://leetcode.com/problems/reshape-the-matrix/
         public int[][] MatrixReshape1(int[][] nums, int r, int c)
