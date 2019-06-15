@@ -8,6 +8,78 @@ namespace ArrayTasks
 {
     public class Solution
     {
+        // one pass, clear way
+        // https://leetcode.com/problems/monotonic-array/
+        public bool IsMonotonic(int[] A)
+        {
+            bool isIncreasing = true;
+            bool isDecreasing = true;
+
+            for (int i = 0; i < A.Length - 1; i++)
+            {
+                if(A[i] > A[i + 1]) isIncreasing = false;
+                if(A[i] < A[i + 1]) isDecreasing = false;
+            }
+
+            return isIncreasing || isDecreasing;
+        }
+
+        // one pass
+        // https://leetcode.com/problems/monotonic-array/
+        public bool IsMonotonic2(int[] A)
+        {
+            bool shouldIncrease = true;
+            bool isTheSame = true;
+
+            for (int i = 0; i < A.Length - 1; i++)
+            {
+                if (isTheSame && A[i] != A[i + 1])
+                {
+                    isTheSame = false;
+                    shouldIncrease = A[i] < A[i + 1];
+                }
+
+                if (!isTheSame && !shouldIncrease && A[i] < A[i + 1])
+                {
+                    return false;
+                }
+
+                if (!isTheSame && shouldIncrease && A[i] > A[i + 1])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        //  two pass
+        // https://leetcode.com/problems/monotonic-array/
+        public bool IsMonotonic1(int[] A)
+        {
+            bool isIncrease = true;
+
+            for (int i = 0; i < A.Length - 1; i++)
+            {
+                if (A[i] > A[i + 1])
+                {
+                    isIncrease = false;
+                    break;
+                }
+            }
+
+            if (!isIncrease)
+            {
+                // should decrease
+                for (int i = 0; i < A.Length - 1; i++)
+                {
+                    if (A[i] < A[i + 1]) return false;
+                }
+            }
+
+            return true;
+        }
+
         // https://leetcode.com/problems/fair-candy-swap/
         public int[] FairCandySwap(int[] A, int[] B)
         {
@@ -23,12 +95,12 @@ namespace ArrayTasks
 
             foreach (int a in A)
             {
-                 if (setB.Contains(a + delta))
+                if (setB.Contains(a + delta))
                 {
                     return new int[] { a, a + delta };
                 }
             }
-          
+
             return ans;
         }
 
