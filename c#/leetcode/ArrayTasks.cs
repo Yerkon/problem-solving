@@ -8,6 +8,24 @@ namespace ArrayTasks
 {
     public class Solution
     {
+
+        // Space Complexity: O(1), Time: O(N^2)
+        // https://leetcode.com/problems/duplicate-zeros/
+        public void DuplicateZeros1(int[] arr)
+        {
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (arr[i] == 0)
+                {
+                    for (int j = arr.Length - 1; j >= 1 && j != i; j--)
+                    {
+                        arr[j] = arr[j - 1];
+                    }
+
+                    i++;
+                }
+            }
+        }
         // one pass, clear way
         // https://leetcode.com/problems/monotonic-array/
         public bool IsMonotonic(int[] A)
@@ -17,8 +35,8 @@ namespace ArrayTasks
 
             for (int i = 0; i < A.Length - 1; i++)
             {
-                if(A[i] > A[i + 1]) isIncreasing = false;
-                if(A[i] < A[i + 1]) isDecreasing = false;
+                if (A[i] > A[i + 1]) isIncreasing = false;
+                if (A[i] < A[i + 1]) isDecreasing = false;
             }
 
             return isIncreasing || isDecreasing;

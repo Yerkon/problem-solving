@@ -11,12 +11,7 @@ namespace leetcode
         {
             //Solution sol = new Solution();
             Solution sol = new Solution();
-            sol.SumEvenAfterQueries(new int[] { 1, 2, 3, 4 }, new int[][] {
-                new int[] {1, 0},
-                new int[] {-3, 1},
-                new int[] {-4, 0},
-                new int[] {2, 3}
-            });
+            sol.DuplicateZeros(new int[] { 1, 0, 2, 3 });
 
         }
     }
