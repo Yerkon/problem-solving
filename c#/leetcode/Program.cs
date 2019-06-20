@@ -11,7 +11,7 @@ namespace leetcode
         {
             //Solution sol = new Solution();
             Solution sol = new Solution();
-            sol.DuplicateZeros(new int[] { 1, 0, 2, 3 });
+            sol.CanThreePartsEqualSum(new int[] { 0, 2, 1, -6, 6, 7, 9, -1, 2, 0, 1 });
 
         }
     }

@@ -8,10 +8,57 @@ namespace ArrayTasks
 {
     public class Solution
     {
+        // https://leetcode.com/problems/max-consecutive-ones/
+        public int FindMaxConsecutiveOnes(int[] nums)
+        {
+            int count = 0;
+            int max = -1;
+            for (int i = 0; i < nums.Length ; i++)
+            {
+
+                if (nums[i] == 1)
+                {
+                    count++;
+                }
+                else
+                {
+                    max = Math.Max(max, count);
+                    count = 0;
+                }
+            }
+
+            return Math.Max(count, max);
+        }
+
+        // https://leetcode.com/problems/partition-array-into-three-parts-with-equal-sum/
+        // [0,2,1,-6,6,-7,9,1,2,0,1]
+        public bool CanThreePartsEqualSum(int[] A)
+        {
+            int sum = 0;
+            Array.ForEach(A, itm => sum += itm);
+
+            if (sum % 3 != 0) return false;
+
+            sum /= 3;
+
+            int part = 0, count = 0;
+            for (int i = 0; i < A.Length; i++)
+            {
+                part += A[i];
+
+                if (part == sum)
+                {
+                    count++;
+                    part = 0;
+                }
+            }
+
+            return count == 3;
+        }
 
         // Space Complexity: O(1), Time: O(N^2)
         // https://leetcode.com/problems/duplicate-zeros/
-        public void DuplicateZeros1(int[] arr)
+        public void DuplicateZeros(int[] arr)
         {
             for (int i = 0; i < arr.Length; i++)
             {
