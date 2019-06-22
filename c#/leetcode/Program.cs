@@ -3,20 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using ArrayTasks;
 
-namespace leetcode
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
+namespace leetcode {
+    class Program {
+        static void Main (string[] args) {
             //Solution sol = new Solution();
-            Solution sol = new Solution();
-            sol.CanThreePartsEqualSum(new int[] { 0, 2, 1, -6, 6, 7, 9, -1, 2, 0, 1 });
+            Solution sol = new Solution ();
+            //  sol.FindDisappearedNumbers (new int[] { 10, 2, 5, 10, 9, 1, 1, 4, 3, 7 });
 
+            sol.FindDisappearedNumbers (new int[] { 4, 3, 2, 7, 8, 2, 3, 1 });
         }
     }
 
 }
-
-
-
