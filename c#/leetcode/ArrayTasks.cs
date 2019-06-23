@@ -7,6 +7,21 @@ using System.Text;
 namespace ArrayTasks {
     public class Solution {
 
+        // https://leetcode.com/problems/majority-element/
+        public int MajorityElement (int[] nums) {
+
+            int limit = nums.Length / 2;
+
+            Dictionary<int, int> dic = new Dictionary<int, int> ();
+            for (int i = 0; i < nums.Length; i++) {
+                dic[nums[i]] = dic.GetValueOrDefault (nums[i], 0) + 1;
+
+                if (dic[nums[i]] > limit) return nums[i];
+            }
+
+            return -1;
+        }
+
         // https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/
         // no extra space, Time: O(N)
         //  [4, 3, 2, 7, 8, 2, 3, 1]
