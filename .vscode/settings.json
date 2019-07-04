@@ -1,3 +1,4 @@
 {
-    "eslint.autoFixOnSave": true
+    "eslint.autoFixOnSave": true,
+    "csharpfixformat.style.spaces.beforeParenthesis": false
 }

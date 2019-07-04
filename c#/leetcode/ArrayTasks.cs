@@ -7,14 +7,63 @@ using System.Text;
 namespace ArrayTasks {
     public class Solution {
 
+        // https://leetcode.com/problems/best-time-to-buy-and-sell-stock/
+        // public int MaxProfit(int[] prices) {
+
+        //     if (prices.Length <= 1) return 0;
+
+        //     int minVal = int.MaxValue;
+        //     int maxVal = int.MinValue;
+
+        //     for (int i = 0, j = prices.Length - 1; i <= j; i++, j--) {
+        //         minVal = Math.Min(prices[i], minVal);
+        //         maxVal = Math.Max(prices[j], maxVal);
+        //     }
+
+        //     int startIdx = 0, endIdx = 0;
+        //     for (int i = 0; i < prices.Length; i++) {
+        //         if (prices[i] == minVal) {
+        //             startIdx = i;
+        //             break;
+        //         }
+        //     }
+
+        //     for (int i = prices.Length - 1; i >= 0; i--) {
+        //         if (prices[i] == maxVal) {
+        //             endIdx = i;
+        //             break;
+        //         }
+        //     }
+
+        //     for (int i = startIdx; i < endIdx; i++) {
+        //         maxVal = Math.Max(prices[i], maxVal);
+        //     }
+
+        //     int profit = maxVal - minVal;
+
+        //     return profit > 0 ? profit : 0;
+        // }
+        // https://leetcode.com/problems/best-time-to-buy-and-sell-stock/
+        public int MaxProfit1(int[] prices) {
+            int profit = int.MinValue;
+
+            for (int i = 0; i < prices.Length; i++) {
+                for (int j = i + 1; j < prices.Length; j++) {
+                    profit = Math.Max(prices[j] - prices[i], profit);
+                }
+            }
+
+            return profit > 0 ? profit : 0;
+        }
+
         // https://leetcode.com/problems/majority-element/
-        public int MajorityElement (int[] nums) {
+        public int MajorityElement(int[] nums) {
 
             int limit = nums.Length / 2;
 
-            Dictionary<int, int> dic = new Dictionary<int, int> ();
+            Dictionary<int, int> dic = new Dictionary<int, int>();
             for (int i = 0; i < nums.Length; i++) {
-                dic[nums[i]] = dic.GetValueOrDefault (nums[i], 0) + 1;
+                dic[nums[i]] = dic.GetValueOrDefault(nums[i], 0) + 1;
 
                 if (dic[nums[i]] > limit) return nums[i];
             }
@@ -25,12 +74,12 @@ namespace ArrayTasks {
         // https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/
         // no extra space, Time: O(N)
         //  [4, 3, 2, 7, 8, 2, 3, 1]
-        public IList<int> FindDisappearedNumbers (int[] nums) {
-            List<int> result = new List<int> ();
+        public IList<int> FindDisappearedNumbers(int[] nums) {
+            List<int> result = new List<int>();
             int length = nums.Length;
 
             for (int i = 0; i < nums.Length; i++) {
-                int refIdx = length - Math.Abs (nums[i]);
+                int refIdx = length - Math.Abs(nums[i]);
 
                 if (nums[refIdx] > 0) {
                     nums[refIdx] = nums[refIdx] * (-1);
@@ -40,7 +89,7 @@ namespace ArrayTasks {
             for (int i = 0; i < nums.Length; i++) {
                 if (nums[i] >= 0) {
                     int missingVal = length - i;
-                    result.Add (missingVal);
+                    result.Add(missingVal);
                 }
             }
 
@@ -49,17 +98,17 @@ namespace ArrayTasks {
 
         // https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/
         // with extra space: O(N)
-        public IList<int> FindDisappearedNumbers1 (int[] nums) {
-            List<int> result = new List<int> ();
+        public IList<int> FindDisappearedNumbers1(int[] nums) {
+            List<int> result = new List<int>();
 
-            HashSet<int> set = new HashSet<int> ();
+            HashSet<int> set = new HashSet<int>();
 
             for (int i = 0; i < nums.Length; i++) {
-                set.Add (nums[i]);
+                set.Add(nums[i]);
             }
 
             for (int i = 1; i <= nums.Length; i++) {
-                if (!set.Contains (i)) result.Add (i);
+                if (!set.Contains(i)) result.Add(i);
             }
 
             return result;
@@ -68,7 +117,7 @@ namespace ArrayTasks {
         // https://leetcode.com/problems/move-zeroes/
         // Input: [0,1,0,3,12]
         // Output: [1,3,12,0,0]
-        public void MoveZeroes (int[] nums) {
+        public void MoveZeroes(int[] nums) {
             int it = -1;
 
             for (int i = 0; i < nums.Length; i++) {
@@ -90,7 +139,7 @@ namespace ArrayTasks {
         }
 
         // https://leetcode.com/problems/max-consecutive-ones/
-        public int FindMaxConsecutiveOnes (int[] nums) {
+        public int FindMaxConsecutiveOnes(int[] nums) {
             int count = 0;
             int max = -1;
 
@@ -99,19 +148,19 @@ namespace ArrayTasks {
                 if (nums[i] == 1) {
                     count++;
                 } else {
-                    max = Math.Max (max, count);
+                    max = Math.Max(max, count);
                     count = 0;
                 }
             }
 
-            return Math.Max (count, max);
+            return Math.Max(count, max);
         }
 
         // https://leetcode.com/problems/partition-array-into-three-parts-with-equal-sum/
         // [0,2,1,-6,6,-7,9,1,2,0,1]
-        public bool CanThreePartsEqualSum (int[] A) {
+        public bool CanThreePartsEqualSum(int[] A) {
             int sum = 0;
-            Array.ForEach (A, itm => sum += itm);
+            Array.ForEach(A, itm => sum += itm);
 
             if (sum % 3 != 0) return false;
 
@@ -132,7 +181,7 @@ namespace ArrayTasks {
 
         // Space Complexity: O(1), Time: O(N^2)
         // https://leetcode.com/problems/duplicate-zeros/
-        public void DuplicateZeros (int[] arr) {
+        public void DuplicateZeros(int[] arr) {
             for (int i = 0; i < arr.Length; i++) {
                 if (arr[i] == 0) {
                     for (int j = arr.Length - 1; j >= 1 && j != i; j--) {
@@ -145,7 +194,7 @@ namespace ArrayTasks {
         }
         // one pass, clear way
         // https://leetcode.com/problems/monotonic-array/
-        public bool IsMonotonic (int[] A) {
+        public bool IsMonotonic(int[] A) {
             bool isIncreasing = true;
             bool isDecreasing = true;
 
@@ -159,7 +208,7 @@ namespace ArrayTasks {
 
         // one pass
         // https://leetcode.com/problems/monotonic-array/
-        public bool IsMonotonic2 (int[] A) {
+        public bool IsMonotonic2(int[] A) {
             bool shouldIncrease = true;
             bool isTheSame = true;
 
@@ -183,7 +232,7 @@ namespace ArrayTasks {
 
         //  two pass
         // https://leetcode.com/problems/monotonic-array/
-        public bool IsMonotonic1 (int[] A) {
+        public bool IsMonotonic1(int[] A) {
             bool isIncrease = true;
 
             for (int i = 0; i < A.Length - 1; i++) {
@@ -204,19 +253,19 @@ namespace ArrayTasks {
         }
 
         // https://leetcode.com/problems/fair-candy-swap/
-        public int[] FairCandySwap (int[] A, int[] B) {
+        public int[] FairCandySwap(int[] A, int[] B) {
             int aSum = 0, bSum = 0, delta = 0;
             int[] ans = new int[2];
 
-            aSum = A.Sum ();
-            bSum = B.Sum ();
+            aSum = A.Sum();
+            bSum = B.Sum();
             delta = (bSum - aSum) / 2;
 
-            HashSet<int> setB = new HashSet<int> ();
-            Array.ForEach (B, val => setB.Add (val));
+            HashSet<int> setB = new HashSet<int>();
+            Array.ForEach(B, val => setB.Add(val));
 
             foreach (int a in A) {
-                if (setB.Contains (a + delta)) {
+                if (setB.Contains(a + delta)) {
                     return new int[] { a, a + delta };
                 }
             }
@@ -225,12 +274,12 @@ namespace ArrayTasks {
         }
 
         // https://leetcode.com/problems/fair-candy-swap/
-        public int[] FairCandySwap1 (int[] A, int[] B) {
+        public int[] FairCandySwap1(int[] A, int[] B) {
             int aSum = 0, bSum = 0, avg = 0;
             int[] ans = new int[2];
 
-            aSum = A.Sum ();
-            bSum = B.Sum ();
+            aSum = A.Sum();
+            bSum = B.Sum();
             avg = (aSum + bSum) / 2;
 
             for (int i = 0; i < A.Length; i++) {
@@ -255,7 +304,7 @@ namespace ArrayTasks {
         }
 
         // https://leetcode.com/problems/reshape-the-matrix/
-        public int[][] MatrixReshape (int[][] nums, int r, int c) {
+        public int[][] MatrixReshape(int[][] nums, int r, int c) {
             int R = nums.Length, C = nums[0].Length, count = 0;
             if (R * C != r * c) return nums;
 
@@ -276,7 +325,7 @@ namespace ArrayTasks {
         }
 
         // https://leetcode.com/problems/reshape-the-matrix/
-        public int[][] MatrixReshape1 (int[][] nums, int r, int c) {
+        public int[][] MatrixReshape1(int[][] nums, int r, int c) {
             int R = nums.Length, C = nums[0].Length;
             if (R * C != r * c) return nums;
 
@@ -302,7 +351,7 @@ namespace ArrayTasks {
         }
 
         // https://leetcode.com/problems/toeplitz-matrix/
-        public bool IsToeplitzMatrix (int[][] matrix) {
+        public bool IsToeplitzMatrix(int[][] matrix) {
             for (int r = 0; r < matrix.Length - 1; r++) {
                 int[] row = matrix[r];
 
@@ -316,9 +365,9 @@ namespace ArrayTasks {
 
         // Time limit:  O(A.length) + O(queryes.length)) 
         // https://leetcode.com/problems/sum-of-even-numbers-after-queries/
-        public int[] SumEvenAfterQueries (int[] A, int[][] queries) {
+        public int[] SumEvenAfterQueries(int[] A, int[][] queries) {
             int[] ans = new int[queries.Length];
-            int evens = A.Sum (val => val % 2 == 0 ? val : 0);
+            int evens = A.Sum(val => val % 2 == 0 ? val : 0);
 
             for (int r = 0; r < queries.Length; r++) {
                 int[] queryRow = queries[r];
@@ -342,7 +391,7 @@ namespace ArrayTasks {
         }
 
         // https://leetcode.com/problems/transpose-matrix/
-        public int[][] Transpose (int[][] A) {
+        public int[][] Transpose(int[][] A) {
             int C = A[0].Length, R = A.Length;
             int[][] result = new int[C][];
 
@@ -358,12 +407,12 @@ namespace ArrayTasks {
         }
 
         // https://leetcode.com/problems/find-common-characters/
-        public IList<string> CommonChars (string[] A) {
-            List<string> commonList = new List<string> ();
+        public IList<string> CommonChars(string[] A) {
+            List<string> commonList = new List<string>();
             if (A.Length == 0) return commonList;
 
             int[] count = new int[26];
-            Array.Fill (count, int.MaxValue);
+            Array.Fill(count, int.MaxValue);
 
             for (int i = 0; i < A.Length; i++) {
                 int[] currArr = new int[26];
@@ -374,13 +423,13 @@ namespace ArrayTasks {
                 }
 
                 for (int j = 0; j < 26; j++) {
-                    count[j] = Math.Min (count[j], currArr[j]);
+                    count[j] = Math.Min(count[j], currArr[j]);
                 }
             }
 
             for (char c = 'a'; c <= 'z'; c++) {
                 while (count[c - 'a'] > 0) {
-                    commonList.Add (c + "");
+                    commonList.Add(c + "");
                     count[c - 'a']--;
                 }
             }
@@ -389,35 +438,35 @@ namespace ArrayTasks {
         }
 
         // https://leetcode.com/problems/find-common-characters/
-        public IList<string> CommonChars1 (string[] A) {
-            List<string> commonList = new List<string> ();
+        public IList<string> CommonChars1(string[] A) {
+            List<string> commonList = new List<string>();
             if (A.Length == 0) return commonList;
 
-            Dictionary<char, int> mainDic = new Dictionary<char, int> ();
+            Dictionary<char, int> mainDic = new Dictionary<char, int>();
 
             for (int i = 0; i < A[0].Length; i++) {
                 string firstWord = A[0];
-                mainDic[firstWord[i]] = mainDic.GetValueOrDefault (firstWord[i], 0) + 1;
+                mainDic[firstWord[i]] = mainDic.GetValueOrDefault(firstWord[i], 0) + 1;
             }
 
             for (int i = 1; i < A.Length; i++) {
-                Dictionary<char, int> wordDic = new Dictionary<char, int> ();
+                Dictionary<char, int> wordDic = new Dictionary<char, int>();
                 string word = A[i];
 
                 for (int j = 0; j < word.Length; j++) {
-                    wordDic[word[j]] = wordDic.GetValueOrDefault (word[j], 0) + 1;
+                    wordDic[word[j]] = wordDic.GetValueOrDefault(word[j], 0) + 1;
                 }
 
                 for (int j = 0; j < mainDic.Keys.Count; j++) {
-                    char letterKey = mainDic.Keys.ElementAt (j);
-                    mainDic[letterKey] = Math.Min (mainDic[letterKey], wordDic.GetValueOrDefault (letterKey, 0));
+                    char letterKey = mainDic.Keys.ElementAt(j);
+                    mainDic[letterKey] = Math.Min(mainDic[letterKey], wordDic.GetValueOrDefault(letterKey, 0));
                 }
 
             }
 
             foreach (var letterKey in mainDic.Keys) {
                 for (int i = 0; i < mainDic[letterKey]; i++) {
-                    commonList.Add (letterKey.ToString ());
+                    commonList.Add(letterKey.ToString());
                 }
             }
 
@@ -425,16 +474,16 @@ namespace ArrayTasks {
         }
 
         // https://leetcode.com/problems/fibonacci-number/
-        public int Fib (int N) {
+        public int Fib(int N) {
             if (N == 0) return 0;
             if (N == 1) return 1;
 
-            return Fib (N - 1) + Fib (N - 2);
+            return Fib(N - 1) + Fib(N - 2);
         }
 
         // in place
         // https://leetcode.com/problems/sort-array-by-parity-ii/
-        public int[] SortArrayByParityII (int[] A) {
+        public int[] SortArrayByParityII(int[] A) {
             for (int i = 0, it = 0; i < A.Length && it < A.Length;) {
                 if (it % 2 == A[i] % 2) {
                     if (it != i) {
@@ -455,7 +504,7 @@ namespace ArrayTasks {
             return A;
         }
         // https://leetcode.com/problems/sort-array-by-parity-ii/
-        public int[] SortArrayByParityII1 (int[] A) {
+        public int[] SortArrayByParityII1(int[] A) {
             int[] result = new int[A.Length];
             int[] tempArr = new int[A.Length];
             int tempIt = 0;
@@ -487,17 +536,17 @@ namespace ArrayTasks {
         }
 
         // https://leetcode.com/problems/squares-of-a-sorted-array/
-        public int[] SortedSquares (int[] A) {
+        public int[] SortedSquares(int[] A) {
             for (int i = 0; i < A.Length; i++) {
                 A[i] = A[i] * A[i];
             }
 
-            Array.Sort (A);
+            Array.Sort(A);
 
             return A;
         }
         // https://leetcode.com/problems/sort-array-by-parity/
-        public int[] SortArrayByParity (int[] A) {
+        public int[] SortArrayByParity(int[] A) {
             int i = 0, j = A.Length - 1;
             while (i < j) {
                 if (A[i] % 2 > A[j] % 2) {
@@ -515,7 +564,7 @@ namespace ArrayTasks {
         }
 
         // https://leetcode.com/problems/sort-array-by-parity/
-        public int[] SortArrayByParity1 (int[] A) {
+        public int[] SortArrayByParity1(int[] A) {
             for (int i = 0; i < A.Length; i++) {
                 if (A[i] % 2 == 0) continue;
 
@@ -534,7 +583,7 @@ namespace ArrayTasks {
         }
 
         // https://leetcode.com/problems/flipping-an-image/
-        public int[][] FlipAndInvertImage (int[][] A) {
+        public int[][] FlipAndInvertImage(int[][] A) {
             for (int i = 0; i < A.Length; i++) {
                 int[] row = A[i];
                 for (int j = 0; j < (row.Length + 1) / 2; j++) {
