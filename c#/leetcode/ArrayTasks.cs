@@ -8,41 +8,45 @@ namespace ArrayTasks {
     public class Solution {
 
         // https://leetcode.com/problems/best-time-to-buy-and-sell-stock/
-        // public int MaxProfit(int[] prices) {
+        public int MaxProfit(int[] prices) {
 
-        //     if (prices.Length <= 1) return 0;
+            if (prices.Length <= 1) return 0;
 
-        //     int minVal = int.MaxValue;
-        //     int maxVal = int.MinValue;
+            int minVal = int.MaxValue;
+            int end = prices.Length - 1;
 
-        //     for (int i = 0, j = prices.Length - 1; i <= j; i++, j--) {
-        //         minVal = Math.Min(prices[i], minVal);
-        //         maxVal = Math.Max(prices[j], maxVal);
-        //     }
+            for (int i = 0; i < end; i++) {
+                minVal = Math.Min(prices[i], minVal);
 
-        //     int startIdx = 0, endIdx = 0;
-        //     for (int i = 0; i < prices.Length; i++) {
-        //         if (prices[i] == minVal) {
-        //             startIdx = i;
-        //             break;
-        //         }
-        //     }
+                while (prices[i] > prices[end] &&
+                    (prices[end] - minVal < prices[i] - minVal) &&
+                    prices[i] != minVal
+                ) {
+                    end--;
+                }
+            }
 
-        //     for (int i = prices.Length - 1; i >= 0; i--) {
-        //         if (prices[i] == maxVal) {
-        //             endIdx = i;
-        //             break;
-        //         }
-        //     }
+            int profit1 = prices[end] - minVal;
 
-        //     for (int i = startIdx; i < endIdx; i++) {
-        //         maxVal = Math.Max(prices[i], maxVal);
-        //     }
+            int maxVal = int.MinValue;
+            end = 0;
 
-        //     int profit = maxVal - minVal;
+            for (int i = prices.Length - 1; i >= 0; i--) {
+                maxVal = Math.Max(prices[i], maxVal);
 
-        //     return profit > 0 ? profit : 0;
-        // }
+                while (prices[i] < prices[end] &&
+                    (maxVal - prices[end] < maxVal - prices[i]) &&
+                    prices[i] != minVal
+                ) {
+                    end++;
+                }
+            }
+
+            int profit2 = maxVal - prices[end];
+
+            return Math.Max(profit1, profit2);
+        }
+
         // https://leetcode.com/problems/best-time-to-buy-and-sell-stock/
         public int MaxProfit1(int[] prices) {
             int profit = int.MinValue;
