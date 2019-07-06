@@ -13,36 +13,42 @@ namespace ArrayTasks {
             if (prices.Length <= 1) return 0;
 
             int minVal = int.MaxValue;
+            int maxVal = prices.Length - 1;
             int end = prices.Length - 1;
 
             for (int i = 0; i < end; i++) {
-                minVal = Math.Min(prices[i], minVal);
+                int curr = prices[i];
+                minVal = Math.Min(curr, minVal);
+                maxVal = prices[end];
 
-                while (prices[i] > prices[end] &&
-                    (prices[end] - minVal < prices[i] - minVal) &&
-                    prices[i] != minVal
+                while (
+                    curr > maxVal &&
+                    (maxVal - minVal < curr - minVal) &&
+                    curr != minVal
                 ) {
-                    end--;
+                    maxVal = prices[--end];
                 }
             }
 
-            int profit1 = prices[end] - minVal;
+            int profit1 = maxVal - minVal;
 
-            int maxVal = int.MinValue;
-            end = 0;
+            maxVal = int.MinValue;
+            int begin = 0;
 
-            for (int i = prices.Length - 1; i >= 0; i--) {
-                maxVal = Math.Max(prices[i], maxVal);
+            for (int j = prices.Length - 1; j >= begin; j--) {
+                int curr = prices[j];
+                minVal = prices[begin];
+                maxVal = Math.Max(curr, maxVal);
 
-                while (prices[i] < prices[end] &&
-                    (maxVal - prices[end] < maxVal - prices[i]) &&
-                    prices[i] != minVal
+                while (
+                    curr < minVal &&
+                    (maxVal - minVal < maxVal - curr)
                 ) {
-                    end++;
+                    minVal = prices[++begin];
                 }
             }
 
-            int profit2 = maxVal - prices[end];
+            int profit2 = maxVal - minVal;
 
             return Math.Max(profit1, profit2);
         }
