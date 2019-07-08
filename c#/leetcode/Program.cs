@@ -5,12 +5,12 @@ using ArrayTasks;
 
 namespace leetcode {
     class Program {
-        static void Main (string[] args) {
+        static void Main(string[] args) {
             //Solution sol = new Solution();
-            Solution sol = new Solution ();
+            Solution sol = new Solution();
             //  sol.FindDisappearedNumbers (new int[] { 10, 2, 5, 10, 9, 1, 1, 4, 3, 7 });
 
-            sol.FindDisappearedNumbers (new int[] { 4, 3, 2, 7, 8, 2, 3, 1 });
+            sol.MaxProfit(new int[] { 7, 6, 4, 3, 1 });
         }
     }
 

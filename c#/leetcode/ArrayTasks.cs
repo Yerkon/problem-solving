@@ -7,8 +7,42 @@ using System.Text;
 namespace ArrayTasks {
     public class Solution {
 
-        // https://leetcode.com/problems/best-time-to-buy-and-sell-stock/
+        // https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/
         public int MaxProfit(int[] prices) {
+            int profit = 0;
+            int minVal = int.MaxValue;
+            int maxVal = int.MinValue;
+
+            for (int i = 0; i < prices.Length; i++) {
+                int curr = prices[i];
+
+                if (curr < maxVal) {
+                    profit += maxVal - minVal;
+
+                    minVal = curr;
+                    maxVal = int.MinValue;
+
+                    continue;
+                }
+
+                if (curr < minVal) {
+                    minVal = curr;
+
+                } else if (curr > maxVal) {
+                    maxVal = curr;
+                }
+
+                if ((prices.Length - 1 == i && maxVal != int.MinValue)) {
+                    profit += maxVal - minVal;  
+                }
+
+            }
+
+            return profit;
+        }
+
+        // https://leetcode.com/problems/best-time-to-buy-and-sell-stock/
+        public int MaxProfit1_2(int[] prices) {
 
             if (prices.Length <= 1) return 0;
 
@@ -54,7 +88,7 @@ namespace ArrayTasks {
         }
 
         // https://leetcode.com/problems/best-time-to-buy-and-sell-stock/
-        public int MaxProfit1(int[] prices) {
+        public int MaxProfit1_1(int[] prices) {
             int profit = int.MinValue;
 
             for (int i = 0; i < prices.Length; i++) {
