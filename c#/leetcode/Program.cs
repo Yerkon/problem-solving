@@ -10,7 +10,7 @@ namespace leetcode {
             Solution sol = new Solution();
             //  sol.FindDisappearedNumbers (new int[] { 10, 2, 5, 10, 9, 1, 1, 4, 3, 7 });
 
-            sol.MaxProfit(new int[] { 7, 6, 4, 3, 1 });
+            sol.FindShortestSubArray(new int[] { 1,2,2,1,2,1,1,1,1,2,2,2 });
         }
     }
 

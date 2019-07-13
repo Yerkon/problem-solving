@@ -7,11 +7,46 @@ using System.Text;
 namespace ArrayTasks {
     public class Solution {
 
+        // https://leetcode.com/problems/degree-of-an-array/
+        public int FindShortestSubArray(int[] nums) {
+            List<int> mostCommons = new List<int>();
+            Dictionary<int, int> dic = new Dictionary<int, int>();
+            int maxQuantity = int.MinValue;
+
+            for (int i = 0; i < nums.Length; i++) {
+                int curr = nums[i];
+                dic[curr] = dic.GetValueOrDefault(curr, 0) + 1;
+
+                if (dic[curr] > maxQuantity) {
+                    maxQuantity = dic[curr];
+                }
+            }
+
+            foreach (int key in dic.Keys) {
+                if (dic[key] == maxQuantity) {
+                    mostCommons.Add(key);
+                }
+            }
+
+            int minLength = int.MaxValue;
+            foreach (int mostCommon in mostCommons) {
+                for (int i = 0, j = nums.Length - 1; i <= j;) {
+                    if (nums[i] != mostCommon) i++;
+                    if (nums[j] != mostCommon) j--;
+
+                    if (nums[i] == nums[j] && nums[i] == mostCommon) {
+                        minLength = Math.Min(((j - i) + 1), minLength);
+                        break;
+                    }
+                }
+            }
+
+            return minLength;
+        }
+
         // https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/
         public int MaxProfit(int[] prices) {
-            int profit = 0;
-            int minVal = int.MaxValue;
-            int maxVal = int.MinValue;
+            int profit = 0, minVal = int.MaxValue, maxVal = int.MinValue;
 
             for (int i = 0; i < prices.Length; i++) {
                 int curr = prices[i];
@@ -32,8 +67,9 @@ namespace ArrayTasks {
                     maxVal = curr;
                 }
 
+                // last element
                 if ((prices.Length - 1 == i && maxVal != int.MinValue)) {
-                    profit += maxVal - minVal;  
+                    profit += maxVal - minVal;
                 }
 
             }
