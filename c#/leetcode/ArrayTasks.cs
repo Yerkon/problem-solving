@@ -7,6 +7,30 @@ using System.Text;
 namespace ArrayTasks {
     public class Solution {
 
+        // https://leetcode.com/problems/single-number/
+        public int SingleNumber(int[] nums) {
+            int res = 0;
+            for (int i = 0; i < nums.Length; i++)
+            {
+                res = res ^ nums[i];
+            }
+
+            return res;
+        }
+
+        // https://leetcode.com/problems/missing-number/
+        public int MissingNumber(int[] nums) {
+            int length = nums.Length;
+            int sum = 0;
+            int numsSum = nums.Sum();
+
+            for (int i = 0; i <= length; i++) {
+                sum += i;
+            }
+
+            return sum - numsSum;
+        }
+
         // https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/
         public int[] TwoSum(int[] numbers, int target) {
 
