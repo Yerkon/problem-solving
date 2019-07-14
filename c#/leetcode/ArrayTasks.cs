@@ -7,21 +7,39 @@ using System.Text;
 namespace ArrayTasks {
     public class Solution {
 
+        // https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/
+        public int[] TwoSum(int[] numbers, int target) {
+
+            Dictionary<int, int> dic = new Dictionary<int, int>();
+            int[] result = new int[2];
+
+            for (int i = 0; i < numbers.Length; i++) {
+                int c = target - numbers[i];
+
+                if (dic.ContainsKey(c)) {
+                    int idx = dic[c];
+                    result[0] = (idx + 1);
+                    result[1] = (i + 1);
+                    break;
+                }
+
+                dic[numbers[i]] = i;
+            }
+
+            return result;
+        }
+
         // https://leetcode.com/problems/degree-of-an-array/
         public int FindShortestSubArray(int[] nums) {
             List<int> mostCommons = new List<int>();
             Dictionary<int, int> dic = new Dictionary<int, int>();
-            int maxQuantity = int.MinValue;
 
             for (int i = 0; i < nums.Length; i++) {
                 int curr = nums[i];
                 dic[curr] = dic.GetValueOrDefault(curr, 0) + 1;
-
-                if (dic[curr] > maxQuantity) {
-                    maxQuantity = dic[curr];
-                }
             }
 
+            int maxQuantity = dic.Values.Max();
             foreach (int key in dic.Keys) {
                 if (dic[key] == maxQuantity) {
                     mostCommons.Add(key);
