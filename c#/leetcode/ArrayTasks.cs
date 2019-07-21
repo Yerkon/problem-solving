@@ -7,11 +7,45 @@ using System.Text;
 namespace ArrayTasks {
     public class Solution {
 
+        // with bit manipulation
+        // https://leetcode.com/problems/find-the-difference/
+        public char FindTheDifference(string s, string t) {
+            int result = 0;
+
+            for (int i = 0; i < s.Length; i++) {
+                result ^= s[i] ^ t[i];
+            }
+
+            char lastLetter = t[t.Length - 1];
+            result ^= lastLetter;
+
+            return Convert.ToChar(result);
+        }
+
+        // with HashTable
+        // https://leetcode.com/problems/find-the-difference/
+        public char FindTheDifference1(string s, string t) {
+            Dictionary<char, int> dic = new Dictionary<char, int>();
+
+            for (int i = 0; i < s.Length; i++) {
+                dic[s[i]] = dic.GetValueOrDefault(s[i], 0) + 1;
+            }
+
+            for (int i = 0; i < t.Length; i++) {
+                dic[t[i]] = dic.GetValueOrDefault(t[i], 0) - 1;
+            }
+
+            foreach (char key in dic.Keys) {
+                if (dic[key] == -1) return key;
+            }
+
+            return 'a';
+        }
+
         // https://leetcode.com/problems/single-number/
         public int SingleNumber(int[] nums) {
             int res = 0;
-            for (int i = 0; i < nums.Length; i++)
-            {
+            for (int i = 0; i < nums.Length; i++) {
                 res = res ^ nums[i];
             }
 
