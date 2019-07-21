@@ -7,6 +7,33 @@ using System.Text;
 namespace ArrayTasks {
     public class Solution {
 
+        // https://leetcode.com/problems/positions-of-large-groups/
+        public IList<IList<int>> LargeGroupPositions(string S) {
+            IList<IList<int>> listOfList = new List<IList<int>>();
+            int count = 0, begin = 0;
+
+            for (int i = 0; i < S.Length; i++) {
+                var list = new List<int>();
+
+                if (i != S.Length - 1 && S[i] == S[i + 1]) {
+                    count++;
+                } else {
+                    if (count >= 2) {
+                        // add to list
+                        list.Add(begin);
+                        list.Add(i);
+
+                        listOfList.Add(list);
+                    }
+
+                    count = 0;
+                    begin = i + 1;
+                }
+            }
+
+            return listOfList;
+        }
+
         // with bit manipulation
         // https://leetcode.com/problems/find-the-difference/
         public char FindTheDifference(string s, string t) {
