@@ -7,6 +7,32 @@ using System.Text;
 namespace ArrayTasks {
     public class Solution {
 
+        // https://leetcode.com/problems/min-cost-climbing-stairs/
+        // [1, 100, 1, 1, 1, 100, 1, 1, 100, 1]
+        public int MinCostClimbingStairs(int[] cost) {
+
+            Dictionary<int, int> dic = new Dictionary<int, int>();
+            int a = calcMinCost(0, cost, dic);
+            int b = calcMinCost(1, cost, dic);
+
+            return Math.Min(a, b);
+        }
+
+        public int calcMinCost(int idx, int[] cost, Dictionary<int, int> dic) {
+            if (dic.ContainsKey(idx)) {
+                return dic[idx];
+            }
+
+            if (idx + 2 > cost.Length - 1) {
+                dic[idx] = cost[idx];
+                return cost[idx];
+            }
+            int costForCurr = cost[idx] + Math.Min(calcMinCost(idx + 1, cost, dic), calcMinCost(idx + 2, cost, dic));
+            dic[idx] = costForCurr;
+
+            return dic[idx];
+        }
+
         // https://leetcode.com/problems/positions-of-large-groups/
         public IList<IList<int>> LargeGroupPositions(string S) {
             IList<IList<int>> listOfList = new List<IList<int>>();
