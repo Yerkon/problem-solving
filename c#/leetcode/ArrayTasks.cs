@@ -7,6 +7,28 @@ using System.Text;
 namespace ArrayTasks {
     public class Solution {
 
+        // https://leetcode.com/problems/pascals-triangle/
+        public IList<IList<int>> Generate(int numRows) {
+            List<IList<int>> res = new List<IList<int>>();
+            IList<int> parentRow = new List<int>(new int[] { 1 });
+
+            for (int i = 0; i < numRows; i++) {
+                IList<int> row = new List<int>();
+
+                for (int j = 0; j < i + 1; j++) {
+                    int leftParent = parentRow.ElementAtOrDefault(j - 1);
+                    int rightParent = parentRow.ElementAtOrDefault(j);
+
+                    row.Add(leftParent + rightParent);
+                }
+
+                res.Add(row);
+                parentRow = row;
+            }
+
+            return res;
+        }
+
         // https://leetcode.com/problems/min-cost-climbing-stairs/
         // [1, 100, 1, 1, 1, 100, 1, 1, 100, 1]
         public int MinCostClimbingStairs(int[] cost) {
