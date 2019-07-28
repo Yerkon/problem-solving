@@ -2,10 +2,41 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 
 namespace ArrayTasks {
     public class Solution {
+
+        // still not passed by Time limit
+        // https://leetcode.com/problems/binary-prefix-divisible-by-5/
+        public IList<bool> PrefixesDivBy5(int[] A) {
+            Stack<bool> stack = new Stack<bool>();
+
+            BigInteger summary = 0;
+
+            for (int i = 0; i < A.Length; i++) {
+
+                int currBit = A[i];
+                summary += currBit * BigInteger.Pow(2, A.Length - 1 - i);
+            }
+
+            stack.Push(summary % 5 == 0);
+
+            for (int i = A.Length - 1; i > 0; i--) {
+
+                int currBit = A[i];
+                BigInteger val = currBit == 1 ? BigInteger.Pow(2, A.Length - 1 - i) : 0;
+
+                summary -= val;
+
+                bool isDivisible = summary % 5 == 0;
+
+                stack.Push(isDivisible);
+            }
+
+            return stack.ToList();
+        }
 
         // https://leetcode.com/problems/pascals-triangle/
         public IList<IList<int>> Generate(int numRows) {
