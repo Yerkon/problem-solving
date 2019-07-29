@@ -13,24 +13,27 @@ namespace ArrayTasks {
         public IList<bool> PrefixesDivBy5(int[] A) {
             Stack<bool> stack = new Stack<bool>();
 
-            BigInteger summary = 0;
+            BigInteger x = 1;
+            BigInteger accum = 0;
 
-            for (int i = 0; i < A.Length; i++) {
-
+            for (int i = A.Length - 1; i >= 0; i--) {
                 int currBit = A[i];
-                summary += currBit * BigInteger.Pow(2, A.Length - 1 - i);
+                int val = i == A.Length - 1 ? 1 : 2;
+                x *= val;
+                accum += currBit * x;
             }
 
-            stack.Push(summary % 5 == 0);
+            stack.Push(accum % 5 == 0);
+            x = 1;
 
             for (int i = A.Length - 1; i > 0; i--) {
-
                 int currBit = A[i];
-                BigInteger val = currBit == 1 ? BigInteger.Pow(2, A.Length - 1 - i) : 0;
+                int val = i == A.Length - 1 ? 1 : 2;
+                x *= val;
 
-                summary -= val;
+                accum -= currBit * x;
 
-                bool isDivisible = summary % 5 == 0;
+                bool isDivisible = accum % 5 == 0;
 
                 stack.Push(isDivisible);
             }
