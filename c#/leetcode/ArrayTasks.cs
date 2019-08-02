@@ -8,7 +8,25 @@ using System.Text;
 namespace ArrayTasks {
     public class Solution {
 
-        // still not passed by Time limit
+        // https://leetcode.com/problems/maximum-product-of-three-numbers/
+        public int MaximumProduct(int[] nums) {
+            if (nums.Length < 3) return 0;
+
+            Array.Sort(nums);
+
+            int first = nums[0] * nums[1] * nums[nums.Length - 1];
+
+            int length = nums.Length;
+            int result =  nums[nums.Length - 1];
+
+            for (int i = nums.Length - 2; i >= length - 3; i--) {
+                result *= nums[i];
+            }
+
+          
+            return Math.Max(first, result);
+        }
+
         // https://leetcode.com/problems/binary-prefix-divisible-by-5/
         public IList<bool> PrefixesDivBy5(int[] A) {
             Stack<bool> stack = new Stack<bool>();
