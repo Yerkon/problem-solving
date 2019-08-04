@@ -10,7 +10,7 @@ namespace leetcode {
             Solution sol = new Solution();
             //  sol.FindDisappearedNumbers (new int[] { 10, 2, 5, 10, 9, 1, 1, 4, 3, 7 });
 
-            sol.MaximumProduct(new int[] { 4, 3, 2, 1 });
+            sol.NumPairsDivisibleBy60(new int[] {30,20,150,100,40, 30,20,150,100,40});
         }
 
     }

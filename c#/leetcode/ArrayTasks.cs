@@ -8,6 +8,38 @@ using System.Text;
 namespace ArrayTasks {
     public class Solution {
 
+        // https://leetcode.com/problems/pairs-of-songs-with-total-durations-divisible-by-60/
+        public int NumPairsDivisibleBy60(int[] time) {
+            Dictionary<int, int> dic = new Dictionary<int, int>();
+            int count = 0;
+
+            for (int i = 0; i < time.Length; i++) {
+                int a = time[i] % 60;
+                int b = (60 - a) % 60; // (a + b)%60 = 0
+                count += dic.GetValueOrDefault(b, 0);
+
+                dic[a] = dic.GetValueOrDefault(a, 0) + 1;
+            }
+
+            return count;
+        }
+
+        
+        // https://leetcode.com/problems/pairs-of-songs-with-total-durations-divisible-by-60/
+        public int NumPairsDivisibleBy60_1(int[] time) {
+            int count = 0;
+
+            for (int i = 0; i < time.Length; i++) {
+                for (int j = i + 1; j < time.Length; j++) {
+                    if ((time[i] + time[j]) % 60 == 0) {
+                        count++;
+                    }
+                }
+            }
+
+            return count;
+        }
+
         // https://leetcode.com/problems/maximum-product-of-three-numbers/
         public int MaximumProduct(int[] nums) {
             if (nums.Length < 3) return 0;
@@ -17,13 +49,12 @@ namespace ArrayTasks {
             int first = nums[0] * nums[1] * nums[nums.Length - 1];
 
             int length = nums.Length;
-            int result =  nums[nums.Length - 1];
+            int result = nums[nums.Length - 1];
 
             for (int i = nums.Length - 2; i >= length - 3; i--) {
                 result *= nums[i];
             }
 
-          
             return Math.Max(first, result);
         }
 
