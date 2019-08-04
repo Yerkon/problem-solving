@@ -8,6 +8,46 @@ using System.Text;
 namespace ArrayTasks {
     public class Solution {
 
+        public int RemoveElement(int[] nums, int val) {
+
+            if (nums.Length <= 0) return 0;
+
+            int startIdx = 0, endIdx = nums.Length - 1;
+
+            for (int i = nums.Length - 1; i >= 0; i--) {
+                if (nums[i] != val) {
+                    endIdx = i;
+                    break;
+                }
+            }
+
+            while (startIdx < endIdx) {
+                if (nums[startIdx] == val) {
+                    int temp = nums[startIdx];
+                    nums[startIdx] = nums[endIdx];
+                    nums[endIdx] = temp;
+                    endIdx--;
+
+                    while (endIdx > startIdx && nums[endIdx] == val) {
+                        endIdx--;
+                    }
+                }
+
+                startIdx++;
+            }
+
+            int length = nums.Length;
+
+            for (int i = 0; i < nums.Length; i++) {
+                if (nums[i] == val) {
+                    length = i;
+                    break;
+                }
+            }
+
+            return length;
+        }
+
         // https://leetcode.com/problems/pairs-of-songs-with-total-durations-divisible-by-60/
         public int NumPairsDivisibleBy60(int[] time) {
             Dictionary<int, int> dic = new Dictionary<int, int>();
@@ -24,7 +64,6 @@ namespace ArrayTasks {
             return count;
         }
 
-        
         // https://leetcode.com/problems/pairs-of-songs-with-total-durations-divisible-by-60/
         public int NumPairsDivisibleBy60_1(int[] time) {
             int count = 0;
