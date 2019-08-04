@@ -8,7 +8,24 @@ using System.Text;
 namespace ArrayTasks {
     public class Solution {
 
+        // less code 
+        // https://leetcode.com/problems/remove-element/
         public int RemoveElement(int[] nums, int val) {
+            int i = 0, end = nums.Length;
+
+            while (i < end) {
+                if (nums[i] == val) {
+                    nums[i] = nums[end - 1];
+                    end--;
+                } else {
+                    i++;
+                }
+            }
+
+            return end;
+        }
+        // https://leetcode.com/problems/remove-element/
+        public int RemoveElement1(int[] nums, int val) {
 
             if (nums.Length <= 0) return 0;
 
