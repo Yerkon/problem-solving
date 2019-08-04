@@ -8,6 +8,49 @@ using System.Text;
 namespace ArrayTasks {
     public class Solution {
 
+        // https://leetcode.com/problems/pascals-triangle-ii/
+        public IList<int> GetRow(int rowIndex) {
+
+            IList<int> row = new List<int>();
+
+            for (int r = 0; r < rowIndex + 1; r++) {
+
+                for (int col = r - 1; col > 0; col--) {
+                    int leftParent = row[col - 1];
+                    int rightParent = row[col];
+
+                    row[col] = leftParent + rightParent;
+                }
+
+                row.Add(1);
+
+            }
+
+            return row;
+        }
+
+        // https://leetcode.com/problems/pascals-triangle/
+        public IList<IList<int>> Generate(int numRows) {
+            List<IList<int>> res = new List<IList<int>>();
+            IList<int> parentRow = new List<int>(new int[] { 1 });
+
+            for (int i = 0; i < numRows; i++) {
+                IList<int> row = new List<int>();
+
+                for (int j = 0; j < i + 1; j++) {
+                    int leftParent = parentRow.ElementAtOrDefault(j - 1);
+                    int rightParent = parentRow.ElementAtOrDefault(j);
+
+                    row.Add(leftParent + rightParent);
+                }
+
+                res.Add(row);
+                parentRow = row;
+            }
+
+            return res;
+        }
+
         // less code 
         // https://leetcode.com/problems/remove-element/
         public int RemoveElement(int[] nums, int val) {
@@ -144,28 +187,6 @@ namespace ArrayTasks {
             }
 
             return stack.ToList();
-        }
-
-        // https://leetcode.com/problems/pascals-triangle/
-        public IList<IList<int>> Generate(int numRows) {
-            List<IList<int>> res = new List<IList<int>>();
-            IList<int> parentRow = new List<int>(new int[] { 1 });
-
-            for (int i = 0; i < numRows; i++) {
-                IList<int> row = new List<int>();
-
-                for (int j = 0; j < i + 1; j++) {
-                    int leftParent = parentRow.ElementAtOrDefault(j - 1);
-                    int rightParent = parentRow.ElementAtOrDefault(j);
-
-                    row.Add(leftParent + rightParent);
-                }
-
-                res.Add(row);
-                parentRow = row;
-            }
-
-            return res;
         }
 
         // https://leetcode.com/problems/min-cost-climbing-stairs/
