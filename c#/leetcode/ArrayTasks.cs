@@ -8,6 +8,36 @@ using System.Text;
 namespace ArrayTasks {
     public class Solution {
 
+        // https://leetcode.com/problems/add-to-array-form-of-integer/
+        public IList<int> AddToArrayForm(int[] A, int K) {
+            
+        }
+
+        // https://leetcode.com/problems/longest-continuous-increasing-subsequence/
+        public int FindLengthOfLCIS(int[] nums) {
+            if (nums.Length <= 1) return nums.Length;
+
+            int longest = int.MinValue;
+            int count = 0;
+
+            for (int i = 0; i < nums.Length - 1; i++) {
+                count++;
+
+                if (nums[i] >= nums[i + 1]) {
+                    longest = Math.Max(longest, count);
+                    count = 0;
+                }
+
+            }
+
+            if (nums[nums.Length - 1] > nums[nums.Length - 2]) {
+                count++;
+                longest = Math.Max(longest, count);
+            }
+
+            return longest;
+        }
+
         // https://leetcode.com/problems/pascals-triangle-ii/
         public IList<int> GetRow(int rowIndex) {
 

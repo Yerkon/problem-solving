@@ -10,7 +10,7 @@ namespace leetcode {
             Solution sol = new Solution();
             //  sol.FindDisappearedNumbers (new int[] { 10, 2, 5, 10, 9, 1, 1, 4, 3, 7 });
 
-            sol.GetRow(3);
+            sol.AddToArrayForm(new int[] {9,9,9,9,9,9,9,9,9, 9}, 1);
         }
 
     }
