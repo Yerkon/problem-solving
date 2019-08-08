@@ -10,28 +10,36 @@ namespace ArrayTasks {
 
         // https://leetcode.com/problems/add-to-array-form-of-integer/
         public IList<int> AddToArrayForm(int[] A, int K) {
-            if (A.Length == 1 && A[0] == 0) return new List<int>() { K };
+            Stack<int> stackRes = new Stack<int>();
+            Stack<int> kStack = new Stack<int>();
 
-            Stack<int> stack = new Stack<int>();
+            while (K > 0) {
+                kStack.Push(K % 10);
 
-            double accum = 0;
-            double d = 1;
-
-            for (int i = A.Length - 1; i >= 0; i--) {
-                accum += A[i] * d;
-                d *= 10;
+                K /= 10;
             }
 
-            accum += K;
+            int[] kArr = kStack.ToArray();
 
-            //Console.WriteLine(accum);
+            int kIt = kArr.Length - 1;
+            int aIt = A.Length - 1;
+            int rem = 0;
 
-            while (accum > 0) {
-                stack.Push((int) (accum % 10));
-                accum = (int) (accum / 10);
+            while ((kIt >= 0 || aIt >= 0) || rem > 0) {
+                int a = kIt >= 0 ? kArr[kIt] : 0;
+                int b = aIt >= 0 ? A[aIt] : 0;
+
+                int curr = a + b + rem;
+                int val = curr % 10;
+                rem = curr / 10;
+
+                stackRes.Push(val);
+
+                kIt--;
+                aIt--;
             }
 
-            return stack.ToList();
+            return stackRes.ToList();
         }
 
         // https://leetcode.com/problems/longest-continuous-increasing-subsequence/
