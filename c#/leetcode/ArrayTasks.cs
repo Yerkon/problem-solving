@@ -20,13 +20,13 @@ namespace ArrayTasks {
             maxVal = Math.Max(maxVal, total);
 
             for (int i = 0; i < nums.Length; i++) {
-                maxVal = Math.Max(getSumRecursive(nums, total, i, 0, nums.Length - 1), maxVal);
+                maxVal = Math.Max(getMaxOfRangeSum(nums, total, i, 0, nums.Length - 1), maxVal);
             }
 
             return maxVal;
         }
 
-        public int getSumRecursive(int[] nums, int total, int targetIdx, int start, int end) {
+        public int getMaxOfRangeSum(int[] nums, int total, int targetIdx, int start, int end) {
 
             if (targetIdx == start && targetIdx == end) {
                 return nums[targetIdx];
@@ -34,12 +34,12 @@ namespace ArrayTasks {
 
             if (start < targetIdx) {
                 total -= nums[start++];
-                return Math.Max(total, getSumRecursive(nums, total, targetIdx, start, end));
+                return Math.Max(total, getMaxOfRangeSum(nums, total, targetIdx, start, end));
             } else {
 
                 // targetIdx < end
                 total -= nums[end--];
-                return Math.Max(total, getSumRecursive(nums, total, targetIdx, start, end));
+                return Math.Max(total, getMaxOfRangeSum(nums, total, targetIdx, start, end));
             }
         }
 
