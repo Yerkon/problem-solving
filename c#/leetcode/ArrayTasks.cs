@@ -8,6 +8,41 @@ using System.Text;
 namespace ArrayTasks {
     public class Solution {
 
+        // Time limin exceed :(
+        // https://leetcode.com/problems/maximum-subarray/
+        public int MaxSubArray(int[] nums) {
+
+            int maxVal = int.MinValue;
+            int total = 0;
+
+            Array.ForEach(nums, (itm) => total += itm);
+
+            maxVal = Math.Max(maxVal, total);
+
+            for (int i = 0; i < nums.Length; i++) {
+                maxVal = Math.Max(getSumRecursive(nums, total, i, 0, nums.Length - 1), maxVal);
+            }
+
+            return maxVal;
+        }
+
+        public int getSumRecursive(int[] nums, int total, int targetIdx, int start, int end) {
+
+            if (targetIdx == start && targetIdx == end) {
+                return nums[targetIdx];
+            }
+
+            if (start < targetIdx) {
+                total -= nums[start++];
+                return Math.Max(total, getSumRecursive(nums, total, targetIdx, start, end));
+            } else {
+
+                // targetIdx < end
+                total -= nums[end--];
+                return Math.Max(total, getSumRecursive(nums, total, targetIdx, start, end));
+            }
+        }
+
         // https://leetcode.com/problems/add-to-array-form-of-integer/
         public IList<int> AddToArrayForm(int[] A, int K) {
             Stack<int> stackRes = new Stack<int>();
@@ -23,15 +58,15 @@ namespace ArrayTasks {
 
             int kIt = kArr.Length - 1;
             int aIt = A.Length - 1;
-            int rem = 0;
+            int carry = 0;
 
-            while ((kIt >= 0 || aIt >= 0) || rem > 0) {
+            while ((kIt >= 0 || aIt >= 0) || carry > 0) {
                 int a = kIt >= 0 ? kArr[kIt] : 0;
                 int b = aIt >= 0 ? A[aIt] : 0;
 
-                int curr = a + b + rem;
+                int curr = a + b + carry;
                 int val = curr % 10;
-                rem = curr / 10;
+                carry = curr / 10;
 
                 stackRes.Push(val);
 
