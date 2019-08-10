@@ -8,38 +8,59 @@ using System.Text;
 namespace ArrayTasks {
     public class Solution {
 
-        // Time limin exceed :(
         // https://leetcode.com/problems/maximum-subarray/
         public int MaxSubArray(int[] nums) {
 
-            int maxVal = int.MinValue;
-            int total = 0;
+            Dictionary<int, int> toLeftDic = new Dictionary<int, int>();
+            Dictionary<int, int> toRightDic = new Dictionary<int, int>();
 
-            Array.ForEach(nums, (itm) => total += itm);
-
-            maxVal = Math.Max(maxVal, total);
+            int maxRangeVal = int.MinValue;
 
             for (int i = 0; i < nums.Length; i++) {
-                maxVal = Math.Max(getMaxOfRangeSum(nums, total, i, 0, nums.Length - 1), maxVal);
+                maxRangeVal = Math.Max(maxRangeVal, getMaxOfRangeSum(nums, nums[i], i, i, toLeftDic, toRightDic));
+                maxRangeVal = Math.Max(nums[i], maxRangeVal);
             }
 
-            return maxVal;
+            return maxRangeVal;
         }
 
-        public int getMaxOfRangeSum(int[] nums, int total, int targetIdx, int start, int end) {
+        public int getMaxOfRangeSum(
+            int[] nums,
+            int curr,
+            int start,
+            int end,
+            Dictionary<int, int> leftDic,
+            Dictionary<int, int> rightDic
+        ) {
 
-            if (targetIdx == start && targetIdx == end) {
-                return nums[targetIdx];
-            }
+            if (start == 0 && end == nums.Length - 1) {
+                return curr;
+            } else if (start > 0) {
+                start--;
+                if (leftDic.ContainsKey(start)) {
 
-            if (start < targetIdx) {
-                total -= nums[start++];
-                return Math.Max(total, getMaxOfRangeSum(nums, total, targetIdx, start, end));
+                    return Math.Max(curr, leftDic[start]);
+
+                } else {
+                    curr += nums[start];
+                    leftDic[start] = Math.Max(curr, getMaxOfRangeSum(nums, curr, start, end, leftDic, rightDic));
+
+                    return leftDic[start];
+                }
+
             } else {
+                // end < nums.Length - 1)
+                end++;
+                if (rightDic.ContainsKey(end)) {
 
-                // targetIdx < end
-                total -= nums[end--];
-                return Math.Max(total, getMaxOfRangeSum(nums, total, targetIdx, start, end));
+                    return Math.Max(curr, rightDic[end]);
+
+                } else {
+                    curr += nums[end];
+                    rightDic[end] = Math.Max(curr, getMaxOfRangeSum(nums, curr, start, end, leftDic, rightDic));
+
+                    return rightDic[end];
+                }
             }
         }
 
