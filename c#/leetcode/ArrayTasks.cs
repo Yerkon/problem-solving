@@ -19,13 +19,8 @@ namespace ArrayTasks {
                 int[] a = new int[2];
 
                 // normalize
-                if (currDomino[0] <= currDomino[1]) {
-                    a[0] = currDomino[0];
-                    a[1] = currDomino[1];
-                } else {
-                    a[0] = currDomino[1];
-                    a[1] = currDomino[0];
-                }
+                a[0] = Math.Min(currDomino[0], currDomino[1]);
+                a[1] = Math.Max(currDomino[0], currDomino[1]);
 
                 string keyStr = string.Join(",", a);
 
@@ -34,13 +29,9 @@ namespace ArrayTasks {
             }
 
             foreach (string key in dic.Keys) {
-                int allPairCount = 0;
+                int occurence = dic[key];
 
-                for (int i = 0; i < dic[key]; i++) {
-                    allPairCount += i;
-                }
-
-                count += allPairCount;
+                count += (occurence * (occurence - 1)) / 2;
             }
 
             return count;
