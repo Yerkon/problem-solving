@@ -8,6 +8,44 @@ using System.Text;
 namespace ArrayTasks {
     public class Solution {
 
+        // https://leetcode.com/problems/number-of-equivalent-domino-pairs/
+        public int NumEquivDominoPairs(int[][] dominoes) {
+            int count = 0;
+            Dictionary<string, int> dic = new Dictionary<string, int>();
+
+            for (int i = 0; i < dominoes.Length; i++) {
+                int[] currDomino = dominoes[i];
+
+                int[] a = new int[2];
+
+                // normalize
+                if (currDomino[0] <= currDomino[1]) {
+                    a[0] = currDomino[0];
+                    a[1] = currDomino[1];
+                } else {
+                    a[0] = currDomino[1];
+                    a[1] = currDomino[0];
+                }
+
+                string keyStr = string.Join(",", a);
+
+                dic[keyStr] = dic.GetValueOrDefault(keyStr, 0) + 1;
+
+            }
+
+            foreach (string key in dic.Keys) {
+                int allPairCount = 0;
+
+                for (int i = 0; i < dic[key]; i++) {
+                    allPairCount += i;
+                }
+
+                count += allPairCount;
+            }
+
+            return count;
+        }
+
         // https://leetcode.com/problems/maximum-subarray/
         public int MaxSubArray(int[] nums) {
             int maxRange = int.MinValue;
