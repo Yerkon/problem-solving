@@ -10,58 +10,19 @@ namespace ArrayTasks {
 
         // https://leetcode.com/problems/maximum-subarray/
         public int MaxSubArray(int[] nums) {
-
-            Dictionary<int, int> toLeftDic = new Dictionary<int, int>();
-            Dictionary<int, int> toRightDic = new Dictionary<int, int>();
-
-            int maxRangeVal = int.MinValue;
+            int maxRange = int.MinValue;
+            int[] sumArr = new int[nums.Length];
 
             for (int i = 0; i < nums.Length; i++) {
-                maxRangeVal = Math.Max(maxRangeVal, getMaxOfRangeSum(nums, nums[i], i, i, toLeftDic, toRightDic));
-                maxRangeVal = Math.Max(nums[i], maxRangeVal);
-            }
+                for (int j = 0; j <= i; j++) {
+                    sumArr[j] += nums[i];
 
-            return maxRangeVal;
-        }
-
-        public int getMaxOfRangeSum(
-            int[] nums,
-            int curr,
-            int start,
-            int end,
-            Dictionary<int, int> leftDic,
-            Dictionary<int, int> rightDic
-        ) {
-
-            if (start == 0 && end == nums.Length - 1) {
-                return curr;
-            } else if (start > 0) {
-                start--;
-                if (leftDic.ContainsKey(start)) {
-
-                    return Math.Max(curr, leftDic[start]);
-
-                } else {
-                    curr += nums[start];
-                    leftDic[start] = Math.Max(curr, getMaxOfRangeSum(nums, curr, start, end, leftDic, rightDic));
-
-                    return leftDic[start];
+                    maxRange = Math.Max(sumArr[j], maxRange);
                 }
 
-            } else {
-                // end < nums.Length - 1)
-                end++;
-                if (rightDic.ContainsKey(end)) {
-
-                    return Math.Max(curr, rightDic[end]);
-
-                } else {
-                    curr += nums[end];
-                    rightDic[end] = Math.Max(curr, getMaxOfRangeSum(nums, curr, start, end, leftDic, rightDic));
-
-                    return rightDic[end];
-                }
             }
+
+            return maxRange;
         }
 
         // https://leetcode.com/problems/add-to-array-form-of-integer/
