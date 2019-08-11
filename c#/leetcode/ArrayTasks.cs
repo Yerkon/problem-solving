@@ -10,7 +10,22 @@ namespace ArrayTasks {
 
         // https://leetcode.com/problems/find-pivot-index/
         public int PivotIndex(int[] nums) {
+            if (nums.Length <= 1) return -1;
 
+            int leftTotal = 0;
+            int rightTotal = rightTotal = nums.Sum();;
+
+            for (int i = 0; i < nums.Length; i++) {
+                leftTotal += (i == 0) ? 0 : nums[i - 1];
+                rightTotal -= nums[i];
+
+                if (leftTotal == rightTotal) {
+                    return i;
+                }
+
+            }
+
+            return -1;
         }
 
         // https://leetcode.com/problems/plus-one/
