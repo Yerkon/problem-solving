@@ -11,26 +11,17 @@ namespace ArrayTasks {
         // https://leetcode.com/problems/number-of-equivalent-domino-pairs/
         public int NumEquivDominoPairs(int[][] dominoes) {
             int count = 0;
-            Dictionary<string, int> dic = new Dictionary<string, int>();
+            Dictionary<int, int> dic = new Dictionary<int, int>();
 
-            for (int i = 0; i < dominoes.Length; i++) {
-                int[] currDomino = dominoes[i];
-
-                int[] a = new int[2];
-
+            foreach (int[] dom in dominoes) {
                 // normalize
-                a[0] = Math.Min(currDomino[0], currDomino[1]);
-                a[1] = Math.Max(currDomino[0], currDomino[1]);
+                int key = Math.Min(dom[0], dom[1]) * 10 + Math.Max(dom[0], dom[1]);
 
-                string keyStr = string.Join(",", a);
-
-                dic[keyStr] = dic.GetValueOrDefault(keyStr, 0) + 1;
-
+                dic[key] = dic.GetValueOrDefault(key, 0) + 1;
             }
 
-            foreach (string key in dic.Keys) {
+            foreach (int key in dic.Keys) {
                 int occurence = dic[key];
-
                 count += (occurence * (occurence - 1)) / 2;
             }
 
