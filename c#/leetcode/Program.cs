@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ArrayTasks;
+using ArrayType;
 
 namespace leetcode {
     class Program {

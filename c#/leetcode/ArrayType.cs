@@ -5,7 +5,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 
-namespace ArrayTasks {
+namespace ArrayType {
     public class Solution {
 
         // https://leetcode.com/problems/find-pivot-index/
