@@ -8,6 +8,31 @@ using System.Text;
 namespace ArrayTasks {
     public class Solution {
 
+        // https://leetcode.com/problems/find-pivot-index/
+        public int PivotIndex(int[] nums) {
+
+        }
+
+        // https://leetcode.com/problems/plus-one/
+        public int[] PlusOne(int[] digits) {
+            Stack<int> stack = new Stack<int>();
+            int i = digits.Length - 1;
+            int carry = 0;
+            int addVal = 1;
+
+            while (i >= 0 || carry > 0) {
+                int curr = (i >= 0 ? digits[i] : 0) + addVal + carry;
+                int val = curr % 10;
+                carry = curr / 10;
+                addVal = 0;
+
+                stack.Push(val);
+                i--;
+            }
+
+            return stack.ToArray();
+        }
+
         // https://leetcode.com/problems/number-of-equivalent-domino-pairs/
         public int NumEquivDominoPairs(int[][] dominoes) {
             int count = 0;
