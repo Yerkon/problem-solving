@@ -8,6 +8,22 @@ using System.Text;
 namespace ArrayType {
     public class Solution {
 
+        // https://leetcode.com/problems/remove-duplicates-from-sorted-array/
+        public int RemoveDuplicates(int[] nums) {
+
+            if (nums.Length <= 0) return 0;
+            
+            int sr = 0;
+
+            for (int i = 1; i < nums.Length; i++) {
+                if (nums[sr] != nums[i]) {
+                    nums[++sr] = nums[i];
+                }
+            }
+
+            return sr + 1;
+        }
+
         // https://leetcode.com/problems/find-pivot-index/
         public int PivotIndex(int[] nums) {
             if (nums.Length <= 1) return -1;
