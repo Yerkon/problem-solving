@@ -8,11 +8,36 @@ using System.Text;
 namespace ArrayType {
     public class Solution {
 
+        // https://leetcode.com/problems/maximize-distance-to-closest-person/
+        public int MaxDistToClosest(int[] seats) {
+            int maxDistance = int.MinValue;
+            int count = 0;
+
+            for (int i = 0; i < seats.Length; i++) {
+                if (seats[i] == 0) {
+                    count++;
+                } else {
+
+                    // begins start with zero
+                    if ((count - i == 0)) {
+                        maxDistance = Math.Max(maxDistance, count);
+                    } else {
+                        int val = (count + 1) / 2;
+                        maxDistance = Math.Max(val, maxDistance);
+                    }
+
+                    count = 0;
+                }
+            }
+
+            return Math.Max(count, maxDistance);
+        }
+
         // https://leetcode.com/problems/remove-duplicates-from-sorted-array/
         public int RemoveDuplicates(int[] nums) {
 
             if (nums.Length <= 0) return 0;
-            
+
             int sr = 0;
 
             for (int i = 1; i < nums.Length; i++) {
