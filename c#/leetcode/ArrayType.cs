@@ -8,6 +8,29 @@ using System.Text;
 namespace ArrayType {
     public class Solution {
 
+        // https://leetcode.com/problems/maximum-average-subarray-i/
+        public double FindMaxAverage(int[] nums, int k) {
+            double maxAverage = int.MinValue;
+            int sumOfk = 0;
+
+            for (int i = 0; i < nums.Length; i++) {
+                int beginIndex = i - k;
+
+                if (beginIndex >= 0) {
+                    sumOfk -= nums[beginIndex];
+                }
+
+                sumOfk += nums[i];
+
+                if (i + 1 >= k) {
+                    maxAverage = Math.Max(maxAverage, (double) sumOfk / k);
+                }
+
+            }
+
+            return maxAverage;
+        }
+
         // https://leetcode.com/problems/largest-number-at-least-twice-of-others/
         public int DominantIndex(int[] nums) {
             int maxVal = int.MinValue;
