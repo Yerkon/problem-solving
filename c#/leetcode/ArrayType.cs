@@ -8,6 +8,18 @@ using System.Text;
 namespace ArrayType {
     public class Solution {
 
+        // https://leetcode.com/problems/search-insert-position/
+        public int SearchInsert(int[] nums, int target) {
+
+            for (int i = 0; i < nums.Length; i++) {
+                if (nums[i] >= target) {
+                    return i;
+                }
+            }
+
+            return nums.Length;
+        }
+
         // https://leetcode.com/problems/maximize-distance-to-closest-person/
         public int MaxDistToClosest(int[] seats) {
             int maxDistance = int.MinValue;
