@@ -8,6 +8,26 @@ using System.Text;
 namespace ArrayType {
     public class Solution {
 
+        // https://leetcode.com/problems/largest-number-at-least-twice-of-others/
+        public int DominantIndex(int[] nums) {
+            int maxVal = int.MinValue;
+            int maxIdx = -1;
+            int maxVal2 = int.MinValue;
+
+            for (int i = 0; i < nums.Length; i++) {
+                if (nums[i] > maxVal) {
+                    maxVal2 = maxVal;
+                    maxVal = nums[i];
+
+                    maxIdx = i;
+                } else if (nums[i] > maxVal2) { // between maxVal2 and maxVal
+                    maxVal2 = nums[i];
+                }
+            }
+
+            return maxVal2 * 2 > maxVal ? -1 : maxIdx;
+        }
+
         // https://leetcode.com/problems/search-insert-position/
         public int SearchInsert(int[] nums, int target) {
 
