@@ -8,6 +8,24 @@ using System.Text;
 namespace ArrayType {
     public class Solution {
 
+        // https://leetcode.com/problems/contains-duplicate-ii/
+        public bool ContainsNearbyDuplicate(int[] nums, int k) {
+            Dictionary<int, int> dic = new Dictionary<int, int>();
+
+            for (int i = 0; i < nums.Length; i++) {
+
+                if (dic.ContainsKey(nums[i])) {
+                    int diff = i - dic[nums[i]];
+
+                    if (diff <= k) return true;
+                }
+
+                dic[nums[i]] = i;
+            }
+
+            return false;
+        }
+
         // https://leetcode.com/problems/maximum-average-subarray-i/
         public double FindMaxAverage(int[] nums, int k) {
             double maxAverage = int.MinValue;
@@ -23,7 +41,7 @@ namespace ArrayType {
                 sumOfk += nums[i];
 
                 if (i + 1 >= k) {
-                    maxAverage = Math.Max(maxAverage, (double) sumOfk / k);
+                    maxAverage = Math.Max(maxAverage, sumOfk * 1.0 / k);
                 }
 
             }
