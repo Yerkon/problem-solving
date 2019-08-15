@@ -11,11 +11,8 @@ namespace ArrayType {
         // less code solution
         // https://leetcode.com/problems/valid-mountain-array/
         public bool ValidMountainArray(int[] A) {
-            if (A.Length <= 2) return false;
-
-            int begin = 0;
-            int end = A.Length - 1;
-
+            int begin = 0, end = A.Length - 1;
+            
             while (begin < A.Length - 1 && A[begin] < A[begin + 1]) {
                 begin++;
             }
@@ -24,7 +21,7 @@ namespace ArrayType {
                 end--;
             }
 
-            return begin == end && begin != 0 && begin != A.Length - 1;
+            return begin > 0 && begin == end && begin < A.Length - 1;
         }
 
         // solution with for loop, but much more code
