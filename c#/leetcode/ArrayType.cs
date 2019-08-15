@@ -8,6 +8,56 @@ using System.Text;
 namespace ArrayType {
     public class Solution {
 
+        // less code solution
+        // https://leetcode.com/problems/valid-mountain-array/
+        public bool ValidMountainArray(int[] A) {
+            if (A.Length <= 2) return false;
+
+            int begin = 0;
+            int end = A.Length - 1;
+
+            while (begin < A.Length - 1 && A[begin] < A[begin + 1]) {
+                begin++;
+            }
+
+            while (end > begin && A[end] < A[end - 1]) {
+                end--;
+            }
+
+            return begin == end && begin != 0 && begin != A.Length - 1;
+        }
+
+        // solution with for loop, but much more code
+        // https://leetcode.com/problems/valid-mountain-array/
+        public bool ValidMountainArray1(int[] A) {
+            if (A.Length <= 2) return false;
+
+            int increaseIndex = 0;
+            bool isIncrease = false;
+            bool isIncreaseReverse = false;
+
+            for (int i = 1; i < A.Length; i++) {
+                if (A[i - 1] < A[i]) {
+                    isIncrease = true;
+                    increaseIndex = i;
+                } else {
+                    break;
+                }
+            }
+
+            for (int i = A.Length - 1; i > increaseIndex; i--) {
+
+                if (A[i] >= A[i - 1]) {
+                    return false;
+                } else {
+                    isIncreaseReverse = true;
+                }
+            }
+
+            return isIncrease && isIncreaseReverse;
+
+        }
+
         // https://leetcode.com/problems/contains-duplicate-ii/
         public bool ContainsNearbyDuplicate(int[] nums, int k) {
             Dictionary<int, int> dic = new Dictionary<int, int>();
