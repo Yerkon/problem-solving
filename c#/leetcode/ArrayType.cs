@@ -8,11 +8,44 @@ using System.Text;
 namespace ArrayType {
     public class Solution {
 
+        // https://leetcode.com/problems/x-of-a-kind-in-a-deck-of-cards/
+        public bool HasGroupsSizeX(int[] deck) {
+            Dictionary<int, int> dic = new Dictionary<int, int>();
+
+            int minCount = int.MaxValue;
+            for (int i = 0; i < deck.Length; i++) {
+                dic[deck[i]] = dic.GetValueOrDefault(deck[i], 0) + 1;
+            }
+
+            minCount = dic.Values.Min();
+
+            List<int> divideList = new List<int>();
+            for (int i = 2; i <= minCount; i++) {
+                if (minCount % i == 0) {
+                    divideList.Add(i);
+                }
+            }
+
+            foreach (int d in divideList) {
+                bool isDividable = true;
+
+                foreach (int key in dic.Keys) {
+                    if (dic[key] % d != 0) {
+                        isDividable = false;
+                    }
+                }
+
+                if (isDividable) return true;
+            }
+
+            return false;
+        }
+
         // less code solution
         // https://leetcode.com/problems/valid-mountain-array/
         public bool ValidMountainArray(int[] A) {
             int begin = 0, end = A.Length - 1;
-            
+
             while (begin < A.Length - 1 && A[begin] < A[begin + 1]) {
                 begin++;
             }
