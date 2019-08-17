@@ -8,6 +8,11 @@ using System.Text;
 namespace ArrayType {
     public class Solution {
 
+        public int gcd(int x, int y) {
+            return x == 0 ? y : gcd(y % x, x);
+        }
+
+
         // https://leetcode.com/problems/x-of-a-kind-in-a-deck-of-cards/
         public bool HasGroupsSizeX(int[] deck) {
             Dictionary<int, int> dic = new Dictionary<int, int>();
@@ -19,14 +24,14 @@ namespace ArrayType {
 
             minCount = dic.Values.Min();
 
-            List<int> divideList = new List<int>();
+            List<int> divisors = new List<int>();
             for (int i = 2; i <= minCount; i++) {
                 if (minCount % i == 0) {
-                    divideList.Add(i);
+                    divisors.Add(i);
                 }
             }
 
-            foreach (int d in divideList) {
+            foreach (int d in divisors) {
                 bool isDividable = true;
 
                 foreach (int key in dic.Keys) {
