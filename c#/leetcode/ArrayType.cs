@@ -20,9 +20,13 @@ namespace ArrayType {
                     n--;
                 }
 
+                if (n <= 0) {
+                    return true;
+                }
+
             }
 
-            return n <= 0;
+            return false;
         }
 
         public int gcd(int x, int y) {
