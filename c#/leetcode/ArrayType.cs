@@ -8,6 +8,57 @@ using System.Text;
 namespace ArrayType {
     public class Solution {
 
+        // https://leetcode.com/problems/rotate-array/
+        public void Rotate(int[] nums, int k) {
+            int N = nums.Length;
+
+            int tempIndex = 0;
+            int tempVal = nums[tempIndex];
+            HashSet<int> set = new HashSet<int>();
+
+            int c = 0;
+            while (c < N) {
+
+                int placeIndex = (tempIndex + k) % N;
+                int placeVal = nums[placeIndex];
+
+                // already filled
+                if (set.Contains(placeIndex)) {
+
+                    tempIndex++;
+                    tempIndex = tempIndex % N;
+                    tempVal = nums[tempIndex];
+
+                    set.Clear();
+                    continue;
+                }
+
+                nums[placeIndex] = tempVal;
+
+                tempIndex = placeIndex;
+                tempVal = placeVal;
+                c++;
+
+                set.Add(placeIndex);
+            }
+        }
+
+        // Time: O(N), Space: O(N)
+        // // https://leetcode.com/problems/rotate-array/
+        public void Rotate1(int[] nums, int k) {
+            int N = nums.Length;
+
+            int[] source = new int[nums.Length];
+            for (int i = 0; i < nums.Length; i++) {
+                source[i] = nums[i];
+            }
+
+            for (int i = 0; i < N; i++) {
+                int nextIdx = (i + k) % N;
+                nums[nextIdx] = source[i];
+            }
+        }
+
         // https://leetcode.com/problems/can-place-flowers/
         public bool CanPlaceFlowers(int[] flowerbed, int n) {
 
