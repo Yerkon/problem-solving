@@ -8,10 +8,26 @@ using System.Text;
 namespace ArrayType {
     public class Solution {
 
+        // https://leetcode.com/problems/can-place-flowers/
+        public bool CanPlaceFlowers(int[] flowerbed, int n) {
+
+            for (int i = 0; i < flowerbed.Length; i++) {
+                if (flowerbed[i] == 0 &&
+                    ((i - 1) < 0 || flowerbed[i - 1] == 0) &&
+                    ((i + 1) == flowerbed.Length || flowerbed[i + 1] == 0)) {
+
+                    flowerbed[i] = 1;
+                    n--;
+                }
+
+            }
+
+            return n <= 0;
+        }
+
         public int gcd(int x, int y) {
             return x == 0 ? y : gcd(y % x, x);
         }
-
 
         // https://leetcode.com/problems/x-of-a-kind-in-a-deck-of-cards/
         public bool HasGroupsSizeX(int[] deck) {
