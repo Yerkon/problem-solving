@@ -17,31 +17,16 @@ namespace ArrayType {
             }
 
             Array.Sort(sortedArr);
+            int start = int.MaxValue, end = int.MinValue;
 
-            bool isStartFound = false, isEndFound = false;
-            int start = 0, end = nums.Length - 1;
-
-            while (!(isStartFound && isEndFound) && start < end) {
-                if (!isStartFound) {
-                    if (sortedArr[start] != nums[start]) {
-                        isStartFound = true;
-                    } else {
-                        start++;
-                    }
+            for (int i = 0; i < nums.Length; i++) {
+                if (nums[i] != sortedArr[i]) {
+                    start = Math.Min(start, i);
+                    end = Math.Max(end, i);
                 }
-
-                if (!isEndFound) {
-                    if (sortedArr[end] != nums[end]) {
-                        isEndFound = true;
-                    } else {
-                        end--;
-                    }
-                }
-
             }
 
-            return isStartFound && isEndFound ? end - start + 1 : 0;
-
+            return start < end ? end - start + 1 : 0;
         }
 
         // https://leetcode.com/problems/rotate-array/
