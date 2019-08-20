@@ -8,6 +8,42 @@ using System.Text;
 namespace ArrayType {
     public class Solution {
 
+        // https://leetcode.com/problems/shortest-unsorted-continuous-subarray/
+        public int FindUnsortedSubarray(int[] nums) {
+            int[] sortedArr = new int[nums.Length];
+
+            for (int i = 0; i < nums.Length; i++) {
+                sortedArr[i] = nums[i];
+            }
+
+            Array.Sort(sortedArr);
+
+            bool isStartFound = false, isEndFound = false;
+            int start = 0, end = nums.Length - 1;
+
+            while (!(isStartFound && isEndFound) && start < end) {
+                if (!isStartFound) {
+                    if (sortedArr[start] != nums[start]) {
+                        isStartFound = true;
+                    } else {
+                        start++;
+                    }
+                }
+
+                if (!isEndFound) {
+                    if (sortedArr[end] != nums[end]) {
+                        isEndFound = true;
+                    } else {
+                        end--;
+                    }
+                }
+
+            }
+
+            return isStartFound && isEndFound ? end - start + 1 : 0;
+
+        }
+
         // https://leetcode.com/problems/rotate-array/
         public void Rotate(int[] nums, int k) {
             int N = nums.Length;
