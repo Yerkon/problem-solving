@@ -8,9 +8,43 @@ using System.Text;
 namespace ArrayType {
     public class Solution {
 
-        // brute force, but no extra space :)
+        // Time: O(N), Space: O(N)
         // https://leetcode.com/problems/shortest-unsorted-continuous-subarray/
         public int FindUnsortedSubarray(int[] nums) {
+
+            Stack<int> stack = new Stack<int>();
+            int start = int.MaxValue, end = int.MinValue;
+            stack.Push(nums[0]);
+            bool isFound = false;
+            int count = 0;
+            
+            for (int i = 1; i < nums.Length; i++) {
+
+                if (stack.Peek() <= nums[i]) {
+                    stack.Push(nums[i]);
+                } else {
+                    end = Math.Max(end, i);
+
+                    int maxVal = int.MinValue;
+
+                    while (stack.Count > 0 && stack.Peek() > nums[i]) {
+                        count++;
+                        maxVal = Math.Max(maxVal, stack.Pop());
+                    }
+                    
+                    stack.Push(maxVal);
+
+                    start = Math.Min(start, i - count);
+                    isFound = true;
+                }
+            }
+
+            return isFound ? (end - start + 1) : 0;
+        }
+
+        // brute force, but no extra space :)
+        // https://leetcode.com/problems/shortest-unsorted-continuous-subarray/
+        public int FindUnsortedSubarray2(int[] nums) {
 
             bool isStartFound = false, isEndFound = false;
             int start = 0, end = nums.Length - 1;
