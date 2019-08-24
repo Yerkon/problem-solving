@@ -8,6 +8,25 @@ using System.Text;
 namespace ArrayType {
     public class Solution {
 
+        // https://leetcode.com/problems/k-diff-pairs-in-an-array/
+        public int FindPairs(int[] nums, int k) {
+            int uniqPairs = 0;
+            HashSet<int> set = new HashSet<int>();
+
+            for (int i = 0; i < nums.Length; i++) {
+                for (int j = i + 1; j < nums.Length; j++) {
+                    int diff = Math.Abs(nums[i] - nums[j]);
+                    int pair = Math.Max(nums[i], nums[j]) + Math.Min(nums[i], nums[j]);
+
+                    if (diff == k && set.Add(pair)) {
+                        uniqPairs++;
+                    }
+                }
+            }
+
+            return uniqPairs;
+        }
+
         // Time: O(N), Space: O(1)
         // https://leetcode.com/problems/shortest-unsorted-continuous-subarray/
         public int FindUnsortedSubarray(int[] nums) {
