@@ -8,16 +8,50 @@ using System.Text;
 namespace ArrayType {
     public class Solution {
 
-        // Time: O(N), Space: O(N)
+        // Time: O(N), Space: O(1)
         // https://leetcode.com/problems/shortest-unsorted-continuous-subarray/
         public int FindUnsortedSubarray(int[] nums) {
+
+            int min = int.MaxValue, max = int.MinValue;
+            int start = nums.Length - 1, end = 0;
+
+            for (int i = 0; i < nums.Length - 1; i++) {
+                if (nums[i] > nums[i + 1]) {
+                    min = Math.Min(min, nums[i + 1]);
+                }
+            }
+
+            for (int i = nums.Length - 1; i > 0; i--) {
+                if (nums[i] < nums[i - 1]) {
+                    max = Math.Max(max, nums[i - 1]);
+                }
+            }
+
+            for (int i = 0; i < nums.Length; i++) {
+                if (min < nums[i]) {
+                    start = Math.Min(start, i);
+                }
+            }
+
+            for (int i = nums.Length - 1; i >= 0; i--) {
+                if (max > nums[i]) {
+                    end = Math.Max(end, i);
+                }
+            }
+
+            return (end - start > 0) ? end - start + 1 : 0;
+        }
+
+        // Time: O(N), Space: O(N)
+        // https://leetcode.com/problems/shortest-unsorted-continuous-subarray/
+        public int FindUnsortedSubarray3(int[] nums) {
 
             Stack<int> stack = new Stack<int>();
             int start = int.MaxValue, end = int.MinValue;
             stack.Push(nums[0]);
             bool isFound = false;
             int count = 0;
-            
+
             for (int i = 1; i < nums.Length; i++) {
 
                 if (stack.Peek() <= nums[i]) {
@@ -31,7 +65,7 @@ namespace ArrayType {
                         count++;
                         maxVal = Math.Max(maxVal, stack.Pop());
                     }
-                    
+
                     stack.Push(maxVal);
 
                     start = Math.Min(start, i - count);
