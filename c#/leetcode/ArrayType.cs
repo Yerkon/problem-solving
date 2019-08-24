@@ -8,8 +8,34 @@ using System.Text;
 namespace ArrayType {
     public class Solution {
 
+
+        // Time: O(N), Space: O(N)
         // https://leetcode.com/problems/k-diff-pairs-in-an-array/
         public int FindPairs(int[] nums, int k) {
+            int uniqPairs = 0;
+            HashSet<int> set = new HashSet<int>();
+            Dictionary<int, int> pairTable = new Dictionary<int, int>();
+
+            for (int i = 0; i < nums.Length; i++) {
+                pairTable[nums[i] + k] = i;
+            }
+
+            for (int i = 0; i < nums.Length; i++) {
+                if (pairTable.ContainsKey(nums[i])) { // contains second pair
+
+                    if (pairTable[nums[i]] != i && set.Add(nums[i])) {
+                        uniqPairs++;
+                    }
+
+                }
+            }
+
+            return uniqPairs;
+        }
+
+        // Brute force
+        // https://leetcode.com/problems/k-diff-pairs-in-an-array/
+        public int FindPairs1(int[] nums, int k) {
             int uniqPairs = 0;
             HashSet<int> set = new HashSet<int>();
 
