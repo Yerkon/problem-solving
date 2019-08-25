@@ -9,6 +9,46 @@ namespace ArrayType {
     public class Solution {
 
         // Time: O(N), Space: O(1)
+        // https://leetcode.com/problems/non-decreasing-array/
+        public bool CheckPossibility(int[] nums) {
+
+            int startIdx = 0;
+            int tempVal = 0;
+
+            for (int i = 0; i < nums.Length - 1; i++) {
+
+                if (nums[i] > nums[i + 1]) {
+                    tempVal = nums[i];
+                    startIdx = i;
+
+                    nums[i] = nums[i + 1];
+                    break;
+                }
+            }
+
+            bool firstPass = true, secondPass = true;
+
+            for (int i = 0; i < nums.Length - 1; i++) {
+                if (nums[i] > nums[i + 1]) {
+                    firstPass = false;
+
+                    nums[startIdx] = tempVal;
+                    nums[startIdx + 1] = nums[startIdx];
+                    break;
+                }
+            }
+
+            for (int i = 0; i < nums.Length - 1; i++) {
+                if (nums[i] > nums[i + 1]) {
+                    secondPass = false;
+                    break;
+                }
+            }
+
+            return firstPass || secondPass;
+        }
+
+        // Time: O(N), Space: O(1)
         // https://leetcode.com/problems/third-maximum-number/
         public int ThirdMax(int[] nums) {
             int max1 = int.MinValue, max2 = int.MinValue, max3 = int.MinValue;
