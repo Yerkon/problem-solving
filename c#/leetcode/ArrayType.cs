@@ -9,6 +9,27 @@ namespace ArrayType {
     public class Solution {
 
         // Time: O(N), Space: O(1)
+        // https://leetcode.com/problems/is-subsequence/
+       public bool IsSubsequence(string s, string t) {
+
+           if(s.Length == 0) return false;
+
+            int start = 0;
+            for (int i = 0; i < t.Length; i++) {
+
+                if (s[start] == t[i]) {
+                    start++;
+                }
+
+                if (start == s.Length) {
+                    break;
+                }
+            }
+
+            return start == s.Length;
+        }
+
+        // Time: O(N), Space: O(1)
         // https://leetcode.com/problems/non-decreasing-array/
         public bool CheckPossibility(int[] nums) {
 
@@ -32,8 +53,8 @@ namespace ArrayType {
                 if (nums[i] > nums[i + 1]) {
                     firstPass = false;
 
-                    nums[startIdx] = tempVal;
-                    nums[startIdx + 1] = nums[startIdx];
+                    nums[startIdx] = tempVal; // restore as original array
+                    nums[startIdx + 1] = nums[startIdx]; // update for second case
                     break;
                 }
             }
