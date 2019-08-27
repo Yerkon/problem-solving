@@ -8,11 +8,78 @@ using System.Text;
 namespace ArrayType {
     public class Solution {
 
+        // Time: O(N), Space: Stack size with max 3 items, O(1) ?
+        // https://leetcode.com/problems/climbing-stairs/submissions/
+        public int ClimbStairs(int n) {
+            Stack<int> stack = new Stack<int>();
+            int k = 0;
+
+            while (k <= n) {
+                if (k <= 2) {
+                    stack.Push(k);
+                } else {
+
+                    int prev = stack.Pop();
+                    int prev2 = stack.Pop();
+
+                    while (stack.Count > 0) { // stack will contain max 3 items
+                        stack.Pop();
+                    }
+
+                    int curr = prev + prev2;
+
+                    stack.Push(prev2);
+                    stack.Push(prev);
+                    stack.Push(curr);
+                }
+
+                k++;
+            }
+
+            return stack.Peek();
+        }
+
+        public int getPossibleSteps(int n, Dictionary<int, int> dic) {
+            if (dic.ContainsKey(n)) return dic[n];
+
+            if (n <= 2) {
+                dic[n] = n;
+                return n;
+            }
+
+            int val = ClimbStairs(n - 1) + ClimbStairs(n - 2);
+            dic[n] = val;
+
+            return dic[n];
+        }
+
+        // https://leetcode.com/problems/is-subsequence/
+        public bool IsSubsequence(string s, string t) {
+
+            List<int> list = new List<int>();
+
+            if (s.Length == 0) return false;
+
+            int start = 0;
+            for (int i = 0; i < t.Length; i++) {
+
+                if (s[start] == t[i]) {
+                    start++;
+                }
+
+                if (start == s.Length) {
+                    break;
+                }
+            }
+
+            return start == s.Length;
+        }
+
         // Time: O(N), Space: O(1)
         // https://leetcode.com/problems/is-subsequence/
-       public bool IsSubsequence(string s, string t) {
+        public bool IsSubsequence1(string s, string t) {
 
-           if(s.Length == 0) return false;
+            if (s.Length == 0) return false;
 
             int start = 0;
             for (int i = 0; i < t.Length; i++) {
