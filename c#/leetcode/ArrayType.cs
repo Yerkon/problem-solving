@@ -22,13 +22,8 @@ namespace ArrayType {
                     int prev = stack.Pop();
                     int prev2 = stack.Pop();
 
-                    while (stack.Count > 0) { // stack will contain max 3 items
-                        stack.Pop();
-                    }
-
                     int curr = prev + prev2;
-
-                    stack.Push(prev2);
+                    
                     stack.Push(prev);
                     stack.Push(curr);
                 }
