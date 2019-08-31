@@ -8,8 +8,6 @@ using System.Text;
 namespace ArrayType {
     public class Solution {
 
-      
-
         // Time: O(N), Space: O(1)
         // https://leetcode.com/problems/non-decreasing-array/
         public bool CheckPossibility(int[] nums) {

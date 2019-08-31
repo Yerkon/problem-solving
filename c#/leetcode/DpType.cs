@@ -7,19 +7,30 @@ using System.Text;
 
 namespace DpType {
     public class Solution {
+        // Time: O(nlogn?), Space: O(N + recursive stack)
         // https://leetcode.com/problems/house-robber/
         public int Rob(int[] nums) {
-            // int sum1 = 0, sum2 = 0;
+            Dictionary<int, int> dic = new Dictionary<int, int>();
 
-            // for (int i = 0; i < nums.Length; i++) {
-            //     if (i % 2 == 0) {
-            //         sum1 += nums[i];
-            //     } else {
-            //         sum2 += nums[i];
-            //     }
-            // }
+            return getRobRec(nums, 0, dic);
+        }
 
-            // return Math.Max(sum1, sum2);
+        public int getRobRec(int[] nums, int index, Dictionary<int, int> dic) {
+            if (dic.ContainsKey(index)) return dic[index];
+
+            if (index >= nums.Length) return 0;
+
+            if (index == nums.Length - 1) {
+                dic[index] = nums[index];
+                return dic[index];
+            }
+
+            int currVal = nums[index] + getRobRec(nums, index + 2, dic);
+            currVal = Math.Max(currVal, getRobRec(nums, index + 1, dic));
+
+            dic[index] = currVal;
+
+            return dic[index];
         }
 
         // Time: O(N), Space: Stack size with max 3 items, O(1) ?
