@@ -7,9 +7,28 @@ using System.Text;
 
 namespace DpType {
     public class Solution {
-        // Time: O(nlogn?), Space: O(N + recursive stack)
+
+        // iterative way
+        // Time: O(N), Space: O(N)
         // https://leetcode.com/problems/house-robber/
         public int Rob(int[] nums) {
+            int[] dp = new int[nums.Length];
+
+            for (int i = 0; i < nums.Length; i++) {
+                int end = nums.Length - 1 - i;
+                int dpMinus2 = i - 2 < 0 ? 0 : dp[i - 2];
+                int dpMinus1 = i - 1 < 0 ? 0 : dp[i - 1];
+
+                dp[i] = Math.Max(dpMinus2 + nums[end], dpMinus1);
+            }
+
+            return nums.Length == 0 ? 0 : dp[dp.Length - 1];
+        }
+
+        // recursive way
+        // Time: O(nlogn?), Space: O(N + recursive stack)
+        // https://leetcode.com/problems/house-robber/
+        public int Rob1(int[] nums) {
             Dictionary<int, int> dic = new Dictionary<int, int>();
 
             return getRobRec(nums, 0, dic);
