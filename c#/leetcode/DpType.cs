@@ -26,7 +26,7 @@ namespace DpType {
         }
 
         // recursive way
-        // Time: O(nlogn?), Space: O(N + recursive stack)
+        // Time: O(N), Space: O(N + recursive stack)
         // https://leetcode.com/problems/house-robber/
         public int Rob1(int[] nums) {
             Dictionary<int, int> dic = new Dictionary<int, int>();
