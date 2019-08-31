@@ -8,6 +8,23 @@ using System.Text;
 namespace DpType {
     public class Solution {
 
+        // Time: O(N), Space: recursive stack
+        // https://leetcode.com/problems/divisor-game/
+        public bool DivisorGame(int N) {
+            
+            return getDivisorRec(N, true);
+        }
+
+        public bool getDivisorRec(int n, bool isAliceMove) {
+            if (n <= 1) {
+                return isAliceMove == true ? false : true;
+            }
+
+            int selectedVal = 1;        
+
+            return getDivisorRec(n - selectedVal, !isAliceMove);
+        }
+
         // iterative way
         // Time: O(N), Space: O(N)
         // https://leetcode.com/problems/house-robber/
