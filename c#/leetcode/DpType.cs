@@ -6,12 +6,69 @@ using System.Numerics;
 using System.Text;
 
 namespace DpType {
+
+    public class NumArray {
+        Dictionary<int, int> dic = new Dictionary<int, int>();
+        int[] arr;
+        public NumArray(int[] nums) {
+            arr = nums;
+        }
+
+        public int SumRange(int i, int j) {
+            if (i == j) {
+
+                return arr[i];
+            }
+
+            if (i > j) {
+                return 0;
+            }
+
+            int left = i >= arr.Length ? 0 : arr[i];
+            int right = j < 0 ? 0 : arr[j];
+
+            return left + right + SumRange(++i, --j);
+        }
+
+    }
+
+    // with using Dictionary
+    public class NumArray1 {
+        Dictionary<KeyValuePair<int, int>, int> dic = new Dictionary<KeyValuePair<int, int>, int>();
+        int[] arr;
+        public NumArray1(int[] nums) {
+            arr = nums;
+        }
+
+        public int SumRange(int i, int j) {
+
+            if (i > j) {
+                return 0;
+            }
+
+            KeyValuePair<int, int> key = KeyValuePair.Create(i, j);
+
+            if (dic.ContainsKey(key)) return dic[key];
+
+            if (i == j) {
+                dic[key] = arr[i];
+                return dic[key];
+            }
+
+            int left = i >= arr.Length ? 0 : arr[i];
+            int right = j < 0 ? 0 : arr[j];
+
+            dic[key] = left + right + SumRange(++i, --j);
+            return dic[key];
+        }
+
+    }
     public class Solution {
 
         // Time: O(N), Space: recursive stack   
         // https://leetcode.com/problems/divisor-game/
         public bool DivisorGame(int N) {
-            
+
             return MoveInDivisorGame(N, true);
         }
 
@@ -20,7 +77,7 @@ namespace DpType {
                 return isAliceMove == true ? false : true;
             }
 
-            int selectedVal = 1;        
+            int selectedVal = 1;
 
             return MoveInDivisorGame(n - selectedVal, !isAliceMove);
         }
