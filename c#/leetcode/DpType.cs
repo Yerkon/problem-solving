@@ -7,6 +7,7 @@ using System.Text;
 
 namespace DpType {
 
+    // https://leetcode.com/problems/range-sum-query-immutable/
     public class NumArray {
         Dictionary<int, int> dic = new Dictionary<int, int>();
         int[] arr;
