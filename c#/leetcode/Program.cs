@@ -8,7 +8,11 @@ namespace leetcode {
         static void Main(string[] args) {
             //Solution sol = new Solution();
             Solution sol = new Solution();
-            sol.SelfDividingNumbers(1, 22);
+            sol.ProjectionArea(new int[][] {
+                new int[] { 1, 1, 1 },
+                    new int[] { 1, 0, 1 },
+                    new int[] { 1, 1, 1 },
+            });
         }
 
     }
