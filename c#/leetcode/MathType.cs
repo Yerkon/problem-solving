@@ -7,21 +7,32 @@ using System.Text;
 
 namespace MathType {
 
-    public class Point3D {
-        public int x { get; set; }
-        public int y { get; set; }
-        public int z { get; set; }
-
-        public Point3D(int x, int y, int z) {
-            this.x = x;
-            this.y = y;
-            this.z = z;
-        }
-    }
     public class Solution {
 
         // https://leetcode.com/problems/projection-area-of-3d-shapes/
         public int ProjectionArea(int[][] grid) {
+            int N = grid.Length;
+            int ans = 0;
+
+            for (int i = 0; i < N; i++) {
+                int bestRow = 0;
+                int bestCol = 0;
+
+                for (int j = 0; j < N; j++) {
+                    if (grid[i][j] > 0) ans++; // top shadow
+
+                    bestRow = Math.Max(bestRow, grid[i][j]);
+                    bestCol = Math.Max(bestCol, grid[j][i]);
+                }
+
+                ans += bestRow + bestCol;
+            }
+
+            return ans;
+        }
+
+        // https://leetcode.com/problems/projection-area-of-3d-shapes/
+        public int ProjectionArea1(int[][] grid) {
             int totalArea = 0;
 
             int[] xzProj = new int[grid.Length];
@@ -48,6 +59,7 @@ namespace MathType {
             }
 
             int xyCount = 0;
+
             for (int x = 0; x < xyProj.Length; x++) {
                 xyCount += xyProj[x].Sum();
             }
