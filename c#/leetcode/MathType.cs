@@ -9,6 +9,25 @@ namespace MathType {
 
     public class Solution {
 
+        // https://leetcode.com/problems/smallest-range-i/
+        public int SmallestRangeI(int[] A, int K) {
+            int min = 10000;
+            int max = 0;
+
+            for (int i = 0; i < A.Length; i++) {
+                min = Math.Min(min, A[i]);
+                max = Math.Max(max, A[i]);
+
+            }
+
+            K = Math.Abs(K);
+
+            min += K;
+            max -= K;
+
+            return max - min < 0 ? 0 : max - min;
+        }
+
         // https://leetcode.com/problems/projection-area-of-3d-shapes/
         public int ProjectionArea(int[][] grid) {
             int N = grid.Length;
