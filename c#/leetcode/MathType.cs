@@ -28,6 +28,7 @@ namespace MathType {
             return max - min < 0 ? 0 : max - min;
         }
 
+        // Time: O(N^2), N = grid.length, Space: O(1)
         // https://leetcode.com/problems/projection-area-of-3d-shapes/
         public int ProjectionArea(int[][] grid) {
             int N = grid.Length;
@@ -50,6 +51,7 @@ namespace MathType {
             return ans;
         }
 
+        // Time: O(N^2) N = grid.length, Space: O(N^2)
         // https://leetcode.com/problems/projection-area-of-3d-shapes/
         public int ProjectionArea1(int[][] grid) {
             int totalArea = 0;
