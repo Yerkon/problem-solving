@@ -9,6 +9,24 @@ namespace MathType {
 
     public class Solution {
 
+        // https://leetcode.com/problems/distribute-candies-to-people/
+        public int[] DistributeCandies(int candies, int num_people) {
+            int[] ans = new int[num_people];
+            int index = 0;
+            int count = 0;
+
+            while (candies > 0) {
+                count++;
+                int rem = candies - count;
+                ans[index] += rem < 0 ? candies : count;
+
+                index = ++index % num_people;
+                candies = rem;
+            }
+
+            return ans;
+        }
+
         // https://leetcode.com/problems/smallest-range-i/
         public int SmallestRangeI(int[] A, int K) {
             int min = 10000;
