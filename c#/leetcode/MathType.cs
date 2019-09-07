@@ -8,6 +8,25 @@ using System.Text;
 namespace MathType {
 
     public class Solution {
+
+        public int BitwiseComplement(int N) {
+            if (N == 0) return 0;
+
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; N > 0; i++) {
+                int binary = (N % 2) ^ 1;
+
+                sb.Append(binary);
+                N /= 2;
+            }
+
+            string binaryRepresent = string.Join("", sb.ToString().Reverse());
+            int numRep = Convert.ToInt32(binaryRepresent, 2);
+
+            return numRep;
+        }
+
         public int BinaryGap(int N) {
 
             List<int> binaryList = new List<int>();
