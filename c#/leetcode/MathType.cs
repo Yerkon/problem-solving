@@ -8,6 +8,33 @@ using System.Text;
 namespace MathType {
 
     public class Solution {
+        public int BinaryGap(int N) {
+
+            List<int> binaryList = new List<int>();
+            int maxDistance = 0;
+
+            for (int i = 0; N > 0; i++) {
+                binaryList.Add(N % 2);
+                N /= 2;
+            }
+
+            int startIdx = -1;
+            int endIdx = -1;
+
+            for (int i = 0; i < binaryList.Count; i++) {
+                if (startIdx == -1 && binaryList.ElementAt(i) == 1) {
+                    startIdx = i;
+                } else if (endIdx == -1 && binaryList.ElementAt(i) == 1) {
+                    endIdx = i;
+
+                    maxDistance = Math.Max(maxDistance, endIdx - startIdx);
+                    startIdx = endIdx;
+                    endIdx = -1;
+                }
+            }
+
+            return maxDistance;
+        }
 
         // https://leetcode.com/problems/distribute-candies-to-people/
         public int[] DistributeCandies(int candies, int num_people) {
