@@ -9,6 +9,61 @@ namespace MathType {
 
     public class Solution {
 
+        public int LargestPerimeter(int[] A) {
+            Array.Sort(A);
+
+            int maxP = 0;
+
+            for (int i = 0; i < A.Length - 2; i++) {
+                int a = A[i];
+                int b = A[i + 1];
+                int c = A[i + 2];
+
+                int p = a + b + c;
+                double s = p * 1.0 / 2;
+                double area = Math.Sqrt(s * (s - a) * (s - b) * (s - c));
+
+                maxP = Math.Max(maxP, area > 0 ? p : 0);
+            }
+
+            return maxP;
+        }
+
+        public int LargestPerimeter1(int[] A) {
+            int max1 = -1, max2 = -1, max3 = -1;
+
+            for (int i = 0; i < A.Length; i++) {
+
+                if ((i < 3 && A[i] > max1) || (A[i] > max1 && isTriangle(A[i], max1, max2))) {
+                    max3 = max2;
+                    max2 = max1;
+                    max1 = A[i];
+
+                } else if ((i < 3 && A[i] > max2) || (A[i] > max2 && isTriangle(A[i], max1, max2))) {
+                    max3 = max2;
+                    max2 = A[i];
+
+                } else if ((i < 3 && A[i] > max2) || (A[i] > max3 && isTriangle(A[i], max1, max2))) {
+                    max3 = A[i];
+                }
+            }
+
+            int p = max1 + max2 + max3;
+            double s = p * 1.0 / 2;
+            double a = Math.Sqrt(s * (s - max1) * (s - max2) * (s - max3));
+
+            return a > 0 ? p : 0;
+        }
+
+        public bool isTriangle(int a, int b, int c) {
+            if ((a + b) >= c) return false;
+            if ((a + c) >= b) return false;
+            if ((b + c) >= a) return false;
+
+            return true;
+
+        }
+
         // https://leetcode.com/problems/complement-of-base-10-integer/
         public int BitwiseComplement(int N) {
             if (N == 0) return 1;

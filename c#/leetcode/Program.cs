@@ -8,7 +8,7 @@ namespace leetcode {
         static void Main(string[] args) {
             //Solution sol = new Solution();
             Solution sol = new Solution();
-            sol.BitwiseComplement(5);
+            sol.LargestPerimeter(new int[] { 3, 6, 2, 3 });
         }
 
     }
