@@ -8,7 +8,7 @@ namespace leetcode {
         static void Main(string[] args) {
             //Solution sol = new Solution();
             Solution sol = new Solution();
-            sol.BinaryGap(8);
+            sol.BitwiseComplement(5);
         }
 
     }

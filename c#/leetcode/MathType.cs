@@ -9,19 +9,20 @@ namespace MathType {
 
     public class Solution {
 
+        // https://leetcode.com/problems/complement-of-base-10-integer/
         public int BitwiseComplement(int N) {
-            if (N == 0) return 0;
+            if (N == 0) return 1;
 
-            StringBuilder sb = new StringBuilder();
+            Stack<int> binaryStack = new Stack<int>();
 
             for (int i = 0; N > 0; i++) {
                 int binary = (N % 2) ^ 1;
+                binaryStack.Push(binary);
 
-                sb.Append(binary);
                 N /= 2;
             }
 
-            string binaryRepresent = string.Join("", sb.ToString().Reverse());
+            string binaryRepresent = string.Join("", binaryStack);
             int numRep = Convert.ToInt32(binaryRepresent, 2);
 
             return numRep;
