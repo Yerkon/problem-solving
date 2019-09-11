@@ -9,6 +9,43 @@ namespace MathType {
 
     public class Solution {
 
+        // https://leetcode.com/problems/largest-triangle-area/
+        public double LargestTriangleArea(int[][] points) {
+            double area = 0;
+
+            for (int i = 0; i < points.Length; i++) {
+                int[] point1 = points[i];
+
+                for (int j = i + 1; j < points.Length; j++) {
+                    int[] point2 = points[j];
+
+                    for (int k = j + 1; k < points.Length; k++) {
+                        int[] point3 = points[k];
+
+                        // calculate area 
+
+                        double p1p2 = CalcLengthOfTriangleSide(point1, point2);
+                        double p2p3 = CalcLengthOfTriangleSide(point2, point3);
+                        double p1p3 = CalcLengthOfTriangleSide(point1, point3);
+
+                        double p = p1p2 + p2p3 + p1p3;
+                        double s = p / 2;
+                        double a = Math.Sqrt(s * (s - p1p2) * (s - p2p3) * (s - p1p3));
+
+                        area = Math.Max(area, double.IsNaN(a) ? 0 : a);
+                    }
+                }
+            }
+
+            return area;
+        }
+
+        public double CalcLengthOfTriangleSide(int[] p1, int[] p2) {
+            int x = p2[0] - p1[0];
+            int y = p2[1] - p1[1];
+            return Math.Sqrt(x * x + y * y);
+        }
+
         public int LargestPerimeter(int[] A) {
             Array.Sort(A);
 
