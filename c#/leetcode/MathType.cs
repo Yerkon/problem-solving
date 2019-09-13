@@ -9,6 +9,33 @@ namespace MathType {
 
     public class Solution {
 
+        // no loops
+        // https://leetcode.com/problems/add-digits/    
+        public int addDigits(int num) {
+            if (num == 0) return 0;
+
+            int rem = num % 9;
+
+            return rem > 0 ? rem : 9;
+        }
+
+        // with use 'while'
+        // https://leetcode.com/problems/add-digits/    
+        public int addDigits1(int num) {
+            while (num > 9) {
+                int k = 0;
+
+                while (num > 0) {
+                    k += num % 10;
+                    num /= 10;
+                }
+
+                num = k;
+            }
+
+            return num;
+        }
+
         // https://leetcode.com/problems/largest-triangle-area/
         public double LargestTriangleArea(int[][] points) {
             double area = 0;
