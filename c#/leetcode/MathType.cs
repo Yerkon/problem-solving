@@ -8,6 +8,20 @@ using System.Text;
 namespace MathType {
 
     public class Solution {
+        
+
+        // https://leetcode.com/problems/excel-sheet-column-number/
+        public int TitleToNumber(string s) {
+            int ans = s[0] - 'A' + 1;
+
+            for (int i = 1; i < s.Length; i++) {
+                int currNum = s[i] - 'A' + 1;
+                ans = ans * 26 + currNum;
+            }
+
+
+            return ans;
+        }
 
         // no loops
         // https://leetcode.com/problems/add-digits/    
