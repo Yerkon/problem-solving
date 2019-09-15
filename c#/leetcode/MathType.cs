@@ -40,7 +40,7 @@ namespace MathType {
         ) {
 
             List<int> newList = permutationList.ToList(); // copy
-            newList.Insert(index, val);
+            newList.Insert(index, val); // bottleneck is here
 
             // base case
             if (newList.Count == size) {
