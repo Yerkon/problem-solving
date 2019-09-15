@@ -8,7 +8,64 @@ using System.Text;
 namespace MathType {
 
     public class Solution {
-        
+
+        // https://leetcode.com/problems/prime-arrangements/
+        public int NumPrimeArrangements(int n) {
+            HashSet<int> primeSet = new HashSet<int>();
+
+            for (int num = 2; num <= 100; num++) {
+                int c = 0;
+
+                for (int i = 1; i <= num; i++) {
+                    if (num % i == 0) {
+                        c++;
+                    }
+                }
+
+                if (c == 2) {
+                    primeSet.Add(num);
+                }
+            }
+
+            List<bool> answerList = new List<bool>();
+            List<int> permutationList = new List<int>();
+
+            GetPermutationPrimeList(primeSet, permutationList, answerList, n, 1, 0);
+
+            return answerList.Count;
+        }
+
+        public void GetPermutationPrimeList(
+            HashSet<int> primeSet, List<int> permutationList, List<bool> answerList, int size, int val, int index
+        ) {
+
+            List<int> newList = permutationList.ToList(); // copy
+            newList.Insert(index, val);
+
+            // base case
+            if (newList.Count == size) {
+                bool isPrimePerm = true;
+
+                for (int i = 0; i < newList.Count; i++) {
+                    if (primeSet.Contains(newList[i]) && !primeSet.Contains(i + 1)) {
+                        isPrimePerm = false;
+
+                        break;
+                    }
+                }
+
+                if (isPrimePerm) {
+                    answerList.Add(true);
+                }
+
+                return;
+            }
+
+            for (int i = 0; i <= newList.Count; i++) {
+                GetPermutationPrimeList(primeSet, newList, answerList, size, val + 1, i);
+            }
+
+        }
 
         // https://leetcode.com/problems/excel-sheet-column-number/
         public int TitleToNumber(string s) {
@@ -18,7 +75,6 @@ namespace MathType {
                 int currNum = s[i] - 'A' + 1;
                 ans = ans * 26 + currNum;
             }
-
 
             return ans;
         }
