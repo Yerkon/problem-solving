@@ -27,20 +27,100 @@ namespace MathType {
                 }
             }
 
-            List<bool> answerList = new List<bool>();
+            int ans = 0;
+            int k = 2;
+            Stack<List<int>> permStack = new Stack<List<int>>();
+            permStack.Push(new List<int>() { 1 });
+
+            while (k <= n) {
+                List<List<int>> newListOfList = new List<List<int>>();
+
+                while (permStack.Count > 0) {
+                    List<int> source = permStack.Pop();
+
+                    for (int i = 0; i <= source.Count; i++) {
+                        List<int> newList = source.ToList();
+                        newList.Insert(i, k);
+                        newListOfList.Add(newList);
+                    }
+
+                }
+
+                if (k == n) {
+
+                    foreach (List<int> newList in newListOfList) {
+                        bool isPrimePerm = true;
+
+                        for (int i = 0; i < newList.Count; i++) {
+                            if (primeSet.Contains(newList[i]) && !primeSet.Contains(i + 1)) {
+                                isPrimePerm = false;
+
+                                break;
+                            }
+                        }
+
+                        if (isPrimePerm) {
+                            ans++;
+                        }
+                    }
+
+                } else {
+                    foreach (List<int> newList in newListOfList) {
+                        permStack.Push(newList);
+                    }
+                }
+
+                k++;
+            }
+
+            return ans;
+
+        }
+
+        // https://leetcode.com/problems/prime-arrangements/
+        public int NumPrimeArrangements1(int n) {
+            HashSet<int> primeSet = new HashSet<int>() {
+                2,
+                3,
+                5,
+                7,
+                11,
+                13,
+                17,
+                19,
+                23,
+                29,
+                31,
+                37,
+                41,
+                43,
+                47,
+                53,
+                59,
+                61,
+                67,
+                71,
+                73,
+                79,
+                83,
+                89,
+                97
+            };
+
+            List<int> answerList = new List<int>() { 0 };
             List<int> permutationList = new List<int>();
 
             GetPermutationPrimeList(primeSet, permutationList, answerList, n, 1, 0);
 
-            return answerList.Count;
+            return answerList[0];
         }
 
         public void GetPermutationPrimeList(
-            HashSet<int> primeSet, List<int> permutationList, List<bool> answerList, int size, int val, int index
+            HashSet<int> primeSet, List<int> permutationList, List<int> answerList, int size, int val, int index
         ) {
 
             List<int> newList = permutationList.ToList(); // copy
-            newList.Insert(index, val); // bottleneck is here
+            newList.Insert(index, val);
 
             // base case
             if (newList.Count == size) {
@@ -55,7 +135,7 @@ namespace MathType {
                 }
 
                 if (isPrimePerm) {
-                    answerList.Add(true);
+                    answerList[0]++;
                 }
 
                 return;
