@@ -8,9 +8,48 @@ using System.Text;
 namespace MathType {
 
     public class Solution {
-
+        
         // https://leetcode.com/problems/prime-arrangements/
         public int NumPrimeArrangements(int n) {
+            int primeCount = 0;
+            int nonPrimeCount = 0;
+
+            for (int i = 2; i <= n; i++) {
+                if (IsPrime(i)) primeCount++;
+            }
+
+            nonPrimeCount = n - primeCount;
+
+            int primeNumComb = GetTotalCombinations(primeCount);
+            int nonPrimeComb = GetTotalCombinations(nonPrimeCount);
+
+            int ans = primeNumComb * nonPrimeComb % 1000000007;
+            return ans;
+
+        }
+
+        public int GetTotalCombinations(int n) {
+            int res = 1;
+            for (int i = 2; i <= n; i++) {
+                res = res * i;
+            }
+
+            return res;
+        }
+
+        public bool IsPrime(int n) {
+            int c = 0;
+
+            for (int i = 1; i <= n; i++) {
+                if (n % i == 0) c++;
+            }
+
+            return c <= 2;
+        }
+
+        // iterative
+        // https://leetcode.com/problems/prime-arrangements/
+        public int NumPrimeArrangements2(int n) {
             HashSet<int> primeSet = new HashSet<int>();
 
             for (int num = 2; num <= 100; num++) {
