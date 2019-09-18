@@ -8,20 +8,46 @@ using System.Text;
 namespace MathType {
 
     public class Solution {
-        
+
+        // Sieve of Eratosthenes
         // https://leetcode.com/problems/prime-arrangements/
         public int NumPrimeArrangements(int n) {
+            int primeCount = 0;
+            int MOD = (int) (1e9 + 7);
+
+            bool[] numberList = new bool[n + 1];
+            for (int i = 2; i <= n; i++) {
+                if (numberList[i] == false) {
+
+                    for (int k = i * i; k <= n; k += i) {
+                        numberList[k] = true;
+                    }
+                }
+            }
+
+            primeCount = numberList.Count(r => r == false) - 2;
+
+            long primeNumComb = GetTotalCombinations(primeCount, MOD);
+            long nonPrimeComb = GetTotalCombinations(n - primeCount, MOD);
+
+            int ans = (int) (primeNumComb * nonPrimeComb % MOD);
+
+            return ans;
+        }
+
+        // https://leetcode.com/problems/prime-arrangements/
+        public int NumPrimeArrangements3(int n) {
             int primeCount = 0;
             int MOD = (int) (1e9 + 7);
 
             for (int i = 2; i <= n; i++) {
                 if (IsPrime(i)) primeCount++;
             }
-            
+
             long primeNumComb = GetTotalCombinations(primeCount, MOD);
             long nonPrimeComb = GetTotalCombinations(n - primeCount, MOD);
 
-            int ans = (int)(primeNumComb * nonPrimeComb % MOD) ;
+            int ans = (int) (primeNumComb * nonPrimeComb % MOD);
 
             return ans;
         }
