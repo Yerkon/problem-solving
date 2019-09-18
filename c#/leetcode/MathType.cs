@@ -13,6 +13,25 @@ namespace MathType {
         public int MinMoves(int[] nums) {
             int count = 0;
 
+            int min = int.MaxValue;
+            
+            for (int i = 0; i < nums.Length; i++) {
+                if (nums[i] < min) {
+                    min = nums[i];
+                }
+            }
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                count += nums[i] - min;
+            }
+            return count;
+        }
+
+        // https://leetcode.com/problems/minimum-moves-to-equal-array-elements/
+        public int MinMoves1(int[] nums) {
+            int count = 0;
+
             int min = int.MaxValue, max = int.MinValue;
             int maxIndex = 0;
             for (int i = 0; i < nums.Length; i++) {
