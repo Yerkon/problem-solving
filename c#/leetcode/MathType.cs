@@ -12,26 +12,24 @@ namespace MathType {
         // https://leetcode.com/problems/prime-arrangements/
         public int NumPrimeArrangements(int n) {
             int primeCount = 0;
-            int nonPrimeCount = 0;
+            int MOD = (int) (1e9 + 7);
 
             for (int i = 2; i <= n; i++) {
                 if (IsPrime(i)) primeCount++;
             }
+            
+            long primeNumComb = GetTotalCombinations(primeCount, MOD);
+            long nonPrimeComb = GetTotalCombinations(n - primeCount, MOD);
 
-            nonPrimeCount = n - primeCount;
+            int ans = (int)(primeNumComb * nonPrimeComb % MOD) ;
 
-            int primeNumComb = GetTotalCombinations(primeCount);
-            int nonPrimeComb = GetTotalCombinations(nonPrimeCount);
-
-            int ans = primeNumComb * nonPrimeComb % 1000000007;
             return ans;
-
         }
 
-        public int GetTotalCombinations(int n) {
-            int res = 1;
+        public long GetTotalCombinations(int n, int MOD) {
+            long res = 1;
             for (int i = 2; i <= n; i++) {
-                res = res * i;
+                res = (res * i) % MOD;
             }
 
             return res;
