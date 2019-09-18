@@ -9,6 +9,54 @@ namespace MathType {
 
     public class Solution {
 
+        // https://leetcode.com/problems/minimum-moves-to-equal-array-elements/
+        public int MinMoves(int[] nums) {
+            int count = 0;
+
+            int min = int.MaxValue, max = int.MinValue;
+            int maxIndex = 0;
+            for (int i = 0; i < nums.Length; i++) {
+                if (nums[i] > max) {
+                    max = nums[i];
+                    maxIndex = i;
+                }
+
+                if (nums[i] < min) {
+                    min = nums[i];
+                }
+            }
+            bool isAllTheSame = false;
+
+            while (isAllTheSame == false) {
+                int diff = max - min;
+                int newMaxIndex = maxIndex;
+
+                min = int.MaxValue;
+                isAllTheSame = true;
+
+                for (int i = 0; i < nums.Length; i++) {
+                    if (i != maxIndex) {
+                        nums[i] += diff;
+                    }
+
+                    if (nums[i] > max) {
+                        max = nums[i];
+                        newMaxIndex = i;
+                        isAllTheSame = false;
+                    }
+
+                    if (nums[i] < min) {
+                        min = nums[i];
+                    }
+                }
+
+                maxIndex = newMaxIndex;
+                count = count + diff;
+            }
+
+            return count;
+        }
+
         // Sieve of Eratosthenes
         // https://leetcode.com/problems/prime-arrangements/
         public int NumPrimeArrangements(int n) {
