@@ -9,20 +9,60 @@ namespace MathType {
 
     public class Solution {
 
+        // https://leetcode.com/problems/day-of-the-year/
+        public int DayOfYear(string date) {
+            string[] dateArr = date.Split('-');
+            int[] months = new int[] {
+                31,
+                28,
+                31,
+                30,
+                31,
+                30,
+                31,
+                31,
+                30,
+                31,
+                30,
+                33,
+            };
+
+            bool isLeapYear = false;
+            int year = int.Parse(dateArr[0]);
+            int month = int.Parse(dateArr[1]);
+            int day = int.Parse(dateArr[2]);
+            int dayOfYear = 0;
+
+            if (year % 400 == 0) {
+                isLeapYear = true;
+            } else if (year % 100 == 0) {
+                isLeapYear = false;
+            } else if (year % 4 == 0) {
+                isLeapYear = true;
+            }
+
+            if (isLeapYear) months[1] = 29;
+
+            for (int i = 0; i < month - 1; i++) {
+                dayOfYear += months[i];
+            }
+
+            return dayOfYear + day;
+        }
+
         // https://leetcode.com/problems/minimum-moves-to-equal-array-elements/
         public int MinMoves(int[] nums) {
             int count = 0;
 
             int min = int.MaxValue;
-            
+
             for (int i = 0; i < nums.Length; i++) {
                 if (nums[i] < min) {
                     min = nums[i];
                 }
             }
 
-            for (int i = 0; i < nums.Length; i++)
-            {
+            for (int i = 0; i < nums.Length; i++) {
                 count += nums[i] - min;
             }
             return count;
