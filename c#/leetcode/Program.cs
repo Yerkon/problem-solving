@@ -7,7 +7,11 @@ namespace leetcode {
     class Program {
         static void Main(string[] args) {
             Solution sol = new Solution();
-            sol.NumPrimeArrangements(100);      
+            sol.MaxCount(3, 3, new int[][] {
+                new int[] { 2, 2, },
+                    new int[] { 3, 3, }
+
+            });
         }
 
     }

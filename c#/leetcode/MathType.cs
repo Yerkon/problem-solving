@@ -9,6 +9,64 @@ namespace MathType {
 
     public class Solution {
 
+        // https://leetcode.com/problems/range-addition-ii/
+        public int MaxCount(int m, int n, int[][] ops) {
+            if (ops.Length == 0) {
+                return m * n;
+            }
+
+            if (ops.Length == 1) {
+                int a = ops[0][0];
+                int b = ops[0][1];
+
+                return a * b;
+            }
+
+            for (int i = 0; i < ops.Length; i++) {
+                m = Math.Max(m, ops[i][0]);
+                n = Math.Max(n, ops[i][1]);
+            }
+
+            int[][] matrix = new int[m][];
+            int maxCount = 0;
+            int maxVal = 0;
+
+            for (int i = 0; i < m; i++) {
+                int[] row = new int[n];
+
+                for (int j = 0; j < n; j++) {
+                    row[j] = 0;
+                }
+
+                matrix[i] = row;
+            }
+
+            for (int i = 0; i < ops.Length; i++) {
+                int[] opr = ops[i];
+
+                for (int r = 0; r < opr[0]; r++) {
+                    for (int c = 0; c < opr[1]; c++) {
+
+                        matrix[r][c]++;
+
+                        maxVal = Math.Max(maxVal, matrix[r][c]);
+                    }
+                }
+
+            }
+
+            for (int i = 0; i < matrix.Length; i++) {
+                for (int j = 0; j < matrix[i].Length; j++) {
+
+                    if (matrix[i][j] == maxVal) {
+                        maxCount++;
+                    }
+                }
+            }
+
+            return maxCount;
+        }
+
         // https://leetcode.com/problems/day-of-the-year/
         public int DayOfYear(string date) {
             string[] dateArr = date.Split('-');
