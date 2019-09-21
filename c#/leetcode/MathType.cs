@@ -11,6 +11,16 @@ namespace MathType {
 
         // https://leetcode.com/problems/range-addition-ii/
         public int MaxCount(int m, int n, int[][] ops) {
+            for (int i = 0; i < ops.Length; i++) {
+                m = Math.Min(m, ops[i][0]);
+                n = Math.Min(n, ops[i][1]);
+            }
+
+            return m * n;
+        }
+
+        // https://leetcode.com/problems/range-addition-ii/
+        public int MaxCount(1 int m, int n, int[][] ops) {
             if (ops.Length == 0) {
                 return m * n;
             }
