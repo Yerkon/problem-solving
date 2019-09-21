@@ -20,7 +20,7 @@ namespace MathType {
         }
 
         // https://leetcode.com/problems/range-addition-ii/
-        public int MaxCount(1 int m, int n, int[][] ops) {
+        public int MaxCount1( int m, int n, int[][] ops) {
             if (ops.Length == 0) {
                 return m * n;
             }
