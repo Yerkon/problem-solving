@@ -9,6 +9,41 @@ namespace MathType {
 
     public class Solution {
 
+        // https://leetcode.com/problems/rectangle-overlap/
+        public bool IsRectangleOverlap(int[] rec1, int[] rec2) {
+            int[] x1Axis = new int[] { rec1[0], rec1[2] };
+            int[] x2Axis = new int[] { rec2[0], rec2[2] };
+
+            int[] y1Axis = new int[] { rec1[1], rec1[3] };
+            int[] y2Axis = new int[] { rec2[1], rec2[3] };
+
+            return isOverlapByAxis(x1Axis, x2Axis) && isOverlapByAxis(y1Axis, y2Axis);
+        }
+
+        public bool isOverlapByAxis(int[] axisRange1, int[] axisRange2) {
+            int axis1Start = Math.Min(axisRange1[0], axisRange1[1]);
+            int axis1End = Math.Max(axisRange1[0], axisRange1[1]);
+
+            int axis2Start = Math.Min(axisRange2[0], axisRange2[1]);
+            int axis2End = Math.Max(axisRange2[0], axisRange2[1]);
+
+            bool isOverlap = false;
+
+            if (axis1Start == axis2Start && axis1End == axis2End) return true;
+
+            if ((axis1Start < axis2Start && axis2Start < axis1End) ||
+                (axis1Start < axis2End && axis2End < axis1End)
+            ) {
+                isOverlap = true;
+            } else if ((axis2Start < axis1Start && axis1Start < axis2End) ||
+                (axis2Start < axis1End && axis1End < axis2End)
+            ) {
+                isOverlap = true;
+            }
+
+            return isOverlap;
+        }
+
         // https://leetcode.com/problems/range-addition-ii/
         public int MaxCount(int m, int n, int[][] ops) {
             for (int i = 0; i < ops.Length; i++) {
@@ -20,7 +55,7 @@ namespace MathType {
         }
 
         // https://leetcode.com/problems/range-addition-ii/
-        public int MaxCount1( int m, int n, int[][] ops) {
+        public int MaxCount1(int m, int n, int[][] ops) {
             if (ops.Length == 0) {
                 return m * n;
             }
