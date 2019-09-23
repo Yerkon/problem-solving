@@ -9,8 +9,59 @@ namespace MathType {
 
     public class Solution {
 
+        // https://leetcode.com/problems/power-of-two/
+        public bool IsPowerOfTwo(int n) {
+
+            if (n <= 0) return false;
+
+            return (n & (n - 1)) == 0;
+        }
+
+        // https://leetcode.com/problems/power-of-two/
+        public bool IsPowerOfTwo1(int n) {
+
+            while (n > 1) {
+                if (n % 2 == 1) return false;
+
+                n /= 2;
+            }
+
+            return n == 1;
+        }
+
+        // https://leetcode.com/problems/happy-number/
+        public bool IsHappy(int n) {
+            if (n <= 0) return false;
+
+            HashSet<int> set = new HashSet<int>();
+
+            while (n != 1 && set.Add(n)) {
+                int k = 0;
+
+                while (n > 0) {
+                    k = k + (n % 10) * (n % 10);
+                    n /= 10;
+                }
+
+                n = k;
+            }
+
+            return n == 1;
+        }
+
+        // elegant way analysis
         // https://leetcode.com/problems/rectangle-overlap/
         public bool IsRectangleOverlap(int[] rec1, int[] rec2) {
+
+            return (
+                Math.Min(rec1[2], rec2[2]) > Math.Max(rec1[0], rec2[0]) && // by x
+                Math.Min(rec1[3], rec2[3]) > Math.Max(rec1[1], rec2[1]) // by y
+            );
+
+        }
+
+        // https://leetcode.com/problems/rectangle-overlap/
+        public bool IsRectangleOverlap1(int[] rec1, int[] rec2) {
             int[] x1Axis = new int[] { rec1[0], rec1[2] };
             int[] x2Axis = new int[] { rec2[0], rec2[2] };
 
