@@ -4,17 +4,51 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace MathType {
 
     public class Solution {
 
-        // https://leetcode.com/problems/power-of-two/
-        public bool IsPowerOfTwo(int n) {
+        // https://leetcode.com/problems/set-mismatch/
 
-            if (n <= 0) return false;
+        public int[] FindErrorNums1(int[] nums) {
+            HashSet<int> set = new HashSet<int>();
+            int[] arr = new int[2];
 
-            return (n & (n - 1)) == 0;
+            for (int i = 0; i < nums.Length; i++) {
+                if (!set.Add(nums[i])) {
+                    arr[0] = nums[i];
+                }
+            }
+
+            for (int i = 1; i <= nums.Length; i++) {
+                if (set.Add(i)) {
+                    arr[1] = i;
+                }
+            }
+
+            return arr;
+        }
+
+        // // https://leetcode.com/problems/power-of-three/
+        // public bool IsPowerOfThree(int n) {
+
+        //     string base3 = Convert.ToString(n, 3);
+        //     Regex reg = new Regex("^10*$");
+
+        //     return reg.IsMatch(base3);
+        // }
+
+        public bool IsPowerOfThree1(int n) {
+
+            while (n > 2) {
+                if (n % 3 > 0) return false;
+
+                n /= 3;
+            }
+
+            return n == 1;
         }
 
         // https://leetcode.com/problems/power-of-two/
