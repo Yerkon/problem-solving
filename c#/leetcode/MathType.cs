@@ -10,7 +10,55 @@ namespace MathType {
 
     public class Solution {
 
+        // https://leetcode.com/problems/ugly-number/
+        public bool IsUgly(int num) {
+            if (num <= 0) return false;
+
+            while (num > 5) {
+                if (num % 2 == 0) {
+                    num /= 2;
+                } else if (num % 3 == 0) {
+                    num /= 3;
+                } else if (num % 5 == 0) {
+                    num /= 5;
+                } else {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         // https://leetcode.com/problems/set-mismatch/
+
+        public int[] FindErrorNums(int[] nums) {
+            int xor = 0, xor0 = 0, xor1 = 0;
+            Array.ForEach(nums, n => xor ^= n);
+
+            for (int i = 1; i <= nums.Length; i++)
+                xor ^= i;
+
+            int rightmostbit = xor & ~(xor - 1);
+
+            Array.ForEach(nums, n => {
+                if ((n & rightmostbit) != 0)
+                    xor1 ^= n;
+                else
+                    xor0 ^= n;
+            });
+
+            for (int i = 1; i <= nums.Length; i++) {
+                if ((i & rightmostbit) != 0)
+                    xor1 ^= i;
+                else
+                    xor0 ^= i;
+            }
+            for (int i = 0; i < nums.Length; i++) {
+                if (nums[i] == xor0)
+                    return new int[] { xor0, xor1 };
+            }
+            return new int[] { xor1, xor0 };
+        }
 
         public int[] FindErrorNums1(int[] nums) {
             HashSet<int> set = new HashSet<int>();

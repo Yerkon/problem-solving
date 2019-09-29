@@ -7,7 +7,7 @@ namespace leetcode {
     class Program {
         static void Main(string[] args) {
             Solution sol = new Solution();
-            sol.IsPowerOfTwo(4);
+            sol.FindErrorNums(new int[] { 1, 2, 2, 3 });
         }
 
     }
