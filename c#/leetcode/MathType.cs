@@ -10,9 +10,47 @@ namespace MathType {
 
     public class Solution {
 
+        // https://leetcode.com/problems/valid-perfect-square/
+        public bool IsPerfectSquare(int num) {
+
+            if (num == 1) return true;
+
+            return FindSquareRoot(1, num, num);
+        }
+
+        public bool FindSquareRoot(int a, int b, int res) {
+            if (a == b) return false;
+
+            int middle = ((b - a) / 2 + a);
+            double bigMiddle = middle * 1.0;
+            double bigMultiplied = bigMiddle * bigMiddle;
+
+            int multiplied = middle * middle;
+
+            if(multiplied == res) {
+                return true;
+            } else if(bigMultiplied > res || multiplied > res) {
+                return FindSquareRoot(a, middle, res);
+            } else {
+                return FindSquareRoot(middle + 1, b, res);
+            }
+
+        }
+
+        public bool IsPerfectSquare1(int num) {
+            int sqr = 1;
+
+            while (sqr * sqr < num) {
+                sqr++;
+            }
+
+            return sqr * sqr == num;
+        }
+
         // https://leetcode.com/problems/ugly-number/
         public bool IsUgly(int num) {
             if (num <= 0) return false;
+
 
             while (num > 5) {
                 if (num % 2 == 0) {
@@ -356,7 +394,7 @@ namespace MathType {
         // https://leetcode.com/problems/prime-arrangements/
         public int NumPrimeArrangements(int n) {
             int primeCount = 0;
-            int MOD = (int) (1e9 + 7);
+            int MOD = (int)(1e9 + 7);
 
             bool[] numberList = new bool[n + 1];
             for (int i = 2; i <= n; i++) {
@@ -373,7 +411,7 @@ namespace MathType {
             long primeNumComb = GetTotalCombinations(primeCount, MOD);
             long nonPrimeComb = GetTotalCombinations(n - primeCount, MOD);
 
-            int ans = (int) (primeNumComb * nonPrimeComb % MOD);
+            int ans = (int)(primeNumComb * nonPrimeComb % MOD);
 
             return ans;
         }
@@ -381,7 +419,7 @@ namespace MathType {
         // https://leetcode.com/problems/prime-arrangements/
         public int NumPrimeArrangements3(int n) {
             int primeCount = 0;
-            int MOD = (int) (1e9 + 7);
+            int MOD = (int)(1e9 + 7);
 
             for (int i = 2; i <= n; i++) {
                 if (IsPrime(i)) primeCount++;
@@ -390,7 +428,7 @@ namespace MathType {
             long primeNumComb = GetTotalCombinations(primeCount, MOD);
             long nonPrimeComb = GetTotalCombinations(n - primeCount, MOD);
 
-            int ans = (int) (primeNumComb * nonPrimeComb % MOD);
+            int ans = (int)(primeNumComb * nonPrimeComb % MOD);
 
             return ans;
         }

@@ -6,3 +6,5 @@ yarn.lock
 c#/leetcode/bin
 c#/leetcode/obj
 
+/c#/leetcode/.vs/leetcode/v16
+/c#/leetcode/.vs/leetcode/DesignTimeBuild

@@ -7,7 +7,7 @@ namespace leetcode {
     class Program {
         static void Main(string[] args) {
             Solution sol = new Solution();
-            sol.FindErrorNums(new int[] { 1, 2, 2, 3 });
+            sol.IsPerfectSquare(2147395600);
         }
 
     }
