@@ -10,8 +10,37 @@ namespace MathType {
 
     public class Solution {
 
+        // https://leetcode.com/problems/powerful-integers/
+        public IList<int> PowerfulIntegers(int x, int y, int bound) {
+           
+            var set = new HashSet<int>();
+            double curr = 0;
+
+            for (int i = 0; ; i++) {
+                double xPow = Math.Pow(x, i);
+               
+                for (int j = 0; curr <= bound ; j++) {
+                    double yPow = Math.Pow(y, j);
+                    curr = xPow + yPow;
+
+                    if (curr <= bound) {
+                        set.Add((int)curr);
+                    }
+
+                    if (y == 1) break;
+                }
+
+                if (xPow > bound || x == 1) break;
+
+                curr = 0;
+            }
+
+            return set.ToList();
+        }
+
         // https://leetcode.com/problems/valid-perfect-square/
         public bool IsPerfectSquare(int num) {
+
 
             if (num == 1) return true;
 
@@ -27,9 +56,9 @@ namespace MathType {
 
             int multiplied = middle * middle;
 
-            if(multiplied == res) {
+            if (multiplied == res) {
                 return true;
-            } else if(bigMultiplied > res || multiplied > res) {
+            } else if (bigMultiplied > res) {
                 return FindSquareRoot(a, middle, res);
             } else {
                 return FindSquareRoot(middle + 1, b, res);
@@ -897,7 +926,7 @@ namespace MathType {
         // https://leetcode.com/problems/self-dividing-numbers/
         public IList<int> SelfDividingNumbers(int left, int right) {
 
-            var result = new List<int>();
+            List<int> result = new List<int>();
 
             for (int i = left; i <= right; i++) {
 
