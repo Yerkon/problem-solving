@@ -10,6 +10,28 @@ namespace MathType {
 
     public class Solution {
 
+        // https://leetcode.com/problems/arranging-coins/
+        public int ArrangeCoins(int n) {
+
+            return (int)Math.Floor(-0.5 + Math.Sqrt(2.0 * n + 0.25));
+        }
+
+
+        public int ArrangeCoins1(int n) {
+            int count = 0;
+
+            for (int i = 1; n > 0; i++) {
+                if(n >= i) {
+                    count++;
+                }
+
+                n -= i;
+            }
+
+            return count;
+        }
+
+
         // https://leetcode.com/problems/powerful-integers/
         public IList<int> PowerfulIntegers(int x, int y, int bound) {
            

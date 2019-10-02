@@ -7,7 +7,7 @@ namespace leetcode {
     class Program {
         static void Main(string[] args) {
             Solution sol = new Solution();
-            sol.PowerfulIntegers(2, 1, 10);
+            sol.ArrangeCoins(1804289383);
         }
 
     }
