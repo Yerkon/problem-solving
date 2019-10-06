@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +10,52 @@ namespace MathType {
 
     public class Solution {
 
+        // https://leetcode.com/problems/valid-boomerang/
+        public bool IsBoomerang(int[][] points) {
+            int[] a = points[0];
+            int[] b = points[1];
+            int[] c = points[2];
+
+            if (isTwoPointsEqual(a, b) || isTwoPointsEqual(a, c) || isTwoPointsEqual(b, c)) {
+                return false;
+            }
+
+            if (IsVertical(a, b) || IsVertical(a, c) || IsVertical(b, c)) {
+                return !(IsVertical(a, b) && IsVertical(a, c) && IsVertical(b, c));
+            }
+
+            if (IsHorizontal(a, b) || IsHorizontal(a, c) || IsHorizontal(b, c)) {
+                return !(IsHorizontal(a, b) && IsHorizontal(a, c) && IsHorizontal(b, c));
+            }
+
+            // find slope
+            int yDiff = b[1] - a[1];
+            int xDiff = b[0] - a[0];
+
+            int mAB = yDiff / xDiff;
+
+            // y − y1 = m(x − x1)
+            int cY = mAB * (c[0] - a[0]) + a[1];
+
+            return !(c[1] == cY);
+        }
+
+        public static bool isTwoPointsEqual(int[] a, int[] b) {
+            return a[0] == b[0] && a[1] == b[1];
+        }
+       
+        public static bool IsHorizontal(int[] a, int[] b) {
+            int xDiff = b[0] - a[0];
+            return xDiff != 0 && a[1] == b[1];
+        }
+
+        public static bool IsVertical(int[] a, int[] b) {
+            int yDiff = b[1] - a[1];
+            return  yDiff != 0 && a[0] == b[0];
+        }
+
+
+        
         // https://leetcode.com/problems/factorial-trailing-zeroes/
         public int TrailingZeroes(int n) {
             int count = 0;

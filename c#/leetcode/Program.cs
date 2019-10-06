@@ -7,7 +7,11 @@ namespace leetcode {
     class Program {
         static void Main(string[] args) {
             Solution sol = new Solution();
-            sol.TrailingZeroes(3951);
+            sol.IsBoomerang(new int[][] {
+                new int[] {0, 0},
+                new int[] {1, 1},
+                new int[] {1, 1}
+            });
         }
 
     }
