@@ -7,11 +7,16 @@ namespace leetcode {
     class Program {
         static void Main(string[] args) {
             Solution sol = new Solution();
-            sol.IsBoomerang(new int[][] {
-                new int[] {0, 0},
-                new int[] {1, 1},
-                new int[] {1, 1}
-            });
+
+            for (int i = 1; i <= 10000; i++) {
+                bool isPerfect = sol.CheckPerfectNumber(i);
+
+                if(isPerfect) {
+                    Console.WriteLine(i + " = " + isPerfect);
+                }
+             
+            }
+
         }
 
     }

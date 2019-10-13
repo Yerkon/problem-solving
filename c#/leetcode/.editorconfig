@@ -198,3 +198,9 @@ dotnet_naming_style.begins_with_i.capitalization = pascal_case
 
 # CA1822: Mark members as static
 dotnet_diagnostic.CA1822.severity = silent
+
+# CA1305: Specify IFormatProvider
+dotnet_diagnostic.CA1305.severity = silent
+
+# CA1062: Validate arguments of public methods
+dotnet_diagnostic.CA1062.severity = silent

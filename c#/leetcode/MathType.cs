@@ -10,6 +10,75 @@ namespace MathType {
 
     public class Solution {
 
+        // https://leetcode.com/problems/largest-time-for-given-digits/
+        public string LargestTimeFromDigits(int[] A) {
+
+            string res = "";
+            string strFormat = "00";
+
+            List<int> minutes = new List<int>();
+            Dictionary<string, int> timesDic = new Dictionary<string, int>();
+
+            for (int i = 0; i < A.Length; i++) {
+                for (int j = i + 1; j < A.Length; j++) {
+
+                    int hour1 = int.Parse(A[i].ToString() + A[j].ToString());
+                    int hour2 = int.Parse(A[j].ToString() + A[i].ToString());
+
+                    int maxMinutes = -1;
+                    minutes.Clear();
+
+                    // find max minutes
+                    for (int k = 0; k < A.Length; k++) {
+                        if (!(k == i || k == j)) {
+                            minutes.Add(A[k]);
+                        }
+                    }
+
+                    int min1 = int.Parse(minutes[0].ToString() + minutes[1].ToString());
+                    int min2 = int.Parse(minutes[1].ToString() + minutes[0].ToString());
+
+                    if (min1 <= 59) maxMinutes = Math.Max(maxMinutes, min1);
+                    if (min2 <= 59) maxMinutes = Math.Max(maxMinutes, min2);
+
+                    if (maxMinutes != -1) {
+                        if (hour1 <= 23) {
+                            string time1 = hour1.ToString(strFormat) + ":" + maxMinutes.ToString(strFormat);
+                            timesDic[time1] = hour1 * 60 + maxMinutes;
+                        }
+
+                        if (hour2 <= 23) {
+                            string time2 = hour2.ToString(strFormat) + ":" + maxMinutes.ToString(strFormat);
+                            timesDic[time2] = hour2 * 60 + maxMinutes;
+                        }
+                    }
+                }
+            }
+
+            if (timesDic.Count == 0) return "";
+
+            int max = -1;
+
+            foreach (var key in timesDic.Keys) {
+
+                if (timesDic[key] > max) {
+                    res = key;
+
+                    max = timesDic[key];
+                }
+            };
+
+            return res;
+        }
+
+        // https://leetcode.com/problems/perfect-number/
+        public bool CheckPerfectNumber1(int num) {
+            HashSet<int> set = new HashSet<int>() { 6, 28, 496, 8128, 33550336 };
+
+            return set.Contains(num);
+        }
+
+
         // https://leetcode.com/problems/valid-boomerang/
         public bool IsBoomerang(int[][] points) {
             int[] a = points[0];
@@ -43,7 +112,7 @@ namespace MathType {
         public static bool isTwoPointsEqual(int[] a, int[] b) {
             return a[0] == b[0] && a[1] == b[1];
         }
-       
+
         public static bool IsHorizontal(int[] a, int[] b) {
             int xDiff = b[0] - a[0];
             return xDiff != 0 && a[1] == b[1];
@@ -51,11 +120,11 @@ namespace MathType {
 
         public static bool IsVertical(int[] a, int[] b) {
             int yDiff = b[1] - a[1];
-            return  yDiff != 0 && a[0] == b[0];
+            return yDiff != 0 && a[0] == b[0];
         }
 
 
-        
+
         // https://leetcode.com/problems/factorial-trailing-zeroes/
         public int TrailingZeroes(int n) {
             int count = 0;
@@ -80,7 +149,7 @@ namespace MathType {
             int count = 0;
 
             for (int i = 1; n > 0; i++) {
-                if(n >= i) {
+                if (n >= i) {
                     count++;
                 }
 
@@ -93,14 +162,14 @@ namespace MathType {
 
         // https://leetcode.com/problems/powerful-integers/
         public IList<int> PowerfulIntegers(int x, int y, int bound) {
-           
-            var set = new HashSet<int>();
+
+            HashSet<int> set = new HashSet<int>();
             double curr = 0;
 
             for (int i = 0; ; i++) {
                 double xPow = Math.Pow(x, i);
-               
-                for (int j = 0; curr <= bound ; j++) {
+
+                for (int j = 0; curr <= bound; j++) {
                     double yPow = Math.Pow(y, j);
                     curr = xPow + yPow;
 
