@@ -22,8 +22,8 @@ namespace MathType {
             for (int i = 0; i < A.Length; i++) {
                 for (int j = i + 1; j < A.Length; j++) {
 
-                    int hour1 = int.Parse(A[i].ToString() + A[j].ToString());
-                    int hour2 = int.Parse(A[j].ToString() + A[i].ToString());
+                    int hour1 = 10 * A[i] + A[j];
+                    int hour2 = 10 * A[j] + A[i];
 
                     int maxMinutes = -1;
                     minutes.Clear();
@@ -35,8 +35,8 @@ namespace MathType {
                         }
                     }
 
-                    int min1 = int.Parse(minutes[0].ToString() + minutes[1].ToString());
-                    int min2 = int.Parse(minutes[1].ToString() + minutes[0].ToString());
+                    int min1 = 10 * minutes[0] + minutes[1];
+                    int min2 = 10 * minutes[1] + minutes[0];
 
                     if (min1 <= 59) maxMinutes = Math.Max(maxMinutes, min1);
                     if (min2 <= 59) maxMinutes = Math.Max(maxMinutes, min2);
