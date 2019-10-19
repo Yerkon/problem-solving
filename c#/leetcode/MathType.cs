@@ -10,7 +10,20 @@ namespace MathType {
 
     public class Solution {
 
-        public int ReachNumber2(int target) {
+        public int ReachNumber(int target) {
+
+            target = Math.Abs(target);
+            int steps = 0;
+
+            while (target > 0) {
+                target -= ++steps;
+            }
+
+            return target % 2 == 0 ? steps : steps + 1 + steps % 2;
+            
+        }
+
+        public int ReachNumber3(int target) {
           
             double res = Math.Sqrt(2 * target + 0.25) + 0.5;
             double rem = res - Math.Floor(res);
