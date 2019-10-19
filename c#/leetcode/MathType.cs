@@ -10,14 +10,63 @@ namespace MathType {
 
     public class Solution {
 
+        public int ReachNumber2(int target) {
+          
+            double res = Math.Sqrt(2 * target + 0.25) + 0.5;
+            double rem = res - Math.Floor(res);
+            // res = Math.Round(res);
+         
+            return rem > 0 ? (int)res + 1 : (int)res - 1;
+        }
+
+
+        // time exceed
+        public int ReachNumber1(int target) {
+            int count = 0;
+
+            var list = new List<int>() { -1, 1 };
+
+            count++;
+
+            while (list.Count > 0) {
+                count++;
+
+                var newList = new List<int>();
+
+                foreach (int val in list) {
+                    if (val == target) return count - 1;
+
+
+                    newList.Add(val - count);
+                    newList.Add(val + count);
+                }
+
+                list = newList;
+            }
+
+            return 0;
+        }
+
+        public int MoveNext(int curr, int target, int count) {
+            if (curr == target) {
+                return count;
+            }
+
+            count++;
+
+
+            return Math.Min(MoveNext(curr - count, target, count), MoveNext(curr + count, target, count));
+        }
+
+
         // https://leetcode.com/problems/largest-time-for-given-digits/
         public string LargestTimeFromDigits(int[] A) {
 
             string res = "";
             string strFormat = "00";
 
-            List<int> minutes = new List<int>();
-            Dictionary<string, int> timesDic = new Dictionary<string, int>();
+            var minutes = new List<int>();
+            var timesDic = new Dictionary<string, int>();
 
             for (int i = 0; i < A.Length; i++) {
                 for (int j = i + 1; j < A.Length; j++) {
@@ -59,7 +108,7 @@ namespace MathType {
 
             int max = -1;
 
-            foreach (var key in timesDic.Keys) {
+            foreach (string key in timesDic.Keys) {
 
                 if (timesDic[key] > max) {
                     res = key;
@@ -73,7 +122,7 @@ namespace MathType {
 
         // https://leetcode.com/problems/perfect-number/
         public bool CheckPerfectNumber1(int num) {
-            HashSet<int> set = new HashSet<int>() { 6, 28, 496, 8128, 33550336 };
+            var set = new HashSet<int>() { 6, 28, 496, 8128, 33550336 };
 
             return set.Contains(num);
         }
@@ -163,7 +212,7 @@ namespace MathType {
         // https://leetcode.com/problems/powerful-integers/
         public IList<int> PowerfulIntegers(int x, int y, int bound) {
 
-            HashSet<int> set = new HashSet<int>();
+            var set = new HashSet<int>();
             double curr = 0;
 
             for (int i = 0; ; i++) {
@@ -278,7 +327,7 @@ namespace MathType {
         }
 
         public int[] FindErrorNums1(int[] nums) {
-            HashSet<int> set = new HashSet<int>();
+            var set = new HashSet<int>();
             int[] arr = new int[2];
 
             for (int i = 0; i < nums.Length; i++) {
@@ -332,7 +381,7 @@ namespace MathType {
         public bool IsHappy(int n) {
             if (n <= 0) return false;
 
-            HashSet<int> set = new HashSet<int>();
+            var set = new HashSet<int>();
 
             while (n != 1 && set.Add(n)) {
                 int k = 0;
@@ -634,7 +683,7 @@ namespace MathType {
         // iterative
         // https://leetcode.com/problems/prime-arrangements/
         public int NumPrimeArrangements2(int n) {
-            HashSet<int> primeSet = new HashSet<int>();
+            var primeSet = new HashSet<int>();
 
             for (int num = 2; num <= 100; num++) {
                 int c = 0;
@@ -652,17 +701,17 @@ namespace MathType {
 
             int ans = 0;
             int k = 2;
-            Stack<List<int>> permStack = new Stack<List<int>>();
+            var permStack = new Stack<List<int>>();
             permStack.Push(new List<int>() { 1 });
 
             while (k <= n) {
-                List<List<int>> newListOfList = new List<List<int>>();
+                var newListOfList = new List<List<int>>();
 
                 while (permStack.Count > 0) {
                     List<int> source = permStack.Pop();
 
                     for (int i = 0; i <= source.Count; i++) {
-                        List<int> newList = source.ToList();
+                        var newList = source.ToList();
                         newList.Insert(i, k);
                         newListOfList.Add(newList);
                     }
@@ -702,7 +751,7 @@ namespace MathType {
 
         // https://leetcode.com/problems/prime-arrangements/
         public int NumPrimeArrangements1(int n) {
-            HashSet<int> primeSet = new HashSet<int>() {
+            var primeSet = new HashSet<int>() {
                 2,
                 3,
                 5,
@@ -730,8 +779,8 @@ namespace MathType {
                 97
             };
 
-            List<int> answerList = new List<int>() { 0 };
-            List<int> permutationList = new List<int>();
+            var answerList = new List<int>() { 0 };
+            var permutationList = new List<int>();
 
             GetPermutationPrimeList(primeSet, permutationList, answerList, n, 1, 0);
 
@@ -742,7 +791,7 @@ namespace MathType {
             HashSet<int> primeSet, List<int> permutationList, List<int> answerList, int size, int val, int index
         ) {
 
-            List<int> newList = permutationList.ToList(); // copy
+            var newList = permutationList.ToList(); // copy
             newList.Insert(index, val);
 
             // base case
@@ -905,7 +954,7 @@ namespace MathType {
         public int BitwiseComplement(int N) {
             if (N == 0) return 1;
 
-            Stack<int> binaryStack = new Stack<int>();
+            var binaryStack = new Stack<int>();
 
             for (int i = 0; N > 0; i++) {
                 int binary = (N % 2) ^ 1;
@@ -922,7 +971,7 @@ namespace MathType {
 
         public int BinaryGap(int N) {
 
-            List<int> binaryList = new List<int>();
+            var binaryList = new List<int>();
             int maxDistance = 0;
 
             for (int i = 0; N > 0; i++) {
@@ -1076,7 +1125,7 @@ namespace MathType {
         // https://leetcode.com/problems/self-dividing-numbers/
         public IList<int> SelfDividingNumbers(int left, int right) {
 
-            List<int> result = new List<int>();
+            var result = new List<int>();
 
             for (int i = left; i <= right; i++) {
 
