@@ -10,9 +10,32 @@ namespace MathType {
 
     public class Solution {
 
+        // https://leetcode.com/problems/sqrtx/
+        // Time: O(Logx), Space: O(LogX)
+        public int MySqrt(int x) {
+            int squareRoot = (int)BinarySearchRootSquare(0, x, x);
+
+            return squareRoot * squareRoot == x ? squareRoot: --squareRoot;
+        }
+
+        public long BinarySearchRootSquare(long start, long end, int target) {
+            if (start >= end) {
+                return start;
+            }
+
+            long mid = start + (end - start) / 2;
+
+            long square = mid * mid;
+            if (square == target) return mid;
+            else if (square > target) {
+                return BinarySearchRootSquare(start, mid, target);
+            } else {
+                return BinarySearchRootSquare(mid + 1, end, target);
+            }
+        }
 
         // https://leetcode.com/problems/sum-of-square-numbers/
-        // time: sqrt(c) * log(c)
+        // time: O (sqrt(c) * log(c))
         public bool JudgeSquareSum(int c) {
             double squareRoot = Math.Sqrt(c);
 

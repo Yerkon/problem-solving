@@ -8,7 +8,7 @@ namespace leetcode {
         private static void Main(string[] args) {
             Solution sol = new Solution();
 
-            sol.JudgeSquareSum(1000);
+            sol.MySqrt(2147483647);
 
             //Console.WriteLine(res);
         }
