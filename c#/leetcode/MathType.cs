@@ -10,6 +10,20 @@ namespace MathType {
 
     public class Solution {
 
+
+        // https://leetcode.com/problems/sum-of-square-numbers/
+        public bool JudgeSquareSum(int c) {
+            double squareRoot = Math.Sqrt(c);
+
+            for (int i = 0; i <= squareRoot; i++) {
+                for (int j = i; j <= squareRoot; j++) {
+                    if ((i * i + j * j) == c) return true;
+                }
+            }
+
+            return false;
+        }
+
         public int ReachNumber(int target) {
 
             target = Math.Abs(target);
@@ -20,15 +34,15 @@ namespace MathType {
             }
 
             return target % 2 == 0 ? steps : steps + 1 + steps % 2;
-            
+
         }
 
         public int ReachNumber3(int target) {
-          
+
             double res = Math.Sqrt(2 * target + 0.25) + 0.5;
             double rem = res - Math.Floor(res);
             // res = Math.Round(res);
-         
+
             return rem > 0 ? (int)res + 1 : (int)res - 1;
         }
 

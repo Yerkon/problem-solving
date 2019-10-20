@@ -8,9 +8,9 @@ namespace leetcode {
         private static void Main(string[] args) {
             Solution sol = new Solution();
 
-            int res = sol.ReachNumber(3564);
+            sol.JudgeSquareSum(1000);
 
-            Console.WriteLine(res);
+            //Console.WriteLine(res);
         }
 
     }
