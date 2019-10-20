@@ -11,21 +11,44 @@ namespace MathType {
     public class Solution {
 
         // https://leetcode.com/problems/sqrtx/
-        // Time: O(Logx), Space: O(LogX)
-        public int MySqrt(int x) {
-            int squareRoot = (int)BinarySearchRootSquare(0, x, x);
+        // Time: O(Logx), Space: O(1)
+        public int MySqrt(int x) {         
+            long start = 0, end = x, mid;
 
-            return squareRoot * squareRoot == x ? squareRoot: --squareRoot;
+            while (start < end) {
+                mid = start + (end - start) / 2;
+                long square = mid * mid;
+
+                if (square == x) {
+                    return (int)mid;
+                } else if (square > x) {
+                    end = mid;
+                } else {
+                    // square is smaller
+                    start = mid + 1;
+                }
+            }
+
+            return start * start == x ? (int)start : (int)--start;
         }
 
+        // Time: O(Logx), Space: O(LogX)
+        public int MySqrt1(int x) {
+            int squareRoot = (int)BinarySearchRootSquare(0, x, x);
+
+            return squareRoot * squareRoot == x ? squareRoot : --squareRoot;
+        }
+
+
+        // recursive
         public long BinarySearchRootSquare(long start, long end, int target) {
             if (start >= end) {
                 return start;
             }
 
             long mid = start + (end - start) / 2;
-
             long square = mid * mid;
+
             if (square == target) return mid;
             else if (square > target) {
                 return BinarySearchRootSquare(start, mid, target);
