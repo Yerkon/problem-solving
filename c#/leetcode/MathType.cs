@@ -12,7 +12,23 @@ namespace MathType {
 
 
         // https://leetcode.com/problems/sum-of-square-numbers/
+        // time: sqrt(c) * log(c)
         public bool JudgeSquareSum(int c) {
+            double squareRoot = Math.Sqrt(c);
+
+            for (int i = 0; i <= squareRoot; i++) {
+                double b = Math.Sqrt(c - i * i);
+
+                if(b == (int)b) {
+                    return true;
+                }
+
+            }
+
+            return false;
+        }
+
+        public bool JudgeSquareSum1(int c) {
             double squareRoot = Math.Sqrt(c);
 
             for (int i = 0; i <= squareRoot; i++) {
