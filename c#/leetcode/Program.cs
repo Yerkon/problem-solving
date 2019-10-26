@@ -8,7 +8,7 @@ namespace leetcode {
         private static void Main(string[] args) {
             Solution sol = new Solution();
 
-            sol.MySqrt(2147483647);
+            sol.CountPrimes(123);
 
             //Console.WriteLine(res);
         }

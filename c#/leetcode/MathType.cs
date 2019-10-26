@@ -10,6 +10,37 @@ namespace MathType {
 
     public class Solution {
 
+        // https://ru.wikipedia.org/wiki/%D0%A0%D0%B5%D1%88%D0%B5%D1%82%D0%BE_%D0%AD%D1%80%D0%B0%D1%82%D0%BE%D1%81%D1%84%D0%B5%D0%BD%D0%B0
+        // https://leetcode.com/problems/count-primes/
+        public int CountPrimes(int n) {
+
+            if (n <= 1) return 0;
+
+            bool[] arr = new bool[n];
+            Array.Fill(arr, true);
+
+            for (int i = 2; i * i < n; i++) {
+                if(arr[i] == true) {
+
+                    for (int j = i * i; j < n; j += i) {
+                        arr[j] = false;
+                    }
+                }    
+            }
+
+            return arr.Count(r => r == true) - 2;
+        }
+
+        public bool IsPrime(int n) {
+            int c = 0;
+
+            for (int i = 1; i <= n; i++) {
+                if (n % i == 0) c++;
+            }
+
+            return c <= 2;
+        }
+
         // https://leetcode.com/problems/sqrtx/
         // Time: O(Logx), Space: O(1)
         public int MySqrt(int x) {         
@@ -759,15 +790,7 @@ namespace MathType {
             return res;
         }
 
-        public bool IsPrime(int n) {
-            int c = 0;
-
-            for (int i = 1; i <= n; i++) {
-                if (n % i == 0) c++;
-            }
-
-            return c <= 2;
-        }
+      
 
         // iterative
         // https://leetcode.com/problems/prime-arrangements/
