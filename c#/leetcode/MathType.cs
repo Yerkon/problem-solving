@@ -10,6 +10,45 @@ namespace MathType {
 
     public class Solution {
 
+        // https://leetcode.com/problems/excel-sheet-column-title/
+        public string ConvertToTitle(int n) {
+
+            string res = GetTitleRec(n);
+
+            return res;
+        }
+
+        public string GetTitleRec(int num) {
+            if(num <= 26) {
+                if (num == 0) num = 1;
+
+                return ((char)(num + 64)).ToString();
+            }
+
+
+            int first = num / 26;
+            int second = num % 26;
+
+            if(second == 0) {
+                second = 26;
+                first--;
+            }
+
+            return GetTitleRec(first) + GetTitleRec(second);
+        }
+
+        // https://leetcode.com/problems/excel-sheet-column-number/
+        public int TitleToNumber(string s) {
+            int ans = s[0] - 'A' + 1;
+
+            for (int i = 1; i < s.Length; i++) {
+                int currNum = s[i] - 'A' + 1;
+                ans = ans * 26 + currNum;
+            }
+
+            return ans;
+        }
+
         // https://ru.wikipedia.org/wiki/%D0%A0%D0%B5%D1%88%D0%B5%D1%82%D0%BE_%D0%AD%D1%80%D0%B0%D1%82%D0%BE%D1%81%D1%84%D0%B5%D0%BD%D0%B0
         // https://leetcode.com/problems/count-primes/
         public int CountPrimes(int n) {
@@ -20,12 +59,12 @@ namespace MathType {
             Array.Fill(arr, true);
 
             for (int i = 2; i * i < n; i++) {
-                if(arr[i] == true) {
+                if (arr[i] == true) {
 
                     for (int j = i * i; j < n; j += i) {
                         arr[j] = false;
                     }
-                }    
+                }
             }
 
             return arr.Count(r => r == true) - 2;
@@ -43,7 +82,7 @@ namespace MathType {
 
         // https://leetcode.com/problems/sqrtx/
         // Time: O(Logx), Space: O(1)
-        public int MySqrt(int x) {         
+        public int MySqrt(int x) {
             long start = 0, end = x, mid;
 
             while (start < end) {
@@ -96,7 +135,7 @@ namespace MathType {
             for (int i = 0; i <= squareRoot; i++) {
                 double b = Math.Sqrt(c - i * i);
 
-                if(b == (int)b) {
+                if (b == (int)b) {
                     return true;
                 }
 
@@ -790,7 +829,7 @@ namespace MathType {
             return res;
         }
 
-      
+
 
         // iterative
         // https://leetcode.com/problems/prime-arrangements/
@@ -931,17 +970,7 @@ namespace MathType {
 
         }
 
-        // https://leetcode.com/problems/excel-sheet-column-number/
-        public int TitleToNumber(string s) {
-            int ans = s[0] - 'A' + 1;
-
-            for (int i = 1; i < s.Length; i++) {
-                int currNum = s[i] - 'A' + 1;
-                ans = ans * 26 + currNum;
-            }
-
-            return ans;
-        }
+       
 
         // no loops
         // https://leetcode.com/problems/add-digits/    

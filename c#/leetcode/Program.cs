@@ -8,7 +8,7 @@ namespace leetcode {
         private static void Main(string[] args) {
             Solution sol = new Solution();
 
-            sol.CountPrimes(123);
+            sol.ConvertToTitle(1000);
 
             //Console.WriteLine(res);
         }
