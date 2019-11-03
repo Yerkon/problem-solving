@@ -1,28 +1,50 @@
 using System.Collections.Generic;
 
-namespace Tree
-{
-    public class Node
-    {
+namespace Tree {
+    public class Node {
         public int val;
         public IList<Node> children;
 
         public Node() { }
-        public Node(int _val, IList<Node> _children)
-        {
+        public Node(int _val, IList<Node> _children) {
             val = _val;
             children = _children;
         }
     }
 
+    public class TreeNode {
+        public int val;
+        public TreeNode left;
+        public TreeNode right;
+        public TreeNode(int x) { val = x; }
+    }
 
-    public class Solution
-    {
-        public IList<IList<int>> LevelOrder(Node root)
-        {
+    public class Solution {
+
+        // https://leetcode.com/problems/range-sum-of-bst/
+        public int RangeSumBST(TreeNode root, int L, int R) {
+            return BstRange(root, L, R);
+        }
+
+        public int BstRange(TreeNode node, int l, int r) {
+            if(node is null) {
+                return 0;
+            }
+
+            int sum = 0;
+
+            if(l <= node.val && node.val <= r) {
+                sum = node.val;
+            }
+
+            return sum + BstRange(node.left, l, r) + BstRange(node.right, l, r);
+
+        }
+
+
+        public IList<IList<int>> LevelOrder(Node root) {
             IList<IList<int>> result = new List<IList<int>>();
-            if (root == null)
-            {
+            if (root == null) {
                 return result;
             }
 
@@ -34,13 +56,11 @@ namespace Tree
             return result;
         }
 
-        public void BFS(IList<IList<int>> result, List<Node> nodes)
-        {
+        public void BFS(IList<IList<int>> result, List<Node> nodes) {
             List<int> valuesArr = new List<int>();
             List<Node> nodesArr = new List<Node>();
 
-            for (int i = 0; i < nodes.Count; i++)
-            {
+            for (int i = 0; i < nodes.Count; i++) {
                 List<Node> currChildren = nodes[i].children as List<Node>;
                 valuesArr.AddRange((currChildren.ConvertAll(child => child.val)));
                 nodesArr.AddRange(currChildren);
@@ -53,8 +73,7 @@ namespace Tree
         }
 
         // iterative way
-        public List<int> Preorder(Node root)
-        {
+        public List<int> Preorder(Node root) {
             Stack<Node> tempStack = new Stack<Node>();
             List<int> resList = new List<int>();
 
@@ -62,13 +81,11 @@ namespace Tree
 
             tempStack.Push(root);
 
-            while (tempStack.Count > 0)
-            {
+            while (tempStack.Count > 0) {
                 Node currNode = tempStack.Pop();
                 resList.Add(currNode.val);
 
-                for (int i = currNode.children.Count - 1; i >= 0; i--)
-                {
+                for (int i = currNode.children.Count - 1; i >= 0; i--) {
                     Node currChild = currNode.children[i];
                     tempStack.Push(currChild);
                 }
@@ -78,15 +95,13 @@ namespace Tree
         }
 
         // recursive way
-        public IList<int> Preorder1(Node root)
-        {
+        public IList<int> Preorder1(Node root) {
             var result = new List<int>();
             if (root == null) return result;
 
             result.Add(root.val);
 
-            for (int i = 0; i < root.children.Count; i++)
-            {
+            for (int i = 0; i < root.children.Count; i++) {
                 Node currNode = root.children[i];
                 this.Preorder(currNode);
             }
@@ -96,23 +111,19 @@ namespace Tree
         /**
         with stack
          */
-        public int[] Postorder(Node root)
-        {
+        public int[] Postorder(Node root) {
             Stack<int> stackResult = new Stack<int>();
             Stack<Node> tempStack = new Stack<Node>();
 
-            if (root == null)
-            {
+            if (root == null) {
                 return stackResult.ToArray();
             }
 
             tempStack.Push(root);
 
-            while (tempStack.Count > 0)
-            {
+            while (tempStack.Count > 0) {
                 Node currNode = tempStack.Pop();
-                for (int i = 0; i < currNode.children.Count; i++)
-                {
+                for (int i = 0; i < currNode.children.Count; i++) {
                     Node childNode = currNode.children[i];
                     tempStack.Push(childNode);
                 }
@@ -126,25 +137,20 @@ namespace Tree
         /**
         with list
         */
-        public List<int> Postorder1(Node root)
-        {
+        public List<int> Postorder1(Node root) {
             List<int> listResult = new List<int>();
 
-            if (root == null)
-            {
+            if (root == null) {
                 return listResult;
             }
 
             Node parentNode = null;
             Node currNode = root;
 
-            while (currNode != null)
-            {
-                if (currNode.children.Count == 0)
-                {
+            while (currNode != null) {
+                if (currNode.children.Count == 0) {
                     // there is no child
-                    if (currNode == root)
-                    {
+                    if (currNode == root) {
                         listResult.Add(currNode.val);
                         currNode = null;
                         continue;
@@ -155,9 +161,7 @@ namespace Tree
 
                     // start from beginning
                     currNode = root;
-                }
-                else
-                {
+                } else {
                     parentNode = currNode;
                     currNode = currNode.children[0];
                 }
@@ -170,18 +174,15 @@ namespace Tree
         /**
         Recursive solution
          */
-        public void ProceedPostOrder(Node root, List<int> result)
-        {
+        public void ProceedPostOrder(Node root, List<int> result) {
 
-            foreach (var child in root.children)
-            {
+            foreach (var child in root.children) {
                 ProceedPostOrder(child, result);
                 result.Add(child.val);
             }
         }
 
-        public Node GetTest1()
-        {
+        public Node GetTest1() {
             Node root = new Node(1, new List<Node>());
 
             Node child1 = new Node(3, new List<Node>());
@@ -200,12 +201,10 @@ namespace Tree
             return root;
         }
 
-        public List<int> GetMock1()
-        {
+        public List<int> GetMock1() {
             return new List<int>() { 5, 6, 3, 2, 4, 1 };
         }
-        public Node getTest2()
-        {
+        public Node getTest2() {
 
             Node root = new Node(1, new List<Node>());
 
@@ -226,8 +225,7 @@ namespace Tree
             return root;
         }
 
-        public List<int> GetMock2()
-        {
+        public List<int> GetMock2() {
             return new List<int>(){
                 5,0,10,6,3,1
             };
