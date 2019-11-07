@@ -23,10 +23,10 @@ namespace Tree {
 
         // https://leetcode.com/problems/range-sum-of-bst/
         public int RangeSumBST(TreeNode root, int L, int R) {
-            return BstRange(root, L, R);
+            return DfsRange(root, L, R);
         }
 
-        public int BstRange(TreeNode node, int l, int r) {
+        public int DfsRange(TreeNode node, int l, int r) {
             if(node is null) {
                 return 0;
             }
@@ -37,7 +37,7 @@ namespace Tree {
                 sum = node.val;
             }
 
-            return sum + BstRange(node.left, l, r) + BstRange(node.right, l, r);
+            return sum + DfsRange(node.left, l, r) + DfsRange(node.right, l, r);
 
         }
 
