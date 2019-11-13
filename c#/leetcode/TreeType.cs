@@ -23,7 +23,29 @@ namespace Tree {
     public class Solution {
 
         // https://leetcode.com/problems/maximum-depth-of-n-ary-tree/
+
         public int MaxDepth(Node root) {
+
+            if (root is null) return 0;
+
+            return GetMaxDepth(root, 1);
+        }
+
+        public int GetMaxDepth(Node root, int depth) {
+            if (root.children.Count == 0) {
+                return depth;
+            }
+
+            depth++;
+            int maxDepth = depth;
+            foreach (Node child in root.children) {
+                maxDepth = Math.Max(GetMaxDepth(child, depth), maxDepth);
+            }
+
+            return maxDepth;
+        }
+
+        public int MaxDepth1(Node root) {
 
             if (root is null) return 0;
 
@@ -48,20 +70,6 @@ namespace Tree {
             return depth;
         }
 
-
-        public int GetMaxDepth(Node root, int depth) {
-            if (root.children.Count == 0) {
-                return depth;
-            }
-
-            depth++;
-            int maxDepth = depth;
-            foreach (Node child in root.children) {
-                maxDepth = Math.Max(GetMaxDepth(child, depth), depth);
-            }
-
-            return maxDepth;
-        }
 
         // https://leetcode.com/problems/range-sum-of-bst/
         public int RangeSumBST(TreeNode root, int L, int R) {
