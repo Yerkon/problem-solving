@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Tree {
@@ -21,19 +22,60 @@ namespace Tree {
 
     public class Solution {
 
+        // https://leetcode.com/problems/maximum-depth-of-n-ary-tree/
+        public int MaxDepth(Node root) {
+
+            if (root is null) return 0;
+
+            int depth = 0;
+            var stack = new Stack<Node>();
+            stack.Push(root);
+
+            while (stack.Count > 0) {
+                var list = new List<Node>();
+                while (stack.Count > 0) {
+                    Node curr = stack.Pop();
+
+                    list.AddRange(curr.children);
+                }
+
+                list.ForEach(r => stack.Push(r));
+
+                depth++;
+            }
+
+
+            return depth;
+        }
+
+
+        public int GetMaxDepth(Node root, int depth) {
+            if (root.children.Count == 0) {
+                return depth;
+            }
+
+            depth++;
+            int maxDepth = depth;
+            foreach (Node child in root.children) {
+                maxDepth = Math.Max(GetMaxDepth(child, depth), depth);
+            }
+
+            return maxDepth;
+        }
+
         // https://leetcode.com/problems/range-sum-of-bst/
         public int RangeSumBST(TreeNode root, int L, int R) {
             return DfsRange(root, L, R);
         }
 
         public int DfsRange(TreeNode node, int l, int r) {
-            if(node is null) {
+            if (node is null) {
                 return 0;
             }
 
             int sum = 0;
 
-            if(l <= node.val && node.val <= r) {
+            if (l <= node.val && node.val <= r) {
                 sum = node.val;
             }
 
@@ -48,7 +90,7 @@ namespace Tree {
                 return result;
             }
 
-            List<Node> nodes = new List<Node>() { root };
+            var nodes = new List<Node>() { root };
 
             result.Add(nodes.ConvertAll(node => node.val));
             BFS(result, nodes);
@@ -57,11 +99,11 @@ namespace Tree {
         }
 
         public void BFS(IList<IList<int>> result, List<Node> nodes) {
-            List<int> valuesArr = new List<int>();
-            List<Node> nodesArr = new List<Node>();
+            var valuesArr = new List<int>();
+            var nodesArr = new List<Node>();
 
             for (int i = 0; i < nodes.Count; i++) {
-                List<Node> currChildren = nodes[i].children as List<Node>;
+                var currChildren = nodes[i].children as List<Node>;
                 valuesArr.AddRange((currChildren.ConvertAll(child => child.val)));
                 nodesArr.AddRange(currChildren);
             }
@@ -74,8 +116,8 @@ namespace Tree {
 
         // iterative way
         public List<int> Preorder(Node root) {
-            Stack<Node> tempStack = new Stack<Node>();
-            List<int> resList = new List<int>();
+            var tempStack = new Stack<Node>();
+            var resList = new List<int>();
 
             if (root == null) return resList;
 
@@ -112,8 +154,8 @@ namespace Tree {
         with stack
          */
         public int[] Postorder(Node root) {
-            Stack<int> stackResult = new Stack<int>();
-            Stack<Node> tempStack = new Stack<Node>();
+            var stackResult = new Stack<int>();
+            var tempStack = new Stack<Node>();
 
             if (root == null) {
                 return stackResult.ToArray();
@@ -138,7 +180,7 @@ namespace Tree {
         with list
         */
         public List<int> Postorder1(Node root) {
-            List<int> listResult = new List<int>();
+            var listResult = new List<int>();
 
             if (root == null) {
                 return listResult;
@@ -176,18 +218,18 @@ namespace Tree {
          */
         public void ProceedPostOrder(Node root, List<int> result) {
 
-            foreach (var child in root.children) {
+            foreach (Node child in root.children) {
                 ProceedPostOrder(child, result);
                 result.Add(child.val);
             }
         }
 
         public Node GetTest1() {
-            Node root = new Node(1, new List<Node>());
+            var root = new Node(1, new List<Node>());
 
-            Node child1 = new Node(3, new List<Node>());
-            Node child2 = new Node(2, new List<Node>());
-            Node child3 = new Node(4, new List<Node>());
+            var child1 = new Node(3, new List<Node>());
+            var child2 = new Node(2, new List<Node>());
+            var child3 = new Node(4, new List<Node>());
 
             child1.children.Add(new Node(5, new List<Node>()));
             child1.children.Add(new Node(6, new List<Node>()));
@@ -206,10 +248,10 @@ namespace Tree {
         }
         public Node getTest2() {
 
-            Node root = new Node(1, new List<Node>());
+            var root = new Node(1, new List<Node>());
 
-            Node child1 = new Node(10, new List<Node>());
-            Node child2 = new Node(3, new List<Node>());
+            var child1 = new Node(10, new List<Node>());
+            var child2 = new Node(3, new List<Node>());
 
             child1.children.Add(new Node(5, new List<Node>()));
             child1.children.Add(new Node(0, new List<Node>()));
