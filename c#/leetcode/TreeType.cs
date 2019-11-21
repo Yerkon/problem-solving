@@ -22,6 +22,133 @@ namespace Tree {
 
     public class Solution {
 
+        // https://leetcode.com/problems/sum-of-root-to-leaf-binary-numbers/
+        public int SumRootToLeaf(TreeNode root) {
+            var binaryList = new List<string>();
+            int sum = 0;
+
+            GetAllPathBinary(root, "", binaryList);
+
+            binaryList.ForEach(binaryStr => {
+
+                //Console.WriteLine(binaryStr);
+
+                sum += Convert.ToInt32(binaryStr, 2);
+            });
+
+            return sum;
+        }
+
+        public void GetAllPathBinary(TreeNode node, string currBinary, List<string> binaryList) {
+            if (node is null) {
+                return;
+            }
+
+            currBinary += node.val;
+
+            if (node.left is null && node.right is null) {
+                binaryList.Add(currBinary);
+                return;
+            }
+
+            GetAllPathBinary(node.left, currBinary, binaryList);
+            GetAllPathBinary(node.right, currBinary, binaryList);
+        }
+
+
+        // https://leetcode.com/problems/maximum-depth-of-binary-tree/
+        public int MaxDepth(TreeNode root) {
+            if (root is null) return 0;
+            int maxDepth = 0;
+
+            var stack = new Stack<TreeNode>();
+            stack.Push(root);
+
+            while (stack.Count > 0) {
+                var list = new List<TreeNode>();
+
+                while (stack.Count > 0) {
+                    TreeNode currNode = stack.Pop();
+                    list.Add(currNode);
+                }
+
+                list.ForEach(n => {
+                    if (n.left != null) stack.Push(n.left);
+                    if (n.right != null) stack.Push(n.right);
+                });
+
+                maxDepth++;
+            }
+
+            return maxDepth;
+        }
+
+
+        // https://leetcode.com/problems/leaf-similar-trees/
+        public bool LeafSimilar(TreeNode root1, TreeNode root2) {
+            var leafs1 = new List<TreeNode>();
+            var leafs2 = new List<TreeNode>();
+
+            GetLeafs(root1, leafs1);
+            GetLeafs(root2, leafs2);
+
+            if (leafs1.Count == leafs2.Count) {
+                for (int i = 0; i < leafs1.Count; i++) {
+                    if (leafs1.ElementAt(i).val != leafs2.ElementAt(i).val) {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+
+        public void GetLeafs(TreeNode node, List<TreeNode> leafs) {
+            if (node == null) return;
+
+            GetLeafs(node.left, leafs);
+
+            if (node.left == null && node.right == null) {
+                leafs.Add(node);
+            }
+
+            GetLeafs(node.right, leafs);
+        }
+
+        // https://leetcode.com/problems/increasing-order-search-tree/
+        private TreeNode cur;
+        public TreeNode IncreasingBST(TreeNode root) {
+            var ans = new TreeNode(0);
+            cur = ans;
+            InOrderSearch(root);
+
+            return ans.right;
+        }
+
+        public void InOrderSearch(TreeNode node) {
+            if (node is null) return;
+
+            InOrderSearch(node.left);
+
+            node.left = null;
+
+            cur.right = node;
+            cur = node;
+
+            InOrderSearch(node.right);
+
+        }
+
+        public void IncreaseBST(TreeNode node) {
+            TreeNode leftNode = node.left;
+
+            node.left = null;
+
+            leftNode.
+        }
+
         // https://leetcode.com/problems/maximum-depth-of-n-ary-tree/
 
         public int MaxDepth(Node root) {
