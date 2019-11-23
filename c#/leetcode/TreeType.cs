@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Tree {
     public class Node {
@@ -21,6 +22,104 @@ namespace Tree {
     }
 
     public class Solution {
+        private TreeNode cur;
+
+        // https://leetcode.com/problems/average-of-levels-in-binary-tree/
+        public IList<double> AverageOfLevels(TreeNode root) {
+            var averageList = new List<double>();
+
+            if (root is null) return averageList;
+
+            var stack = new Stack<TreeNode>();
+
+            stack.Push(root);
+
+            while (stack.Count > 0) {
+                double avg = 0;
+                var childs = new List<TreeNode>();
+                int count = 0;
+
+                while (stack.Count > 0) {
+                    TreeNode currNode = stack.Pop();
+
+                    avg += currNode.val;
+                    count++;
+
+                    if (currNode.left != null) childs.Add(currNode.left);
+                    if (currNode.right != null) childs.Add(currNode.right);
+                }
+
+                avg /= (count * 1.0);
+
+                averageList.Add(avg);
+
+                childs.ForEach(n => stack.Push(n));
+            }
+
+            return averageList;
+        }
+
+
+        // https://leetcode.com/problems/trim-a-binary-search-tree/
+        public TreeNode TrimBST(TreeNode root, int L, int R) {
+            TrimBSTRec(root, L, R);
+
+            return cur;
+        }
+
+        public TreeNode TrimBSTRec(TreeNode node, int L, int R) {
+            if (node is null) return null;
+
+            if (L <= node.val && node.val <= R) {
+                if (cur is null) cur = node; // assign root node
+
+                node.left = TrimBSTRec(node.left, L, R);
+                node.right = TrimBSTRec(node.right, L, R);
+
+                return node;
+            } else {
+                TreeNode rightNode = TrimBSTRec(node.right, L, R);
+                return rightNode is null ? TrimBSTRec(node.left, L, R) : rightNode;
+            }
+        }
+
+
+        // https://leetcode.com/problems/invert-binary-tree/
+        // recursive
+        public TreeNode InvertTree(TreeNode root) {
+            if (root is null) return null;
+
+            TreeNode leftNode = root.left;
+            root.left = root.right;
+            root.right = leftNode;
+
+            InvertTree(root.left);
+            InvertTree(root.right);
+
+            return root;
+        }
+
+        // iterative
+        public TreeNode InvertTree1(TreeNode root) {
+            if (root is null) return null;
+
+            var stack = new Stack<TreeNode>();
+
+            stack.Push(root);
+
+            while (stack.Count > 0) {
+                TreeNode currNode = stack.Pop();
+
+                TreeNode leftNode = currNode.left;
+                currNode.left = currNode.right;
+                currNode.right = leftNode;
+
+                if (currNode.left != null) stack.Push(currNode.left);
+                if (currNode.right != null) stack.Push(currNode.right);
+            }
+
+            return root;
+        }
 
         // https://leetcode.com/problems/sum-of-root-to-leaf-binary-numbers/
         public int SumRootToLeaf(TreeNode root) {
@@ -118,7 +217,7 @@ namespace Tree {
         }
 
         // https://leetcode.com/problems/increasing-order-search-tree/
-        private TreeNode cur;
+      
         public TreeNode IncreasingBST(TreeNode root) {
             var ans = new TreeNode(0);
             cur = ans;
