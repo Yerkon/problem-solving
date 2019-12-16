@@ -29,46 +29,50 @@ namespace Tree {
         public bool FindTarget(TreeNode root, int k) {
             var set = new HashSet<int>();
 
-           return FillSet(root, set, k);
+            return FindSum(root, set, k);
         }
 
-        public bool FillSet(TreeNode node, HashSet<int> set, int k) {
+        public bool FindSum(TreeNode node, HashSet<int> set, int k) {
             if (node is null) return false;
 
-            if(set.Contains(node.val)) {
+            if (set.Contains(node.val)) {
                 return true;
             } else {
                 set.Add(k - node.val);
 
-                return FillSet(node.left, set, k) || FillSet(node.right, set, k);
+                return FindSum(node.left, set, k) || FindSum(node.right, set, k);
             }
         }
 
         // with list
-      
-        public bool FindTarget1(TreeNode root, int k) {
+
+        public bool FindTarget(TreeNode root, int k) {
             var list = new List<int>();
 
-            FillList(root, list);
+            FillListInOrder(root, list);
 
-            for (int i = 0; i < list.Count; i++) {
-                for (int j = i + 1; j < list.Count; j++) {
-                    if((list.ElementAt(i) + list.ElementAt(j)) == k) {
-                        return true;
-                    }
+            int l = 0, r = list.Count - 1;
+
+            while (l < r) {
+                int sum = list.ElementAt(l) + list.ElementAt(r);
+
+                if (sum == k) return true;
+                else if (sum < k) {
+                    l++;
+                } else {
+                    r--;
                 }
             }
 
             return false;
         }
 
-        public void FillList(TreeNode node, List<int> list) {
+        public void FillListInOrder(TreeNode node, List<int> list) {
             if (node is null) return;
 
+            FillListInOrder(node.left, list);
             list.Add(node.val);
-
-            FillList(node.left, list);
-            FillList(node.right, list);
+            FillListInOrder(node.right, list);
         }
 
         // https://leetcode.com/problems/average-of-levels-in-binary-tree/
@@ -264,7 +268,7 @@ namespace Tree {
         }
 
         // https://leetcode.com/problems/increasing-order-search-tree/
-      
+
         public TreeNode IncreasingBST(TreeNode root) {
             var ans = new TreeNode(0);
             cur = ans;
