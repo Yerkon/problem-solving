@@ -24,6 +24,53 @@ namespace Tree {
     public class Solution {
         private TreeNode cur;
 
+        // with hashset
+        // https://leetcode.com/problems/two-sum-iv-input-is-a-bst/
+        public bool FindTarget(TreeNode root, int k) {
+            var set = new HashSet<int>();
+
+           return FillSet(root, set, k);
+        }
+
+        public bool FillSet(TreeNode node, HashSet<int> set, int k) {
+            if (node is null) return false;
+
+            if(set.Contains(node.val)) {
+                return true;
+            } else {
+                set.Add(k - node.val);
+
+                return FillSet(node.left, set, k) || FillSet(node.right, set, k);
+            }
+        }
+
+        // with list
+      
+        public bool FindTarget1(TreeNode root, int k) {
+            var list = new List<int>();
+
+            FillList(root, list);
+
+            for (int i = 0; i < list.Count; i++) {
+                for (int j = i + 1; j < list.Count; j++) {
+                    if((list.ElementAt(i) + list.ElementAt(j)) == k) {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        public void FillList(TreeNode node, List<int> list) {
+            if (node is null) return;
+
+            list.Add(node.val);
+
+            FillList(node.left, list);
+            FillList(node.right, list);
+        }
+
         // https://leetcode.com/problems/average-of-levels-in-binary-tree/
         public IList<double> AverageOfLevels(TreeNode root) {
             var averageList = new List<double>();
