@@ -28,25 +28,29 @@ namespace Tree {
         public TreeNode ConvertBST(TreeNode root) {
             if (root is null) return root;
 
-            var nodes = new List<TreeNode>();
-            FillInOrderList(root, nodes);
-
             int accum = 0;
-            foreach (var item in nodes) {
-                int temp = item.val;
-                item.val += accum;
-                accum += temp;
-            }
+            ConvertInOrderReverse(root, ref accum);
 
             return root;
         }
 
-        public void FillInOrderList(TreeNode node, List<TreeNode> nodes) {
+        public void ConvertInOrderReverse(TreeNode node, ref int accum) {
             if (node is null) return;
 
-            FillInOrderList(node.right, nodes);
+            ConvertInOrderReverse(node.right, ref accum);
+            int temp = node.val;
+            node.val += accum;
+            accum += temp;
+
+            ConvertInOrderReverse(node.left, ref accum);
+        }
+
+        public void FillInOrderReverseList(TreeNode node, List<TreeNode> nodes) {
+            if (node is null) return;
+
+            FillInOrderReverseList(node.right, nodes);
             nodes.Add(node);
-            FillInOrderList(node.left, nodes);
+            FillInOrderReverseList(node.left, nodes);
         }
 
 
