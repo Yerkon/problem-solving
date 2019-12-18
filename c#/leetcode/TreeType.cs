@@ -24,6 +24,32 @@ namespace Tree {
     public class Solution {
         private TreeNode cur;
 
+        // https://leetcode.com/problems/convert-bst-to-greater-tree/
+        public TreeNode ConvertBST(TreeNode root) {
+            if (root is null) return root;
+
+            var nodes = new List<TreeNode>();
+            FillInOrderList(root, nodes);
+
+            int accum = 0;
+            foreach (var item in nodes) {
+                int temp = item.val;
+                item.val += accum;
+                accum += temp;
+            }
+
+            return root;
+        }
+
+        public void FillInOrderList(TreeNode node, List<TreeNode> nodes) {
+            if (node is null) return;
+
+            FillInOrderList(node.right, nodes);
+            nodes.Add(node);
+            FillInOrderList(node.left, nodes);
+        }
+
+
         // with hashset
         // https://leetcode.com/problems/two-sum-iv-input-is-a-bst/
         public bool FindTarget(TreeNode root, int k) {
