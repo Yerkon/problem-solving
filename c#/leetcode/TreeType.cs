@@ -24,6 +24,31 @@ namespace Tree {
     public class Solution {
         private TreeNode cur;
 
+
+        // https://leetcode.com/problems/minimum-absolute-difference-in-bst/
+        public int GetMinimumDifference(TreeNode root) {
+            int minDiff = int.MaxValue;
+
+            var list = new List<int>();
+
+            FillList(root, list);
+
+            for (int i = 0; i < list.Count - 1; i++) {
+                int currDiff = Math.Abs(list.ElementAt(i) - list.ElementAt(i + 1));
+                minDiff = Math.Min(minDiff, currDiff);
+            }
+
+            return minDiff;
+        }
+
+        public void FillList(TreeNode node, List<int> vals) {
+            if (node is null) return;
+
+            FillList(node.left, vals);
+            vals.Add(node.val);
+            FillList(node.right, vals);
+        }
+
         // https://leetcode.com/problems/convert-bst-to-greater-tree/
         public TreeNode ConvertBST(TreeNode root) {
             if (root is null) return root;
@@ -76,7 +101,7 @@ namespace Tree {
 
         // with list
 
-        public bool FindTarget(TreeNode root, int k) {
+        public bool FindTarget1(TreeNode root, int k) {
             var list = new List<int>();
 
             FillListInOrder(root, list);
@@ -321,13 +346,13 @@ namespace Tree {
 
         }
 
-        public void IncreaseBST(TreeNode node) {
-            TreeNode leftNode = node.left;
+        //public void IncreaseBST(TreeNode node) {
+        //    TreeNode leftNode = node.left;
 
-            node.left = null;
+        //    node.left = null;
 
-            leftNode.
-        }
+        //    leftNode.
+        //}
 
         // https://leetcode.com/problems/maximum-depth-of-n-ary-tree/
 
