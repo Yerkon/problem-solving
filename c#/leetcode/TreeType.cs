@@ -24,6 +24,21 @@ namespace Tree {
     public class Solution {
         private TreeNode cur;
 
+       
+        // https://leetcode.com/problems/same-tree/
+        public bool IsSameTree(TreeNode p, TreeNode q) {
+            if (p != null && q != null) {
+                if (p.val == q.val) {
+                    return IsSameTree(p.left, q.left) && IsSameTree(p.right, q.right);
+                }
+            } else if (p == null && q == null) {
+                return true;
+            }
+
+            return false;
+        }
+
+
         // https://leetcode.com/problems/cousins-in-binary-tree/
         public bool IsCousins(TreeNode root, int x, int y) {
             var stack = new Stack<TreeNode>();
@@ -36,7 +51,7 @@ namespace Tree {
 
                 while (stack.Count > 0) {
                     TreeNode currNode = stack.Pop();
-                    if (currNode.left != null && currNode.right != null 
+                    if (currNode.left != null && currNode.right != null
                         && (currNode.left.val == x || currNode.right.val == x)
                         && (currNode.left.val == y || currNode.right.val == y)) {
                         return false;
@@ -46,7 +61,7 @@ namespace Tree {
                         tempList.Add(currNode.left);
                         tempStack.Push(currNode.left);
                     }
-                    if (currNode.right != null) { 
+                    if (currNode.right != null) {
                         tempList.Add(currNode.right);
                         tempStack.Push(currNode.right);
                     }
@@ -55,11 +70,11 @@ namespace Tree {
                 bool isFirst = false;
                 bool isSecond = false;
                 foreach (TreeNode node in tempList) {
-                    if (node.val == x) isFirst = true; 
-                    else if (node.val == y) isSecond = true; 
-                }
+                    if (node.val == x) isFirst = true;
+                    else if (node.val == y) isSecond = true;
 
-                if (isFirst && isSecond) return true;
+                    if (isFirst && isSecond) return true;
+                }
 
                 stack = tempStack;
             }
