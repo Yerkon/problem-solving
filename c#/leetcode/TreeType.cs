@@ -24,7 +24,59 @@ namespace Tree {
     public class Solution {
         private TreeNode cur;
 
-       
+        // https://leetcode.com/problems/binary-tree-level-order-traversal-ii/
+        public IList<IList<int>> LevelOrderBottom(TreeNode root) {
+            if(root is null) {
+                return new List<IList<int>>();
+            }
+
+            var stack = new Stack<IList<int>>();
+            var queue = new Queue<TreeNode>();
+        
+            queue.Enqueue(root);
+
+            while (queue.Count > 0) {
+                var innerList = new List<TreeNode>();
+                var valueList = new List<int>();
+
+                while (queue.Count > 0) {
+                    TreeNode currNode = queue.Dequeue();
+                    innerList.Add(currNode);
+                    valueList.Add(currNode.val);
+                }
+
+                stack.Push(valueList);
+
+                foreach (TreeNode node in innerList) {
+                    if (node.left != null) queue.Enqueue(node.left);
+                    if (node.right != null) queue.Enqueue(node.right);
+                }
+            }
+
+            return stack.ToList();
+        }
+
+
+        // https://leetcode.com/problems/sum-of-left-leaves/
+        public int SumOfLeftLeaves(TreeNode root) {
+            if (root is null) return 0;
+
+            return SumLeftLeavesRec(root, false);
+        }
+
+        public int SumLeftLeavesRec(TreeNode node, bool isLeft) {
+            if (node is null) return 0;
+
+            if (isLeft) {
+                if (node.left == null && node.right == null) {
+                    return node.val;
+                }
+            }
+
+            return SumLeftLeavesRec(node.left, true) + SumLeftLeavesRec(node.right, false);
+        }
+
+
         // https://leetcode.com/problems/same-tree/
         public bool IsSameTree(TreeNode p, TreeNode q) {
             if (p != null && q != null) {
