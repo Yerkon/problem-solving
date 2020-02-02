@@ -25,32 +25,56 @@ namespace Tree {
         private TreeNode cur;
 
         // https://leetcode.com/problems/binary-tree-level-order-traversal-ii/
+        // Recursive way
         public IList<IList<int>> LevelOrderBottom(TreeNode root) {
-            if(root is null) {
+            if (root is null) {
+                return new List<IList<int>>();
+            }
+
+            var list = new List<IList<int>>();
+            FillListLevelOrderBottomRec(list, root, 0);
+
+            return list;
+        }
+
+        public void FillListLevelOrderBottomRec(List<IList<int>> list, TreeNode node, int level) {
+            if (node is null) return;
+            
+            if(level >= list.Count) {
+                list.Insert(0, new List<int>());
+            }
+            
+            FillListLevelOrderBottomRec(list, node.left, level + 1);
+            FillListLevelOrderBottomRec(list, node.right, level + 1);
+
+            list[(list.Count - level - 1)].Add(node.val);
+        }
+
+
+        // Iterative way
+        public IList<IList<int>> LevelOrderBottom1(TreeNode root) {
+            if (root is null) {
                 return new List<IList<int>>();
             }
 
             var stack = new Stack<IList<int>>();
             var queue = new Queue<TreeNode>();
-        
+
             queue.Enqueue(root);
 
             while (queue.Count > 0) {
-                var innerList = new List<TreeNode>();
+              
                 var valueList = new List<int>();
+                int queueSize = queue.Count;
 
-                while (queue.Count > 0) {
-                    TreeNode currNode = queue.Dequeue();
-                    innerList.Add(currNode);
-                    valueList.Add(currNode.val);
+                for (int i = 0; i < queueSize; i++) {
+                    if (queue.Peek().left != null) queue.Enqueue(queue.Peek().left);
+                    if (queue.Peek().right != null) queue.Enqueue(queue.Peek().right);
+
+                    valueList.Add(queue.Dequeue().val);
                 }
-
+             
                 stack.Push(valueList);
-
-                foreach (TreeNode node in innerList) {
-                    if (node.left != null) queue.Enqueue(node.left);
-                    if (node.right != null) queue.Enqueue(node.right);
-                }
             }
 
             return stack.ToList();
