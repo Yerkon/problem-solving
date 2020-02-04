@@ -24,12 +24,42 @@ namespace Tree {
     public class Solution {
         private TreeNode cur;
 
+        // https://leetcode.com/problems/binary-tree-paths/
+        public IList<string> BinaryTreePaths(TreeNode root) {
+            var list = new List<string>();
+
+            FillBinaryTreePath(root, new List<int>(), list);
+
+            return list;
+        }
+
+
+        public void FillBinaryTreePath(TreeNode node, List<int> vals, List<string> list) {
+            if (node is null) {
+                return;
+            }
+
+            var newVals = new List<int>();
+            newVals.AddRange(vals);
+            newVals.Add(node.val);
+
+            if(node.left is null && node.right is null) {
+                list.Add(string.Join("->", newVals));
+                return;
+            }
+
+            FillBinaryTreePath(node.left, newVals, list);
+            FillBinaryTreePath(node.right, newVals, list);
+        }
+
+
         // https://leetcode.com/problems/binary-tree-level-order-traversal-ii/
         // Recursive way
         public IList<IList<int>> LevelOrderBottom(TreeNode root) {
             if (root is null) {
                 return new List<IList<int>>();
             }
+
 
             var list = new List<IList<int>>();
             FillListLevelOrderBottomRec(list, root, 0);
