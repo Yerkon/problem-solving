@@ -28,28 +28,26 @@ namespace Tree {
         public IList<string> BinaryTreePaths(TreeNode root) {
             var list = new List<string>();
 
-            FillBinaryTreePath(root, new List<int>(), list);
+            FillBinaryTreePath(root, "", list);
 
             return list;
         }
 
 
-        public void FillBinaryTreePath(TreeNode node, List<int> vals, List<string> list) {
+        public void FillBinaryTreePath(TreeNode node, string val, List<string> list) {
             if (node is null) {
                 return;
             }
 
-            var newVals = new List<int>();
-            newVals.AddRange(vals);
-            newVals.Add(node.val);
+            val += "->" + node.val;
 
             if(node.left is null && node.right is null) {
-                list.Add(string.Join("->", newVals));
+                list.Add(val.Substring(2));
                 return;
             }
 
-            FillBinaryTreePath(node.left, newVals, list);
-            FillBinaryTreePath(node.right, newVals, list);
+            FillBinaryTreePath(node.left, val, list);
+            FillBinaryTreePath(node.right, val, list);
         }
 
 
