@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BinaryTree2 {  
+namespace BinaryTree2 {
 
     public class TreeNode {
         public int val;
@@ -15,8 +15,33 @@ namespace BinaryTree2 {
         private TreeNode cur;
 
         // https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/
+
+        // iterative
         public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-            
+            TreeNode currNode = root;
+
+            while (currNode != null) {
+                
+                if (p.val < currNode.val && q.val < currNode.val) {
+                    currNode = currNode.left;
+                } else if(p.val > currNode.val && q.val > currNode.val) {
+                    currNode = currNode.right;
+                } else {
+                    return currNode;
+                }
+            }
+
+            return null;
+        }
+
+        // recursive
+        public TreeNode LowestCommonAncestor1(TreeNode root, TreeNode p, TreeNode q) {
+            if (p.val < root.val && q.val < root.val) {
+                return LowestCommonAncestor(root.left, p, q);
+            } else if (p.val > root.val && q.val > root.val) {
+                return LowestCommonAncestor(root.right, p, q);
+            }
+
             return root;
         }
 
@@ -27,20 +52,20 @@ namespace BinaryTree2 {
 
             FillDiameterOfBinaryTreeList(root, ref maxDistance);
 
-            return maxDistance;  
+            return maxDistance;
         }
 
         public int FillDiameterOfBinaryTreeList(TreeNode node, ref int maxDistance) {
-            if(node is null) {
+            if (node is null) {
                 return 0;
             }
 
             int leftDepth = 0, rightDepth = 0;
-            if(node.left != null) {
+            if (node.left != null) {
                 leftDepth = 1 + FillDiameterOfBinaryTreeList(node.left, ref maxDistance);
             }
 
-            if(node.right != null) {
+            if (node.right != null) {
                 rightDepth = 1 + FillDiameterOfBinaryTreeList(node.right, ref maxDistance);
             }
 
@@ -67,7 +92,7 @@ namespace BinaryTree2 {
 
             val += "->" + node.val;
 
-            if(node.left is null && node.right is null) {
+            if (node.left is null && node.right is null) {
                 list.Add(val.Substring(2));
                 return;
             }
@@ -93,11 +118,11 @@ namespace BinaryTree2 {
 
         public void FillListLevelOrderBottomRec(List<IList<int>> list, TreeNode node, int level) {
             if (node is null) return;
-            
-            if(level >= list.Count) {
+
+            if (level >= list.Count) {
                 list.Insert(0, new List<int>());
             }
-            
+
             FillListLevelOrderBottomRec(list, node.left, level + 1);
             FillListLevelOrderBottomRec(list, node.right, level + 1);
 
@@ -117,7 +142,7 @@ namespace BinaryTree2 {
             queue.Enqueue(root);
 
             while (queue.Count > 0) {
-              
+
                 var valueList = new List<int>();
                 int queueSize = queue.Count;
 
@@ -127,7 +152,7 @@ namespace BinaryTree2 {
 
                     valueList.Add(queue.Dequeue().val);
                 }
-             
+
                 stack.Push(valueList);
             }
 
@@ -541,7 +566,7 @@ namespace BinaryTree2 {
         //    leftNode.
         //}
 
-   
+
 
 
         // https://leetcode.com/problems/range-sum-of-bst/
