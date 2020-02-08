@@ -24,6 +24,35 @@ namespace Tree {
     public class Solution {
         private TreeNode cur;
 
+        // https://leetcode.com/problems/diameter-of-binary-tree/
+        public int DiameterOfBinaryTree(TreeNode root) {
+            int maxDistance = 0;
+
+            FillDiameterOfBinaryTreeList(root, ref maxDistance);
+
+            return maxDistance;  
+        }
+
+        public int FillDiameterOfBinaryTreeList(TreeNode node, ref int maxDistance) {
+            if(node is null) {
+                return 0;
+            }
+
+            int leftDepth = 0, rightDepth = 0;
+            if(node.left != null) {
+                leftDepth = 1 + FillDiameterOfBinaryTreeList(node.left, ref maxDistance);
+            }
+
+            if(node.right != null) {
+                rightDepth = 1 + FillDiameterOfBinaryTreeList(node.right, ref maxDistance);
+            }
+
+            maxDistance = Math.Max(maxDistance, leftDepth + rightDepth);
+
+            return Math.Max(leftDepth, rightDepth);
+
+        }
+
         // https://leetcode.com/problems/binary-tree-paths/
         public IList<string> BinaryTreePaths(TreeNode root) {
             var list = new List<string>();
