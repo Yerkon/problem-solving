@@ -14,17 +14,79 @@ namespace BinaryTree2 {
     public class Solution {
         private TreeNode cur;
 
-        // https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/
+        // https://leetcode.com/problems/symmetric-tree/
+        // recursive
+        public bool IsSymmetric(TreeNode root) {
+            if (root is null) return true;
+            if (root.left is null && root.right is null) return true;
+            if (root.left is null || root.right is null) return false;
 
+
+            return IsMirror(root.left, root.right);
+        }
+
+        public bool IsMirror(TreeNode node1, TreeNode node2) {
+
+            if (node1 is null && node2 is null) return true;
+            if (node1 is null || node2 is null) return false;
+
+            return node1.val == node2.val 
+                && IsMirror(node1.left, node2.right) 
+                && IsMirror(node1.right, node2.left);
+        }
+
+
+        // iterative 
+        public bool IsSymmetric1(TreeNode root) {
+            if (root is null) return true;
+            if (root.left is null && root.right is null) return true;
+
+            if (root.left == null || root.right == null) {
+                return false;
+            }
+
+            var stack1 = new Stack<TreeNode>();
+            var stack2 = new Stack<TreeNode>();
+
+            stack1.Push(root.left);
+            stack2.Push(root.right);
+
+            while (stack1.Count > 0 && stack2.Count > 0) {
+                TreeNode node1 = stack1.Pop();
+                TreeNode node2 = stack2.Pop();
+
+                if (node1 != null && node2 != null) {
+                    if (node1.val != node2.val) {
+                        return false;
+                    }
+
+                    stack1.Push(node1.left);
+                    stack1.Push(node1.right);
+
+                    stack2.Push(node2.right);
+                    stack2.Push(node2.left);
+
+                } else if (node1 == null && node2 == null) {
+                    continue;
+                } else {
+                    // one of null
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        // https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/
         // iterative
         public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
             TreeNode currNode = root;
 
             while (currNode != null) {
-                
+
                 if (p.val < currNode.val && q.val < currNode.val) {
                     currNode = currNode.left;
-                } else if(p.val > currNode.val && q.val > currNode.val) {
+                } else if (p.val > currNode.val && q.val > currNode.val) {
                     currNode = currNode.right;
                 } else {
                     return currNode;
