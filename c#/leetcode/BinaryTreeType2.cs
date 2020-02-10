@@ -14,6 +14,48 @@ namespace BinaryTree2 {
     public class Solution {
         private TreeNode cur;
 
+        // https://leetcode.com/problems/path-sum-iii/
+        public int PathSum(TreeNode root, int sum) {
+            if (root is null) return 0;
+
+            int count = 0;
+            var wrapList = new List<List<int>>();
+
+            FillPathList(root, new List<int>(), wrapList);
+
+            foreach (List<int> list in wrapList) {
+                int[] accumArr = new int[list.Count];
+
+                for (int i = 0; i < list.Count; i++) {
+                    for (int j = 0; j <= i; j++) {
+                        accumArr[j] += list.ElementAt(i);
+                        if (accumArr[j] == sum) count++;
+                    }
+                }
+            }
+
+            return count;
+        }
+
+        public void FillPathList(TreeNode node, List<int> list, List<List<int>> wrapList) {
+            if (node is null) {
+                return;
+            }
+
+            var newList = new List<int>();
+            newList.AddRange(list);
+            newList.Add(node.val);
+
+            if (node.left is null && node.right is null) {
+                wrapList.Add(newList);
+                return;
+            }
+
+            FillPathList(node.left, newList, wrapList);
+            FillPathList(node.right, newList, wrapList);
+        }
+
+
         // https://leetcode.com/problems/symmetric-tree/
         // recursive
         public bool IsSymmetric(TreeNode root) {
@@ -30,8 +72,8 @@ namespace BinaryTree2 {
             if (node1 is null && node2 is null) return true;
             if (node1 is null || node2 is null) return false;
 
-            return node1.val == node2.val 
-                && IsMirror(node1.left, node2.right) 
+            return node1.val == node2.val
+                && IsMirror(node1.left, node2.right)
                 && IsMirror(node1.right, node2.left);
         }
 
