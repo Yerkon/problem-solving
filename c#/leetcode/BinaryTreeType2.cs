@@ -23,7 +23,7 @@ namespace BinaryTree2 {
 
             while (stack.Count > 0) {
                 TreeNode currNode = stack.Pop();
-                if(IsTreeEqual(currNode, t)) {
+                if(AreTreesEqual(currNode, t)) {
                     return true;
                 } else {
                     if (currNode.left != null) stack.Push(currNode.left);
@@ -34,9 +34,9 @@ namespace BinaryTree2 {
             return false;
         }
 
-        public bool IsTreeEqual(TreeNode s, TreeNode t) {
+        public bool AreTreesEqual(TreeNode s, TreeNode t) {
             if(s != null && t!= null) {
-                return s.val == t.val && IsTreeEqual(s.left, t.left) && IsTreeEqual(s.right, t.right);
+                return s.val == t.val && AreTreesEqual(s.left, t.left) && AreTreesEqual(s.right, t.right);
             } else if(s is null && t is null) {
                 return true;
             }
