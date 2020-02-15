@@ -14,6 +14,36 @@ namespace BinaryTree2 {
     public class Solution {
         private TreeNode cur;
 
+        // https://leetcode.com/problems/subtree-of-another-tree/
+        public bool IsSubtree(TreeNode s, TreeNode t) {
+
+            var stack = new Stack<TreeNode>();
+            
+            stack.Push(s);
+
+            while (stack.Count > 0) {
+                TreeNode currNode = stack.Pop();
+                if(IsTreeEqual(currNode, t)) {
+                    return true;
+                } else {
+                    if (currNode.left != null) stack.Push(currNode.left);
+                    if (currNode.right != null) stack.Push(currNode.right);
+                }
+            }
+
+            return false;
+        }
+
+        public bool IsTreeEqual(TreeNode s, TreeNode t) {
+            if(s != null && t!= null) {
+                return s.val == t.val && IsTreeEqual(s.left, t.left) && IsTreeEqual(s.right, t.right);
+            } else if(s is null && t is null) {
+                return true;
+            }
+
+            return false;
+        }
+
         // https://leetcode.com/problems/path-sum-iii/
         public int PathSum(TreeNode root, int sum) {
             if (root is null) return 0;
