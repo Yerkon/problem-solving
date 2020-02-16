@@ -15,15 +15,37 @@ namespace BinaryTree2 {
         private TreeNode cur;
 
         // https://leetcode.com/problems/balanced-binary-tree/
+        // Time: O(N)
         public bool IsBalanced(TreeNode root) {
+            
+            return GetBalancedHeight(root) != -1;
+        }
+
+        public int GetBalancedHeight(TreeNode node) {
+            if (node is null) return 0;
+
+            int leftHeight = GetBalancedHeight(node.left);
+            if (leftHeight == -1) return -1;
+
+            int rightHeight = GetBalancedHeight(node.right);
+            if (rightHeight == -1) return -1;
+
+            if (Math.Abs(leftHeight - rightHeight) > 1) return -1;
+
+            return Math.Max(leftHeight, rightHeight) + 1;
+        }
+
+
+        // Time: N^2
+        public bool IsBalanced1(TreeNode root) {
             if (root is null) return true;
 
             int leftHeight = GetHeight(root.left);
             int rightHeight = GetHeight(root.right);
 
             return Math.Abs(leftHeight - rightHeight) <= 1 
-                && IsBalanced(root.left) 
-                && IsBalanced(root.right);
+                && IsBalanced1(root.left) 
+                && IsBalanced1(root.right);
         }
 
         public int GetHeight(TreeNode node) {
