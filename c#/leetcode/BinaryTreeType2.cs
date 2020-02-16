@@ -14,16 +14,45 @@ namespace BinaryTree2 {
     public class Solution {
         private TreeNode cur;
 
+        // https://leetcode.com/problems/balanced-binary-tree/
+        public bool IsBalanced(TreeNode root) {
+            if (root is null) return true;
+
+            int leftHeight = GetHeight(root.left);
+            int rightHeight = GetHeight(root.right);
+
+            return Math.Abs(leftHeight - rightHeight) <= 1 
+                && IsBalanced(root.left) 
+                && IsBalanced(root.right);
+        }
+
+        public int GetHeight(TreeNode node) {
+            if (node is null) return 0;
+
+            int leftHeight = 1 + GetHeight(node.left);
+            int rightHeight = 1 + GetHeight(node.right);
+
+            return Math.Max(leftHeight, rightHeight);
+        }
+
+
         // https://leetcode.com/problems/subtree-of-another-tree/
+        // recursive
         public bool IsSubtree(TreeNode s, TreeNode t) {
 
+            return Traverse(s, t);
+        }
+
+        // iterative and recursive
+        public bool IsSubtree1(TreeNode s, TreeNode t) {
+
             var stack = new Stack<TreeNode>();
-            
+
             stack.Push(s);
 
             while (stack.Count > 0) {
                 TreeNode currNode = stack.Pop();
-                if(AreTreesEqual(currNode, t)) {
+                if (AreTreesEqual(currNode, t)) {
                     return true;
                 } else {
                     if (currNode.left != null) stack.Push(currNode.left);
@@ -34,10 +63,14 @@ namespace BinaryTree2 {
             return false;
         }
 
+        public bool Traverse(TreeNode s, TreeNode t) {
+            return s != null && (AreTreesEqual(s, t) || Traverse(s.left, t) || Traverse(s.right, t));
+        }
+
         public bool AreTreesEqual(TreeNode s, TreeNode t) {
-            if(s != null && t!= null) {
+            if (s != null && t != null) {
                 return s.val == t.val && AreTreesEqual(s.left, t.left) && AreTreesEqual(s.right, t.right);
-            } else if(s is null && t is null) {
+            } else if (s is null && t is null) {
                 return true;
             }
 
