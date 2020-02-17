@@ -14,6 +14,32 @@ namespace BinaryTree2 {
     public class Solution {
         private TreeNode cur;
 
+        // https://leetcode.com/problems/path-sum/
+        public bool HasPathSum(TreeNode root, int sum) {
+
+            if (root is null) return false;
+
+            int currSubstr = sum - root.val;
+
+            if(root.left is null && root.right is null) {
+                return currSubstr == 0;
+            }
+
+            return HasPathSum(root.left, currSubstr) || HasPathSum(root.right, currSubstr);            
+        }
+
+        public bool HasPathSumCheck(TreeNode node, int sum, int accum) {
+            if (node is null) return false;
+
+            int currAccum = node.val + accum;
+            if(node.left is null && node.right is null) {
+                return sum == currAccum;
+            }
+
+            return HasPathSumCheck(node.left, sum, currAccum) 
+                    || HasPathSumCheck(node.right, sum, currAccum);
+        }
+
         // https://leetcode.com/problems/balanced-binary-tree/
         // Time: O(N)
         public bool IsBalanced(TreeNode root) {
@@ -100,45 +126,47 @@ namespace BinaryTree2 {
         }
 
         // https://leetcode.com/problems/path-sum-iii/
-        public int PathSum(TreeNode root, int sum) {
-            if (root is null) return 0;
+        //public int PathSum(TreeNode root, int sum) {
+        //    if (root is null) return 0;
 
-            int count = 0;
-            var wrapList = new List<List<int>>();
 
-            FillPathList(root, new List<int>(), wrapList);
+        //    int leftAccum = PathSum(root.left, sum);
+        //    if(leftAccum == sum)
 
-            foreach (List<int> list in wrapList) {
-                int[] accumArr = new int[list.Count];
+        //    PathSum(root.right, sum);
 
-                for (int i = 0; i < list.Count; i++) {
-                    for (int j = 0; j <= i; j++) {
-                        accumArr[j] += list.ElementAt(i);
-                        if (accumArr[j] == sum) count++;
-                    }
-                }
-            }
+        //}
 
-            return count;
-        }
+        //public int CalcPathSum(TreeNode node, int sum, ref int count) {
+        //    if (node is null) return 0;
 
-        public void FillPathList(TreeNode node, List<int> list, List<List<int>> wrapList) {
-            if (node is null) {
-                return;
-            }
+        //    int leftSum = node.val + CalcPathSum(node.left, sum, ref count);
+        //    int rightSum = node.val + CalcPathSum(node.right, sum, ref count);
 
-            var newList = new List<int>();
-            newList.AddRange(list);
-            newList.Add(node.val);
+        //    if (leftSum == sum) count++;
+        //    if (leftSum + count == sum) count++;
 
-            if (node.left is null && node.right is null) {
-                wrapList.Add(newList);
-                return;
-            }
 
-            FillPathList(node.left, newList, wrapList);
-            FillPathList(node.right, newList, wrapList);
-        }
+
+        //}
+
+        //public void FillPathList(TreeNode node, List<int> list, List<List<int>> wrapList) {
+        //    if (node is null) {
+        //        return;
+        //    }
+
+        //    var newList = new List<int>();
+        //    newList.AddRange(list);
+        //    newList.Add(node.val);
+
+        //    if (node.left is null && node.right is null) {
+        //        wrapList.Add(newList);
+        //        return;
+        //    }
+
+        //    FillPathList(node.left, newList, wrapList);
+        //    FillPathList(node.right, newList, wrapList);
+        //}
 
 
         // https://leetcode.com/problems/symmetric-tree/
