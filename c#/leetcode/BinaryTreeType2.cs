@@ -14,6 +14,35 @@ namespace BinaryTree2 {
     public class Solution {
         private TreeNode cur;
 
+        // https://leetcode.com/problems/path-sum-iii/
+        public int PathSum(TreeNode root, int sum) {
+            if (root is null) return 0;
+
+            int count = 0;
+            TraversePathSum(root, sum, ref count);
+
+            return count;
+        }
+
+        public void TraversePathSum(TreeNode node, int sum, ref int count) {
+            if (node is null) return;
+
+            CountPathSum(node, sum, 0, ref count);
+
+            TraversePathSum(node.left, sum, ref count);
+            TraversePathSum(node.right, sum, ref count);
+        }
+
+        public void CountPathSum(TreeNode node, int sum, int accum, ref int count) {
+            if (node is null) return;
+
+            int newAccum = accum + node.val;
+            if (newAccum == sum) count++;
+
+            CountPathSum(node.left, sum, newAccum, ref count);
+            CountPathSum(node.right, sum, newAccum, ref count);
+        }
+
         // https://leetcode.com/problems/path-sum/
         public bool HasPathSum(TreeNode root, int sum) {
 
@@ -125,50 +154,7 @@ namespace BinaryTree2 {
             return false;
         }
 
-        // https://leetcode.com/problems/path-sum-iii/
-        //public int PathSum(TreeNode root, int sum) {
-        //    if (root is null) return 0;
-
-
-        //    int leftAccum = PathSum(root.left, sum);
-        //    if(leftAccum == sum)
-
-        //    PathSum(root.right, sum);
-
-        //}
-
-        //public int CalcPathSum(TreeNode node, int sum, ref int count) {
-        //    if (node is null) return 0;
-
-        //    int leftSum = node.val + CalcPathSum(node.left, sum, ref count);
-        //    int rightSum = node.val + CalcPathSum(node.right, sum, ref count);
-
-        //    if (leftSum == sum) count++;
-        //    if (leftSum + count == sum) count++;
-
-
-
-        //}
-
-        //public void FillPathList(TreeNode node, List<int> list, List<List<int>> wrapList) {
-        //    if (node is null) {
-        //        return;
-        //    }
-
-        //    var newList = new List<int>();
-        //    newList.AddRange(list);
-        //    newList.Add(node.val);
-
-        //    if (node.left is null && node.right is null) {
-        //        wrapList.Add(newList);
-        //        return;
-        //    }
-
-        //    FillPathList(node.left, newList, wrapList);
-        //    FillPathList(node.right, newList, wrapList);
-        //}
-
-
+       
         // https://leetcode.com/problems/symmetric-tree/
         // recursive
         public bool IsSymmetric(TreeNode root) {
