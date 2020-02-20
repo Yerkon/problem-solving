@@ -14,6 +14,49 @@ namespace BinaryTree2 {
     public class Solution {
         private TreeNode cur;
 
+        // https://leetcode.com/problems/minimum-depth-of-binary-tree/
+        // recursive
+        public int MinDepth(TreeNode root) {
+            if (root is null) return 0;
+
+            int leftHeight = MinDepth(root.left);
+            int rightHeight = MinDepth(root.right);
+
+            if (leftHeight != 0 && rightHeight != 0) {
+                return Math.Min(leftHeight, rightHeight) + 1;
+            }
+
+            return Math.Max(leftHeight, rightHeight) + 1;
+        }
+
+        // iterative
+        public int MinDepth1(TreeNode root) {
+            if (root is null) return 0;
+
+            var queue = new Queue<TreeNode>();
+            int minDepth = 1;
+            queue.Enqueue(root);
+
+            while (queue.Count > 0) {
+                var subQueue = new Queue<TreeNode>();
+
+                while (queue.Count > 0) {
+                    var currNode = queue.Dequeue();
+
+                    if (currNode.left is null && currNode.right is null) return minDepth;
+
+                    if (currNode.left != null) subQueue.Enqueue(currNode.left);
+                    if (currNode.right != null) subQueue.Enqueue(currNode.right);
+                }
+
+
+                queue = subQueue;
+                minDepth++;
+            }
+
+            return minDepth;
+        }
+
         // https://leetcode.com/problems/path-sum-iii/
         public int PathSum(TreeNode root, int sum) {
             if (root is null) return 0;
@@ -50,29 +93,29 @@ namespace BinaryTree2 {
 
             int currSubstr = sum - root.val;
 
-            if(root.left is null && root.right is null) {
+            if (root.left is null && root.right is null) {
                 return currSubstr == 0;
             }
 
-            return HasPathSum(root.left, currSubstr) || HasPathSum(root.right, currSubstr);            
+            return HasPathSum(root.left, currSubstr) || HasPathSum(root.right, currSubstr);
         }
 
         public bool HasPathSumCheck(TreeNode node, int sum, int accum) {
             if (node is null) return false;
 
             int currAccum = node.val + accum;
-            if(node.left is null && node.right is null) {
+            if (node.left is null && node.right is null) {
                 return sum == currAccum;
             }
 
-            return HasPathSumCheck(node.left, sum, currAccum) 
+            return HasPathSumCheck(node.left, sum, currAccum)
                     || HasPathSumCheck(node.right, sum, currAccum);
         }
 
         // https://leetcode.com/problems/balanced-binary-tree/
         // Time: O(N)
         public bool IsBalanced(TreeNode root) {
-            
+
             return GetBalancedHeight(root) != -1;
         }
 
@@ -98,8 +141,8 @@ namespace BinaryTree2 {
             int leftHeight = GetHeight(root.left);
             int rightHeight = GetHeight(root.right);
 
-            return Math.Abs(leftHeight - rightHeight) <= 1 
-                && IsBalanced1(root.left) 
+            return Math.Abs(leftHeight - rightHeight) <= 1
+                && IsBalanced1(root.left)
                 && IsBalanced1(root.right);
         }
 
@@ -154,7 +197,7 @@ namespace BinaryTree2 {
             return false;
         }
 
-       
+
         // https://leetcode.com/problems/symmetric-tree/
         // recursive
         public bool IsSymmetric(TreeNode root) {
