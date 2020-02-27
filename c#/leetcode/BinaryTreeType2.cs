@@ -14,6 +14,7 @@ namespace BinaryTree2 {
     public class Solution {
         private TreeNode cur;
 
+
         // https://leetcode.com/problems/minimum-depth-of-binary-tree/
         // recursive
         public int MinDepth(TreeNode root) {
@@ -41,7 +42,7 @@ namespace BinaryTree2 {
                 var subQueue = new Queue<TreeNode>();
 
                 while (queue.Count > 0) {
-                    var currNode = queue.Dequeue();
+                    TreeNode currNode = queue.Dequeue();
 
                     if (currNode.left is null && currNode.right is null) return minDepth;
 
