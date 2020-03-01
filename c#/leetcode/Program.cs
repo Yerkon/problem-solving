@@ -15,7 +15,7 @@ namespace leetcode {
 
             root.left.left.left = new TreeNode(-1);
 
-            sol.PathSum(root, 0);
+            //sol.PathSum(root, 0);
 
             //Console.WriteLine(res);
         }
