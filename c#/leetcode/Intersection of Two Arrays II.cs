@@ -7,12 +7,33 @@ using System.Text;
 namespace Intersection_of_Two_Arrays_II {
     class Solution {
 
-        // What if the given array is already sorted? How would you optimize your algorithm?
+
         public int[] Intersect(int[] nums1, int[] nums2) {
             var list = new List<int>();
-            var set1 = new HashSet<int>();
-            var set2 = new HashSet<int>();
+            var dic = new Dictionary<int, int>();
 
+            for (int i = 0; i < nums1.Length; i++) {
+                int curr = nums1[i];
+                dic[curr] = dic.GetValueOrDefault(curr, 0) + 1;
+            }
+
+            for (int i = 0; i < nums2.Length; i++) {
+                int curr = nums2[i];
+                if(dic.ContainsKey(curr) && dic[curr] > 0) {
+                    list.Add(curr);
+                    dic[curr] -= 1;
+                }
+            }
+
+
+            return list.ToArray();
+        }
+
+
+        // What if the given array is already sorted? How would you optimize your algorithm?
+        public int[] Intersect2(int[] nums1, int[] nums2) {
+            var list = new List<int>();
+          
             var sorted1 = new List<int>();
             var sorted2 = new List<int>();
 
@@ -41,7 +62,6 @@ namespace Intersection_of_Two_Arrays_II {
             var list = new List<int>();
             var set1 = new HashSet<int>();
             var set2 = new HashSet<int>();
-
 
             for (int i = 0; i < nums1.Length; i++) {
                 for (int j = 0; j < nums2.Length; j++) {
