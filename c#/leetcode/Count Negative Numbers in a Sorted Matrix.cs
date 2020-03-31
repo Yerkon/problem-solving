@@ -15,8 +15,8 @@ namespace leetcode {
                 int[] row = grid[r];
 
                 int index = BinarySearch(row, 0, row.Length - 1);
-                
-                if(index != -1) {
+
+                if (index != -1) {
                     count += row.Length - index;
                 }
 
@@ -27,17 +27,15 @@ namespace leetcode {
 
 
         public int BinarySearch(int[] row, int l, int r) {
-            if(l >= r) {
-                return row[l] > 0 ? -1: l;
+            if (l >= r) {
+                return row[l] >= 0 ? -1 : l;
             }
 
             int mid = (l + r) / 2;
 
-            if(row[mid] >= 0) {
-                return BinarySearch(row, mid + 1, r);
-            } else {
-                return BinarySearch(row, l, mid - 1);
-            }
+            return row[mid] >= 0
+                ? BinarySearch(row, mid + 1, r)
+                : BinarySearch(row, l, mid);
         }
 
 
