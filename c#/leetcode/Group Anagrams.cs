@@ -6,11 +6,60 @@ using System.Text;
 namespace leetcode {
     internal class Group_Anagrams {
 
+        // better solution on Java
+        //public List<List<String>> groupAnagrams(String[] strs) {
+        //    if (strs.length == 0) return new ArrayList();
+        //    Map<String, List> ans = new HashMap<String, List>();
+        //    int[] count = new int[26];
+        //    for (String s : strs) {
+        //        Arrays.fill(count, 0);
+        //        for (char c : s.toCharArray()) count[c - 'a']++;
+
+        //        StringBuilder sb = new StringBuilder("");
+        //        for (int i = 0; i < 26; i++) {
+        //            sb.append('#');
+        //            sb.append(count[i]);
+        //        }
+        //        String key = sb.toString();
+        //        if (!ans.containsKey(key)) ans.put(key, new ArrayList());
+        //        ans.get(key).add(s);
+        //    }
+        //    return new ArrayList(ans.values());
+        //}
+
+        // Time: O(NKLogK). K - max size of word in strs, N - strs.length
+        // Space: O(NK)
         public IList<IList<string>> GroupAnagrams(string[] strs) {
+            var sortedDic = new Dictionary<string, IList<string>>();
+
+            for (int i = 0; i < strs.Length; i++) {
+                IOrderedEnumerable<char> orderedArr = strs[i].OrderBy(r => r);
+                var sb = new StringBuilder();
+                
+                foreach (var item in orderedArr) {
+                    sb.Append(item);
+                }
+               
+                string sorted = sb.ToString();
+
+                if(!sortedDic.ContainsKey(sorted)) {
+                    sortedDic.Add(sorted, new List<string>() { });
+                } 
+
+                sortedDic[sorted].Add(strs[i]);
+            }
+
+            return sortedDic.Values.ToList();
+        }
+
+        
+
+        public IList<IList<string>> GroupAnagrams3(string[] strs) {
 
             var listOfList = new List<IList<string>>();
             if (strs.Length == 0) return listOfList;
 
+            //  var listOfSet = new List<HashSet>
             var anagramList = new List<string>() { strs[0] };
             listOfList.Add(new List<string>() { strs[0] });
 
@@ -79,7 +128,7 @@ namespace leetcode {
 
 
         // by sort
-        public IList<IList<string>> GroupAnagrams(string[] strs) {
+        public IList<IList<string>> GroupAnagrams2(string[] strs) {
             var listOfList = new List<IList<string>>();
             var strList = new List<string>();
 
