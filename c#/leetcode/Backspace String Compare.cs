@@ -42,8 +42,7 @@ namespace leetcode {
                         return false;
                     }
                 }
-
-
+                
                 while (i >= 0 && (S[i] == '#' || iGridCount > 0)) {
 
                     if (S[i] == '#') {
@@ -54,8 +53,6 @@ namespace leetcode {
                         iGridCount--;
                     }
                 }
-
-                // 
 
                 while (j >= 0 && (T[j] == '#' || jGridCount > 0)) {
 
