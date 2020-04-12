@@ -29,32 +29,32 @@ namespace leetcode {
 
         // Time Complexity: O(nlogn), space: O(N)
         public int LastStoneWeight(int[] stones) {
-            var descSorted = new SortedSet<Pair>(new PairComparer());
+            var sortedSet = new SortedSet<Pair>(new PairComparer());
             
 
             for (int i = 0; i < stones.Length; i++) {
-                descSorted.Add(new Pair(stones[i], i));
+                sortedSet.Add(new Pair(stones[i], i));
             }
 
-            int it = descSorted.Count;
+            int it = sortedSet.Count;
 
-            while (descSorted.Count >= 2) {
-                var maxPair = descSorted.Max;
+            while (sortedSet.Count >= 2) {
+                var maxPair = sortedSet.Max;
                 int max1 = maxPair.Key;
-                descSorted.Remove(maxPair);
+                sortedSet.Remove(maxPair);
 
-                var max2Pair = descSorted.Max;
+                var max2Pair = sortedSet.Max;
                 int max2 = max2Pair.Key;
-                descSorted.Remove(max2Pair); // O(log n)
+                sortedSet.Remove(max2Pair); // O(log n)
 
                 int diff = max1 - max2;
                 if(diff > 0) {
                     var newPair = new Pair(diff, it++);
-                    descSorted.Add(newPair); // O(log n)
+                    sortedSet.Add(newPair); // O(log n)
                 }
             }
 
-            return descSorted.Count > 0 ? descSorted.Min.Key : 0;
+            return sortedSet.Count > 0 ? sortedSet.Min.Key : 0;
         }
 
 
