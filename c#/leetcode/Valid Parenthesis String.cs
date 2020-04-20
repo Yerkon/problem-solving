@@ -28,6 +28,7 @@ namespace leetcode {
             }
 
 
+
             s = string.Join("", stack.ToArray());
             stack.Clear();           
 
@@ -98,7 +99,7 @@ namespace leetcode {
         }
 
 
-        public bool CheckValidString(string s) {
+        public bool CheckValidString1(string s) {
             if (s.Length == 0) return true;
 
             var stack = new Stack<char>();

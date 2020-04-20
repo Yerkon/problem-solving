@@ -6,18 +6,16 @@ using System.Linq;
 namespace leetcode {
     internal class Program {
         private static void Main(string[] args) {
-            Solution sol = new Solution();
 
-            TreeNode root = new TreeNode(1);
-            root.left = new TreeNode(-2);
-            root.left.left = new TreeNode(1);
-            root.left.right = new TreeNode(3);
+            var sol = new Search_in_Rotated_Sorted_Array();
 
-            root.left.left.left = new TreeNode(-1);
+            int[] input = new int[8] { 7, 8, 1, 2, 3, 4, 5, 6 };
 
-            //sol.PathSum(root, 0);
+            int res = sol.Search(input, 2);
 
-            //Console.WriteLine(res);
+
+            Console.WriteLine(res);
+            //  sol.MinPathSum()
         }
 
     }
