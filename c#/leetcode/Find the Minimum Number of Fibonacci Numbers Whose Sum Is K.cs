@@ -16,10 +16,12 @@ namespace leetcode {
                 fib.Add(sum);
             }
 
+
+
             int curr = k, count = 0;
 
             while (curr != 0) {
-                for (int i = fib.Count - 1; i >= 0; i++) {
+                for (int i = fib.Count - 1; i >= 0; i--) {
                     if(fib[i] <= curr) {
                         curr -= fib[i];
                         count++;
