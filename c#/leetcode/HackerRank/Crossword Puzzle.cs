@@ -58,9 +58,6 @@ class Solution {
                         fillRight = false;
                     }
 
-                    // Console.WriteLine("fill right" + fillRight);
-                    // Console.WriteLine("i: " + i + " j:" + j + " fill right: " + fillRight);
-
                     for (int k = 0; k < wordsArr.Length; k++) {
                         string word = wordsArr[k];
                         string newWordsStr = string.Join(";", wordsArr.Where(w => w != word));
@@ -68,22 +65,28 @@ class Solution {
                         if (fillRight) {
                             bool isFilled = FillRight(crossword, i, j, word);
 
+
                             if (isFilled) {
                                 Fill(crossword, newWordsStr);
                             } else {
                                 ClearRight(crossword, i, j);
                             }
 
+                            if (isFilled) ClearRightWord(crossword, i, j, j + word.Length - 1);
+
                         } else {
                             // bottom
                             bool isFilled = FillBottom(crossword, i, j, word);
                             // Console.WriteLine("fill bottom " + isFilled );
+
 
                             if (isFilled) {
                                 Fill(crossword, newWordsStr);
                             } else {
                                 ClearBottom(crossword, i, j);
                             }
+
+                            if (isFilled) ClearBottomWord(crossword, i, j, i + word.Length - 1);
                         }
                     }
                 }
@@ -151,6 +154,14 @@ class Solution {
         //  Console.WriteLine(" after clear " + new string(crossword[r]));
     }
 
+    public static void ClearRightWord(char[][] crossword, int r, int start, int end) {
+        end = Math.Min(crossword[r].Length - 1, end);
+
+        for (int i = start; i <= end; i++) {
+            crossword[r][i] = '-';
+        }
+    }
+
     public static bool FillBottom(char[][] crossword, int r, int c, string word) {
 
         if (r != 0 && crossword[r - 1][c] == '-') {
@@ -166,8 +177,6 @@ class Solution {
         if (word.Length > colFillLength) {
             return false;
         }
-
-        //Console.WriteLine(word);
 
         for (int i = 0; i < word.Length; i++) {
             if (crossword[r][c] == '-') {
@@ -190,9 +199,29 @@ class Solution {
 
     public static void ClearBottom(char[][] crossword, int r, int c) {
 
+        //  Console.WriteLine("Clearbottom before: ");
+
+        //  for(int i = 0; i< crossword.Length; i++) {
+        //      Console.Write(crossword[i][c]);
+        //  }
+
         while (r != crossword.Length && !(crossword[r][c] == '-' || crossword[r][c] == '+' || crossword[r][c] == 'X')) {
             //  Console.WriteLine("ClearBottom r:" + r + ". col: " + c);
             crossword[r++][c] = '-';
+        }
+
+        //    Console.WriteLine("Clearbottom after: ");
+
+        //     for(int i = 0; i< crossword.Length; i++) {
+        //      Console.Write(crossword[i][c]);
+        //  }
+    }
+
+    public static void ClearBottomWord(char[][] crossword, int r, int c, int end) {
+        end = Math.Min(crossword.Length - 1, end);
+
+        for (int i = r; i <= end; i++) {
+            crossword[i][c] = '-';
         }
     }
 
