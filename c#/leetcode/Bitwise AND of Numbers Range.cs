@@ -12,7 +12,7 @@ namespace leetcode {
                 int t = n & (1 << i);
 
                 if (k > 0 && k == t) {
-                    val += (int)Math.Pow(2, i);
+                    val += 1 << i;
 
                 } else if (k > 0 || t > 0) {
                     return val;
