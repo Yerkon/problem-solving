@@ -27,24 +27,24 @@ class MaxSubsetSum {
             return max;
         }
 
-        int[] sumArr = new int[arr.Length];
+        int[] dp = new int[arr.Length];
 
-        sumArr[0] = arr[0];
-        sumArr[1] = arr[1];
-        sumArr[2] = Math.Max(sumArr[2], sumArr[2] + sumArr[0]);
+        dp[0] = arr[0];
+        dp[1] = arr[1];
+        dp[2] = Math.Max(dp[2], dp[2] + dp[0]);
 
-        max = Math.Max(max, Math.Max(sumArr[1], sumArr[2]));
+        max = Math.Max(max, Math.Max(dp[1], dp[2]));
 
         for (int i = 2; i < arr.Length; i++) {
-            int max1 = Math.Max(arr[i], arr[i] + sumArr[i - 2]);
-            max1 = Math.Max(max1, sumArr[i - 2]);
+            int max1 = Math.Max(arr[i], arr[i] + dp[i - 2]);
+            max1 = Math.Max(max1, dp[i - 2]);
 
-            int prevPrevVal = (i - 3) < 0 ? 0 : sumArr[i - 3];
+            int prevPrevVal = (i - 3) < 0 ? 0 : dp[i - 3];
             int max2 = Math.Max(arr[i], arr[i] + prevPrevVal);
             max2 = Math.Max(max2, prevPrevVal);
 
-            sumArr[i] = Math.Max(max1, max2);
-            max = Math.Max(max, sumArr[i]);
+            dp[i] = Math.Max(max1, max2);
+            max = Math.Max(max, dp[i]);
         }
 
         // for(int i = 0; i< sumArr.Length; i++) {
