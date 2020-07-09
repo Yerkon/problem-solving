@@ -5,7 +5,7 @@ using System.Text;
 namespace Project.HackerRank.DP {
     internal class Matrix_Block_Sum {
 
-        // wrong
+        
         public int[][] MatrixBlockSum(int[][] mat, int K) {
             int[][] res = new int[mat.Length][];
             int[][] dp = new int[mat.Length][];
@@ -34,26 +34,24 @@ namespace Project.HackerRank.DP {
 
             for (int i = 0; i < res.Length; i++) {
                 for (int j = 0; j < res[i].Length; j++) {
-                    if (i + K < res.Length && j + K < res[i].Length) {
-                        res[i][j] = dp[i + K][j + K];
-                    } else if (j + K >= res[i].Length && i + K >= res.Length) {
-                        int left = Math.Max(dp[i].Length - 2 - K, 0);
-                        int top = Math.Max(dp.Length - 2 - K, 0);
+                    int top = i - K - 1;
+                    int left = j - K - 1;
 
-                        res[i][j] = dp[dp.Length - 1][dp[i].Length - 1] - dp[dp.Length - 1][left] - dp[top][dp[i].Length - 1];
+                    int nextRow = Math.Min(i + K, dp.Length - 1);
+                    int nextCol = Math.Min(j + K, dp[i].Length - 1);
 
+                    res[i][j] = dp[nextRow][nextCol];
 
-                        // add cross
-
-                        res[i][j] += dp[top][left]; 
-                    } else if (j + K >= res[i].Length) {
-                        int begin = Math.Max(res[i].Length - 2 - K, 0);
-                        res[i][j] = dp[i + K][res[i].Length - 1] - dp[i + K][begin];
-                    } else if (i + K >= res.Length) {
-                        int begin = Math.Max(res.Length - 2 - K, 0);
-                        res[i][j] = dp[res.Length - 1][j + K] - dp[begin][j + K];
+                    if (left >= 0) {
+                        res[i][j] -= dp[nextRow][left];
                     }
 
+                    if (top >= 0) {
+                        res[i][j] -= dp[top][nextCol];
+                    }
+
+                    // add cross
+                    if (top >= 0 && left >= 0) res[i][j] += dp[top][left];
                 }
             }
 
