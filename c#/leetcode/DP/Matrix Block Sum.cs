@@ -5,40 +5,34 @@ using System.Text;
 namespace Project.HackerRank.DP {
     internal class Matrix_Block_Sum {
 
-        
         public int[][] MatrixBlockSum(int[][] mat, int K) {
             int[][] res = new int[mat.Length][];
-            int[][] dp = new int[mat.Length][];
+            int[][] dp = new int[mat.Length + 1][];
 
             for (int i = 0; i < mat.Length; i++) {
                 int[] row = new int[mat[i].Length];
-                int[] dpRow = new int[mat[i].Length];
+                int[] dpRow = new int[mat[i].Length + 1];
 
                 res[i] = row;
                 dp[i] = dpRow;
             }
 
+           dp[mat.Length] = new int[mat[0].Length + 1];
+
 
             for (int i = 0; i < mat.Length; i++) {
                 for (int j = 0; j < mat[i].Length; j++) {
-                    dp[i][j] = mat[i][j];
-
-                    if (i - 1 >= 0) dp[i][j] += dp[i - 1][j];
-
-                    // add top columns sum
-                    for (int k = 0; k < j; k++) {
-                        dp[i][j] += mat[i][k];
-                    }
+                    dp[i + 1][j + 1] = mat[i][j] + dp[i][j + 1] + dp[i + 1][j] - dp[i][j];
                 }
             }
 
             for (int i = 0; i < res.Length; i++) {
                 for (int j = 0; j < res[i].Length; j++) {
-                    int top = i - K - 1;
-                    int left = j - K - 1;
+                    int top = i - K;
+                    int left = j - K;
 
-                    int nextRow = Math.Min(i + K, dp.Length - 1);
-                    int nextCol = Math.Min(j + K, dp[i].Length - 1);
+                    int nextRow = Math.Min(i + K + 1, dp.Length - 1);
+                    int nextCol = Math.Min(j + K + 1, dp[i].Length - 1);
 
                     res[i][j] = dp[nextRow][nextCol];
 
