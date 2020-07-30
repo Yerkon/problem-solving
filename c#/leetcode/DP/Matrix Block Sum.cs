@@ -17,8 +17,7 @@ namespace Project.HackerRank.DP {
                 dp[i] = dpRow;
             }
 
-           dp[mat.Length] = new int[mat[0].Length + 1];
-
+            dp[mat.Length] = new int[mat[0].Length + 1];
 
             for (int i = 0; i < mat.Length; i++) {
                 for (int j = 0; j < mat[i].Length; j++) {
