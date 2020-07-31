@@ -22,8 +22,44 @@ class Result {
      *  2. LONG_INTEGER_ARRAY c
      */
 
+    // DP. bottom-up
+    public static long getWays(int N, List<long> c) {
+        if (N == 0 || c.Count == 0) return 0;
+
+        long[][] dp = new long[c.Count + 1][];
+
+        for (int i = 0; i < dp.Length; i++) {
+            long[] row = new long[N + 1];
+            dp[i] = row;
+        }
+
+        for (int i = 1; i < dp.Length; i++) {
+            for (int j = 0; j < dp[0].Length; j++) { // iterate up to N
+
+                if (c[i - 1] > j) {
+                    dp[i][j] = dp[i - 1][j];
+                } else {
+                    long found = j - c[i - 1] == 0 ? 1 : 0;
+                    long include = dp[i][j - c[i - 1]];
+                    long prev = dp[i - 1][j];
+
+                    dp[i][j] = include + found + prev;
+                }
+            }
+        }
+
+        //   for(int i = 0; i<dp.Length; i++) {
+        //       for(int j = 0; j < dp[0].Length; j++) {
+        //           Console.Write(dp[i][j] + " ");
+        //       }
+        //       Console.WriteLine();
+        //   }
+
+        return dp[c.Count][N];
+    }
+
     // DP. Top-down solution
-    public static long getWays(int W, List<long> c) {
+    public static long getWays2(int W, List<long> c) {
         long[][] dp = new long[c.Count][];
 
         for (int i = 0; i < dp.Length; i++) {
