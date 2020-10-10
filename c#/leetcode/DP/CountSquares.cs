@@ -5,7 +5,7 @@ using System.Text;
 namespace Project.DP {
     public class Solution {
 
-        // bottom- up. in progress
+        // Iterative. bottom- up. 
         public int CountSquares(int[][] matrix) {
             int count = 0;
             int[][] dp = new int[matrix.Length][];
@@ -16,7 +16,6 @@ namespace Project.DP {
                 dp[i] = dpRow;
             }
 
-
             for (int i = 0; i < matrix.Length; i++) {
                 for (int j = 0; j < matrix[i].Length; j++) {
 
@@ -24,23 +23,23 @@ namespace Project.DP {
                     int prevLeft = j - 1 < 0 ? 0 : dp[i][j - 1];
                     int prevTopLeft = 0;
 
-                    if (i - 1 < 0 && j - 1 < 0) {
-                        prevTopLeft = 0;
-                    } else if (i - 1 < 0) {
-                        prevTopLeft = prevLeft;
 
-                    } else if (j - 1 < 0) {
-                        prevTopLeft = prevTop;
+                    prevTopLeft = Math.Min(prevTop, prevLeft);
+
+                    if (i - 1 >= 0 && j - 1 >= 0) {
+                        prevTopLeft = dp[i - 1][j - 1];
                     }
 
-                    dp[i][j] = matrix[i][j] + Math.Min(Math.Min(prevTop, prevLeft), prevTopLeft);
-                    count += dp[i][j];
+                    if (matrix[i][j] == 1) {
+                        dp[i][j] = matrix[i][j] + Math.Min(Math.Min(prevTop, prevLeft), prevTopLeft);
+                        count += dp[i][j];
+                    }
                 }
             }
 
             for (int i = 0; i < dp.Length; i++) {
                 for (int j = 0; j < dp[i].Length; j++) {
-                    Console.WriteLine(dp[i][j] + " ");
+                    Console.Write(dp[i][j] + " ");
                 }
 
                 Console.WriteLine();
