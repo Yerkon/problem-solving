@@ -4,26 +4,28 @@ using System.Text;
 
 namespace Project.January_2021 {
     internal class Max_Chunks_To_Make_Sorted {
+
+        // time: O(N^2)
         public int MaxChunksToSorted(int[] arr) {
             int chunks = 0;
-            int value = -1;
-            
+
+            HashSet<int> set = new HashSet<int>();
+
             for (int i = 0; i < arr.Length; i++) {
-                if (arr[i] == i && value == -1) {
-                    chunks++;
-                
-                } else {
+                set.Add(i);
 
-                    if (value == i) {
-                        chunks++;
-                        value = -1;
-                    } else if (value == -1) {
-                        value = arr[i];
+                bool isInSet = true;
+                for (int j = 0; j <= i; j++) {
+                    if (!set.Contains(arr[j])) {
+                        isInSet = false;
                     }
-
                 }
-            }
 
+                if(isInSet) {
+                    chunks++;
+                }
+
+            }
             return  chunks;
         }
     }
