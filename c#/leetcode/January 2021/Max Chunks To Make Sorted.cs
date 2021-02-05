@@ -31,18 +31,14 @@ namespace Project.January_2021 {
         // time: O(N)
         public int MaxChunksToSorted(int[] arr) {
             int chunks = 0;
-
-            int[] sumArr = new int[arr.Length];
-
-            for (int i = 1; i < arr.Length; i++) {
-                sumArr[i] = sumArr[i - 1] + i;
-            }
-
             int currSum = 0;
+            int sortedSum = 0;
+
             for (int i = 0; i < arr.Length; i++) {
+                sortedSum += i;
                 currSum += arr[i];
 
-                if(sumArr[i] == currSum) {
+                if(sortedSum == currSum) {
                     chunks++;
                 }
             }
