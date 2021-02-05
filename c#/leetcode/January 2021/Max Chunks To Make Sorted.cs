@@ -6,9 +6,8 @@ namespace Project.January_2021 {
     internal class Max_Chunks_To_Make_Sorted {
 
         // time: O(N^2)
-        public int MaxChunksToSorted(int[] arr) {
+        public int MaxChunksToSorted1(int[] arr) {
             int chunks = 0;
-
             HashSet<int> set = new HashSet<int>();
 
             for (int i = 0; i < arr.Length; i++) {
@@ -27,6 +26,28 @@ namespace Project.January_2021 {
 
             }
             return  chunks;
+        }
+
+        // time: O(N)
+        public int MaxChunksToSorted(int[] arr) {
+            int chunks = 0;
+
+            int[] sumArr = new int[arr.Length];
+
+            for (int i = 1; i < arr.Length; i++) {
+                sumArr[i] = sumArr[i - 1] + i;
+            }
+
+            int currSum = 0;
+            for (int i = 0; i < arr.Length; i++) {
+                currSum += arr[i];
+
+                if(sumArr[i] == currSum) {
+                    chunks++;
+                }
+            }
+           
+            return chunks;
         }
     }
 }
