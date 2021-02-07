@@ -5,40 +5,37 @@ using System.Text;
 namespace Project.January_2021 {
     internal class Longest_Common_Subsequence {
         public int LongestCommonSubsequence(string text1, string text2) {
-            int longest = 0;
+            
+            int[][] dp = new int[text1.Length + 1][];
 
-            var set1 = new HashSet<string>();
-            var set2 = new HashSet<string>();
+            for (int i = 0; i < text1.Length + 1; i++) {
+                int[] dpRow = new int[text2.Length + 1];
 
-            for (int i = 0; i < text1.Length; i++) {
-                CountSubs(text1, new StringBuilder(), i, set1);
+                dp[i] = dpRow;
             }
 
-            for (int i = 0; i < text2.Length; i++) {
-                CountSubs(text2, new StringBuilder(), i, set2);
-            }
-
-            foreach (string item in set1) {
-                Console.WriteLine(item);
-                if(set2.Contains(item)) {
-                    longest = Math.Max(longest, item.Length);
+            for (int i = 1; i <= text1.Length; i++) {
+                for (int j = 1; j <= text2.Length; j++) {
+                    int equal = text1[i - 1] == text2[j - 1] ? 1 : 0;
+                    int k = equal + dp[i - 1][j - 1];
+                    
+                    dp[i][j] = Math.Max(k, Math.Max(dp[i][j - 1], dp[i - 1][j]));
                 }
             }
 
-            return longest;
+            return dp[text1.Length][text2.Length];
         }
 
-        public void CountSubs(string text, StringBuilder currStr, int currIdx, HashSet<string> set) {
+        public void CountSubs(string text, string currStr, int currIdx) {
 
-            //string curr = currStr +  text1[currIdx];
-            var newBuilder = new StringBuilder(currStr.ToString());
-            newBuilder.Append(text[currIdx]);
+            string curr = currStr +  text[currIdx];
+            //var newBuilder = new StringBuilder(currStr.ToString());
+            //newBuilder.Append(text[currIdx]);
 
             for (int i = currIdx + 1; i < text.Length; i++) {
-                CountSubs(text, newBuilder, i, set);
+                CountSubs(text, curr, i);
             }
 
-            set.Add(newBuilder.ToString());
         }
     }
 }
