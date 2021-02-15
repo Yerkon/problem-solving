@@ -67,13 +67,9 @@ namespace Project._2021 {
             else if (root2 is null) return false;
             else if (root1.val != root2.val) return false;
 
-            if(root1.left?.val == root2.left?.val && root1.right?.val == root2.right?.val) {
-                return IsNodesAreEqual(root1.left, root2.left) && IsNodesAreEqual(root1.right, root2.right);
-            } else if (root1.left?.val == root2.right?.val && root1.right?.val == root2.left?.val) {
-                return IsNodesAreEqual(root1.left, root2.right) && IsNodesAreEqual(root1.right, root2.left);
-            }
+            return (IsNodesAreEqual(root1.left, root2.left) && IsNodesAreEqual(root1.right, root2.right)) 
+                || (IsNodesAreEqual(root1.left, root2.right) && IsNodesAreEqual(root1.right, root2.left));
 
-            return false;
         }
 
     }
