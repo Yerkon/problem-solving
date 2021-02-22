@@ -31,46 +31,55 @@ namespace Project._2021 {
             return root;
         }
 
-
         // iterative
         public TreeNode TrimBST(TreeNode root, int L, int R) {
             if (root is null) return null;
             
             TreeNode newRoot = null;
-            TreeNode parent = null;
-
             var stack = new Stack<TreeNode>();
+            var parentStack = new Stack<TreeNode>();
+
             stack.Push(root);
-
+          
             while (stack.Count > 0) {
-                TreeNode curr = stack.Pop();
+                var parentNode = parentStack.Count > 0 ? parentStack.Pop() : null ;
+                var currNode = stack.Pop();
 
-                if(curr is null) {
+                //if(currNode is null) {
+                //    continue;
+                //}
+
+                if(currNode.val < L) {
+                    if(currNode.right != null) stack.Push(currNode.right);
+
+                    if (parentNode != null) {
+                        parentNode.left = currNode.right;
+                        parentStack.Push(parentNode);
+                    }
+
                     continue;
-                }
+                } else if(currNode.val > R ) {
+                    if(currNode.left != null) stack.Push(currNode.left);
 
-                if(curr.val < L) {
-                    stack.Push(curr.right);
-
-                    if(parent != null) parent.left = curr.right;
-
-                    continue;
-                } else if(curr.val > R ) {
-                    stack.Push(curr.left);
-
-                    if(parent != null) parent.right = curr.left;
+                    if (parentNode != null) { 
+                        parentNode.right = currNode.left;
+                        parentStack.Push(parentNode);
+                    }
 
                     continue;
                 }
 
                 if(newRoot is null) {
-                    newRoot = curr;
+                    newRoot = currNode;
                 }
 
-                parent = curr;
-                stack.Push(curr.left);
-                stack.Push(curr.right);
-               
+                // parent in range
+                if(currNode.left != null || currNode.right != null) {
+                    parentStack.Push(currNode);
+                }
+
+                if(currNode.left != null) stack.Push(currNode.left);
+                if(currNode.right != null) stack.Push(currNode.right);
             }
 
             return newRoot;
