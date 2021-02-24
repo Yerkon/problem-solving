@@ -37,24 +37,27 @@ namespace Project._2021 {
             
             TreeNode newRoot = null;
             var stack = new Stack<TreeNode>();
-            var parentStack = new Stack<TreeNode>();
+            var parentStack = new Stack<TreeNode>();  
 
             stack.Push(root);
           
             while (stack.Count > 0) {
-                var parentNode = parentStack.Count > 0 ? parentStack.Pop() : null ;
+                var parentNode = parentStack.Count > 0 ? parentStack.Peek() : null;
                 var currNode = stack.Pop();
 
-                //if(currNode is null) {
-                //    continue;
-                //}
+                if (currNode is null) {
+                    continue;
+                }
 
-                if(currNode.val < L) {
+                if (currNode.val < L) {
                     if(currNode.right != null) stack.Push(currNode.right);
 
                     if (parentNode != null) {
                         parentNode.left = currNode.right;
-                        parentStack.Push(parentNode);
+                    }
+
+                    if (stack.Count > 0 && !(stack.Peek() == parentNode?.left || stack.Peek() == parentNode?.right)) {
+                        if(parentStack.Count > 0) parentStack.Pop();
                     }
 
                     continue;
@@ -63,27 +66,35 @@ namespace Project._2021 {
 
                     if (parentNode != null) { 
                         parentNode.right = currNode.left;
-                        parentStack.Push(parentNode);
                     }
+
+                    if (stack.Count > 0 && !(stack.Peek() == parentNode?.left || stack.Peek() == parentNode?.right)) {
+                        if (parentStack.Count > 0) parentStack.Pop();
+                    }
+
 
                     continue;
                 }
 
-                if(newRoot is null) {
+                // in range
+                if (stack.Count > 0 && !(stack.Peek() == parentNode?.left || stack.Peek() == parentNode?.right)) {
+                    if (parentStack.Count > 0) parentStack.Pop();
+                }
+
+                if (newRoot is null) {
                     newRoot = currNode;
                 }
 
-                // parent in range
-                if(currNode.left != null || currNode.right != null) {
+                if (currNode.left != null) stack.Push(currNode.left);
+                if (currNode.right != null) stack.Push(currNode.right);
+
+                if (currNode.left != null || currNode.right != null) {
                     parentStack.Push(currNode);
                 }
-
-                if(currNode.left != null) stack.Push(currNode.left);
-                if(currNode.right != null) stack.Push(currNode.right);
             }
 
             return newRoot;
         }
 
-    }
+    } //
 }
