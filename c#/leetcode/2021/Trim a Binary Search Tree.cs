@@ -44,11 +44,7 @@ namespace Project._2021 {
             while (stack.Count > 0) {
                 var parentNode = parentStack.Count > 0 ? parentStack.Peek() : null;
                 var currNode = stack.Pop();
-
-                if (currNode is null) {
-                    continue;
-                }
-
+                
                 if (currNode.val < L) {
                     if(currNode.right != null) stack.Push(currNode.right);
 
@@ -71,7 +67,6 @@ namespace Project._2021 {
                     if (stack.Count > 0 && !(stack.Peek() == parentNode?.left || stack.Peek() == parentNode?.right)) {
                         if (parentStack.Count > 0) parentStack.Pop();
                     }
-
 
                     continue;
                 }
