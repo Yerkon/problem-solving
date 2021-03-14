@@ -9,18 +9,43 @@ namespace Project._2021 {
 
         // 000111 L: 6
         public IList<string> FindRepeatedDnaSequences(string s) {
-            var result = new List<string>();
+            var set = new HashSet<string>();
+            var sb = new StringBuilder();
+            var secondSb = new StringBuilder();
 
             for (int i = 0; i < s.Length - 10; i++) {
-                string substr = s.Substring(i, 10);
 
-                for (int j = i + 10; j < s.Length - 10 + 1; j++) {
-                    string nextSubstr = s.Substring(j, 10);
-                    
-                    if (string.Equals(substr, nextSubstr)) {
-                        result.Add(substr);
-                    } 
+                if(sb.Length > 0) sb.Remove(0, 1);
+
+                while(sb.Length < 10) {
+                    var ch = s[i + sb.Length];
+                    sb.Append(ch);
                 }
+
+                var substr = sb.ToString();
+                if (set.Contains(substr)) continue;
+
+                secondSb.Clear();
+                for (int j = i + 1; j < s.Length - 10 + 1; j++) {
+
+                    if (secondSb.Length > 0) secondSb.Remove(0, 1);
+
+                    while (secondSb.Length < 10) {
+                        var ch = s[j + secondSb.Length];
+                        secondSb.Append(ch);
+                    }
+
+                    if(sb.Equals(secondSb)) {
+                        set.Add(substr);
+                        break;
+                    }
+                }
+            }
+                
+            var result = new List<string>();
+
+            foreach (string item in set) {
+                result.Add(item);
             }
 
             return result;
