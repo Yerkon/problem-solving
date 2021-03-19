@@ -8,8 +8,40 @@ namespace Project._2021 {
         // 0000000000111111111122, L: 22
 
         // 000111 L: 6
+
         public IList<string> FindRepeatedDnaSequences(string s) {
             var set = new HashSet<string>();
+            var resultSet = new HashSet<string>();
+            var sb = new StringBuilder();
+         
+            for (int i = 0; i < s.Length - 10 + 1; i++) {
+
+                if (sb.Length > 0) sb.Remove(0, 1);
+
+                while (sb.Length < 10) {
+                    char ch = s[i + sb.Length];
+                    sb.Append(ch);
+                }
+
+                string substr = sb.ToString();
+                if (!set.Add(substr)) {
+                    resultSet.Add(substr);
+                };
+            }
+
+            var result = new List<string>();
+
+            foreach (string item in resultSet) {
+                result.Add(item);
+            }
+
+            return result;
+        }
+
+
+        public IList<string> FindRepeatedDnaSequences2(string s) {
+            var set = new HashSet<string>();
+            var resultSet = new HashSet<string>();
             var sb = new StringBuilder();
             var secondSb = new StringBuilder();
 
@@ -18,11 +50,11 @@ namespace Project._2021 {
                 if(sb.Length > 0) sb.Remove(0, 1);
 
                 while(sb.Length < 10) {
-                    var ch = s[i + sb.Length];
+                    char ch = s[i + sb.Length];
                     sb.Append(ch);
                 }
 
-                var substr = sb.ToString();
+                string substr = sb.ToString();
                 if (set.Contains(substr)) continue;
 
                 secondSb.Clear();
@@ -31,7 +63,7 @@ namespace Project._2021 {
                     if (secondSb.Length > 0) secondSb.Remove(0, 1);
 
                     while (secondSb.Length < 10) {
-                        var ch = s[j + secondSb.Length];
+                        char ch = s[j + secondSb.Length];
                         secondSb.Append(ch);
                     }
 
