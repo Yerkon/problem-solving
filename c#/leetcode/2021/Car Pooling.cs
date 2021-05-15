@@ -12,6 +12,7 @@ namespace Project._2021 {
             
             for (int i = 0; i < trips.Length; i++) {
 
+                
                 int[] trip = trips[i];
               
                 for (int k = trip[1]; k < trip[2]; k++) {
