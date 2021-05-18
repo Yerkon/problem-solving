@@ -17,7 +17,13 @@ public class Solution {
         
         for (int i = 0; i < n; i++) {
             adjList.Add(new List<int>());
-            distance.Add(new int[n]);
+
+            int[] items = new int[n];
+            for (int k = 0; k < n; k++)
+            {
+                items[k] = -1;           
+            }
+            distance.Add(items);
         }
 
         for (int i = 0; i < edges.Length; i++) {
@@ -35,17 +41,18 @@ public class Solution {
            minHeight = Math.Min(minHeight, heights[i]);
         }
 
-        for (int i = 0; i < distance.Count; i++)
-        {
-            Console.WriteLine($"Distance {i}  to ");
-            for (int j = 0; j < distance[i].Length; j++)
-            {
-                Console.WriteLine($"{j} = {distance[i][j]}");
-            }
-        }
+        // for (int i = 0; i < distance.Count; i++)
+        // {
+        //     Console.WriteLine($"Distance from {i} to ");
+        //     for (int j = 0; j < distance[i].Length; j++)
+        //     {
+        //         Console.WriteLine($"{j} = {distance[i][j]}");
+        //     }
+        // }
 
         for (int i = 0; i < heights.Length; i++)
         {
+           // Console.WriteLine($"node: {i}: " + heights[i]);
             if(heights[i] == minHeight) {
                 result.Add(i);
             }
@@ -57,12 +64,10 @@ public class Solution {
 
       public int GetHeightForNode(int node, List<List<int>> adjList, int n, List<int[]> gDistance) {
         bool[] visited = new bool[n];
-        int[] distance = new int[n];
         int maxDistance = 0;
         Queue<int> q = new Queue<int>();
 
         visited[node] = true;
-        distance[node] = 0;
         gDistance[node][node] = 0;
         q.Enqueue(node);
         
@@ -73,23 +78,24 @@ public class Solution {
             foreach (int u in adjList[currNode]) {
                 if (visited[u]) continue;
 
-                if(gDistance[node][u] != 0) {
+                if(gDistance[node][u] != -1) {
                     visited[u] = true;
-                    distance[u] = gDistance[node][u];
+                    maxDistance = Math.Max(maxDistance, gDistance[node][u]);
+                    q.Enqueue(u);
                     continue;
-                } else if(gDistance[u][node] != 0) {
+                } else if(gDistance[u][node] != -1) {
                     visited[u] = true;
-                    distance[u] = gDistance[u][node];
+                     maxDistance = Math.Max(maxDistance, gDistance[u][node]);
+                    q.Enqueue(u);
                     continue;
                 }
                 
                 visited[u] = true;
-                distance[u] = distance[currNode] + 1;
+             
+                gDistance[node][u] = gDistance[node][currNode] + 1;
+                gDistance[u][node] = gDistance[node][currNode] + 1;
 
-                gDistance[node][u] = distance[u];
-                gDistance[u][node] = distance[u];
-
-                maxDistance = Math.Max(maxDistance, distance[u]);
+                maxDistance = Math.Max(maxDistance, gDistance[node][u]);
                 q.Enqueue(u);
             }
         }
