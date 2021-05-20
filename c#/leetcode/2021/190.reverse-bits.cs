@@ -12,7 +12,25 @@ using System.Text;
 // @lc code=start
 public class Solution {
 
-    public uint reverseBits(uint n) {
+
+  public uint reverseBits(uint n) {
+        
+        uint res = 0;
+        int pow = 31;
+
+        while (n > 0)
+        {
+            res += (n & 1) << pow;
+            n = n >> 1;
+
+            pow -= 1;
+        }
+
+
+        return res;
+    }
+
+    public uint reverseBits1(uint n) {
         
         uint res = 0;
         StringBuilder s = new StringBuilder();
