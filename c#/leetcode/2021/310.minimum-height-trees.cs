@@ -10,7 +10,70 @@ using System.Collections.Generic;
 
 // @lc code=start
 public class Solution {
-    public IList<int> FindMinHeightTrees(int n, int[][] edges) {
+
+public IList<int> FindMinHeightTrees(int n, int[][] edges) {
+        var neighbors = new List<HashSet<int>>();
+        
+        // base cases
+        if(n < 2) {
+            var centroids = new List<int>();
+
+            for (int i = 0; i < n; i++)
+            {
+                centroids.Add(i);
+            }
+
+            return centroids;
+        }
+
+        for (int i = 0; i < n; i++) {
+            neighbors.Add(new HashSet<int>());
+        }
+
+        for (int i = 0; i < edges.Length; i++) {
+            int[] edge = edges[i];
+
+            neighbors[edge[0]].Add(edge[1]);
+            neighbors[edge[1]].Add(edge[0]);
+        }
+
+        // first layer of leaves
+        List<int> leaves = new List<int>();
+        for (int i = 0; i < neighbors.Count; i++)
+        {
+            if(neighbors[i].Count == 1){
+                leaves.Add(i);
+            }
+        }
+
+        // trim the leaves until centroids
+        int remainingNodes = n;
+        while (remainingNodes > 2)
+        {
+            remainingNodes -= leaves.Count;
+
+            var newLeaves = new List<int>();
+
+            foreach (var leave in leaves)
+            {
+                // remove leave from node
+                int neighbor = neighbors[leave].FirstOrDefault();
+                neighbors[neighbor].Remove(leave);
+
+                if(neighbors[neighbor].Count == 1) {
+                    newLeaves.Add(neighbor);
+                }
+            }
+
+            // prepare for the next round
+            leaves = newLeaves;
+        }
+
+
+        return leaves;
+    }
+
+    public IList<int> FindMinHeightTrees1(int n, int[][] edges) {
         var result = new List<int>();
         var adjList = new List<List<int>>();
         var distance = new List<int[]>();
