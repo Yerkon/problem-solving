@@ -16,28 +16,44 @@ public class Solution {
         bool[,] visited = new bool[10000, 10000];
         int[,] plane = new int[10000, 10000];
 
+        int size = 0;
         for (int i = 0; i < stones.Length; i++) {
             int r = stones[i][0];
             int c = stones[i][1];
 
-            plane[r,c] = 1;
+            plane[r, c] = 1;
+
+            size = Math.Max(c, Math.Max(size, r));
         }
 
-        // Console.WriteLine(plane.Length);
+        for (int i = 0; i <= size; i++) {
+            for (int j = 0; j <= size; j++) {
+                // Console.WriteLine($"iterate {i} {j}");
 
-        CountRemoveStones(plane, visited, stones[0][0], stones[0][1], ref res);
+                if (!visited[i, j] && plane[i, j] == 1) {
 
-        for (int i = 0; i < 3; i++)
-        {
-            for (int j = 0; j < 3; j++)
-            {
+                    // Console.WriteLine($"i: {i} j: {j}");
+                    CountRemoveStones(plane, visited, i, j, ref res);
+
+                  
+                    // Console.WriteLine();
+                }
+            }
+        }
+
+        print(size, plane);
+
+        return res;
+    }
+
+    public void print(int size, int[,] plane) {
+        for (int i = 0; i <= size; i++) {
+            for (int j = 0; j <= size; j++) {
                 Console.Write($"{plane[i, j]} ");
             }
 
             Console.WriteLine();
         }
-
-        return res;
     }
 
     public void CountRemoveStones(int[,] plane, bool[,] visited, int r, int c, ref int res) {
@@ -55,13 +71,24 @@ public class Solution {
 
             int newRow = r, newCol = c;
             bool byRow = false, byCol = false;
-            for (int ir = r + 1; ir < plane.GetLength(0); ir++) {
-                // visited[ir, c] = true;
-                if (plane[ir, c] == 1) {
-                    byRow = true;
 
-                    newRow = ir;
+            // bottom
+            for (int rr = r + 1; rr < plane.GetLength(0); rr++) {
+                if (plane[rr, c] == 1) {
+                    byRow = true;
+                    newRow = rr;
                     break;
+                }
+            }
+
+            if (!byRow) {
+                // top
+                for (int rr = r - 1; rr >= 0; rr--) {
+                    if (plane[rr, c] == 1) {
+                        byRow = true;
+                        newRow = rr;
+                        break;
+                    }
                 }
             }
 
@@ -70,24 +97,37 @@ public class Solution {
                 plane[r, c] = 0;
             } else {
 
-                for (int ic = c + 1; ic < plane.GetLength(1); ic++) {
-                    // visited[r, ic] = true;
-                    if (plane[r, ic] == 1) {
+                // right
+                for (int cc = c + 1; cc < plane.GetLength(1); cc++) {
+                    if (plane[r, cc] == 1) {
                         byCol = true;
-
-                        newCol = ic;
+                        newCol = cc;
                         break;
                     }
                 }
 
-                if(byCol) {
+                // left
+
+                if (!byCol) {
+                    for (int cc = c - 1; cc >= 0; cc--) {
+                        if (plane[r, cc] == 1) {
+                            byCol = true;
+                            newCol = cc;
+                            break;
+                        }
+                    }
+                }
+
+                if (byCol) {
                     res++;
                     plane[r, c] = 0;
                 }
             }
 
-            CountRemoveStones(plane, visited, newRow, newCol, ref res);
-        } 
+            if (byRow || byCol) {
+                CountRemoveStones(plane, visited, newRow, newCol, ref res);
+            }
+        }
     }
 }
 // @lc code=end
