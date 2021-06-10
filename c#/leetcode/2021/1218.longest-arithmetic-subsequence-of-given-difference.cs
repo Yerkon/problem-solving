@@ -13,15 +13,13 @@ using System.Text;
 public class Solution {
 
     public int LongestSubsequence(int[] arr, int difference) {
-        if (arr.Length == 1) return 1;
-
         int res = 1;
         var map = new Dictionary<int, int>();
-      
+
         for (int i = 0; i < arr.Length; i++) {
             int key = arr[i] + difference;
-            
-            map[key] = map.GetValueOrDefault(key, 0);
+
+            // init if no key
             map[arr[i]] = map.GetValueOrDefault(arr[i], 0);
 
             map[key] = map[arr[i]] + 1;
