@@ -16,7 +16,6 @@ public class Solution {
         int currRow = 0, currCol = 0;
 
         for (int i = 0; i < target.Length; i++) {
-
             var (row, col) = GetPosition(target[i]);
             ans += GetPath(currRow, currCol, row, col);
 
@@ -45,22 +44,17 @@ public class Solution {
         int hDiff = Math.Abs(col - dCol);
 
         if (row == 5 && col == 0) {
-            for (int i = 0; i < vDiff; i++) {
-                ans += vDirection;
-            }
+            char temp = hDirection;
+            hDirection = vDirection;
+            vDirection = temp;
 
-            for (int i = 0; i < hDiff; i++) {
-                ans += hDirection;
-            }
-        } else {
-            for (int i = 0; i < hDiff; i++) {
-                ans += hDirection;
-            }
-
-            for (int i = 0; i < vDiff; i++) {
-                ans += vDirection;
-            }
+            int temp2 = hDiff;
+            hDiff = vDiff;
+            vDiff = temp2;
         }
+
+        ans += new string(hDirection, hDiff);
+        ans += new string(vDirection, vDiff);
 
         return ans + "!";
     }
