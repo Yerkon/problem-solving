@@ -13,16 +13,16 @@ using System.Text;
 public class Solution {
     public bool IsPossibleDivide(int[] nums, int k) {
         var map = new Dictionary<int, int>();
-
+        
         for (int i = 0; i < nums.Length; i++) {
             map[nums[i]] = map.GetValueOrDefault(nums[i], 0) + 1;
         }
 
         for (int i = 0; i < nums.Length; i++) {
             int length = GetConseqLength(map, nums[i], k);
-            Console.Write(nums[i] + "_" +  length + " ");
-            PrintMap(map);
-            Console.WriteLine("------");
+            // Console.Write(nums[i] + "_" +  length + " ");
+            // PrintMap(map);
+            // Console.WriteLine("------");
 
             if (length != 0 && length != k) {
                 return false;
@@ -41,16 +41,14 @@ public class Solution {
 
     public int GetConseqLength(Dictionary<int, int> map, int curr, int k) {
         int count = 0, it = curr;
-        
+       
+        // move to begin conseq
         while (map.ContainsKey(it) && map[it] > 0) {
-            map[it] -= 1;
-            count++;
             it--;
-
-            if (count == k) return count;
         }
 
-        it = curr + 1;
+        it++;
+
         while (map.ContainsKey(it) && map[it] > 0) {
             map[it] -= 1;
             count++;
