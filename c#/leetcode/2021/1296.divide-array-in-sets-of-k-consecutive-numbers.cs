@@ -19,12 +19,7 @@ public class Solution {
         }
 
         for (int i = 0; i < nums.Length; i++) {
-            int length = GetConseqLength(map, nums[i], k);
-            // Console.Write(nums[i] + "_" +  length + " ");
-            // PrintMap(map);
-            // Console.WriteLine("------");
-
-            if (length != 0 && length != k) {
+            if(!IsRemoved(map, nums[i], k)) {
                 return false;
             }
         }
@@ -39,8 +34,10 @@ public class Solution {
         }
     }
 
-    public int GetConseqLength(Dictionary<int, int> map, int curr, int k) {
-        int count = 0, it = curr;
+    public bool IsRemoved(Dictionary<int, int> map, int curr, int k) {
+        if(map[curr] == 0) return true;
+
+        int it = curr;
        
         // move to begin conseq
         while (map.ContainsKey(it) && map[it] > 0) {
@@ -48,16 +45,16 @@ public class Solution {
         }
 
         it++;
+        int freq = map[it];
 
-        while (map.ContainsKey(it) && map[it] > 0) {
-            map[it] -= 1;
-            count++;
-            it++;
-
-            if (count == k) return count;
+        for (int i = 0; i < k; i++)
+        {
+            if(!map.ContainsKey(it + i) || map[it + i] < freq) return false;
+            
+            map[it + i] -= freq;
         }
 
-        return count;
+        return true;
     }
 }
 // @lc code=end
