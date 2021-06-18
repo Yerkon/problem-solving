@@ -11,7 +11,28 @@ using System.Text;
 
 // @lc code=start
 public class Solution {
-    public int MinAddToMakeValid(string s) {
+
+     // balance
+     public int MinAddToMakeValid(string s) {
+        if(string.IsNullOrEmpty(s)) return 0;
+        int ans = 0, bal = 0;
+
+        for (int i = 0; i < s.Length; i++)
+        {
+            bal += s[i] == '(' ? 1 : -1;
+            
+            // bal >= -1, guarantee
+            if(bal == -1) {
+                bal++;
+                ans++;
+            }
+        }
+
+        return ans + bal;
+    }
+
+    // stack
+    public int MinAddToMakeValid1(string s) {
         if(string.IsNullOrEmpty(s)) return 0;
 
         var stack = new Stack<char>();
