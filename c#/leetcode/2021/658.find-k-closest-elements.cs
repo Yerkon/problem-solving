@@ -12,36 +12,37 @@ using System.Text;
 // @lc code=start
 public class Solution {
     public IList<int> FindClosestElements(int[] arr, int k, int x) {
+        if (arr.Length == k) {
+            return arr.ToList();
+        }
+
+        var res = new List<int>();
         int idx = Array.BinarySearch(arr, x);
 
-        if(idx < 0) idx = ~(idx);
-        
-        var res = new int[k];
-        int count = 0, leftIt = idx - 1, rightIt = idx;
-      
-        while (count != k) {
+        if (idx < 0) idx = ~(idx);
 
-            if (leftIt < 0) {
-                res[count++] = arr[rightIt++];
+        int left = idx - 1, right = idx;
+
+        while (right - left - 1 < k) {
+
+            if (left < 0) {
+                right++;
                 continue;
-            } else if (rightIt >= arr.Length) {
-                res[count++] = arr[leftIt--];
-                continue;
-            }
+            } 
+
             // in range
-
-            if ((Math.Abs(arr[leftIt] - x) < Math.Abs(arr[rightIt] - x)) ||
-                Math.Abs(arr[leftIt] - x) == Math.Abs(arr[rightIt] - x)
-            ) {
-                res[count++] = arr[leftIt--];
+            if (right == arr.Length || Math.Abs(arr[left] - x) <= Math.Abs(arr[right] - x)) {
+                left--;
             } else {
-                res[count++] = arr[rightIt++];
+                right++;
             }
         }
 
-        Array.Sort(res);
+        for (int i = left + 1; i < right; i++) {
+            res.Add(arr[i]);
+        }
 
-        return res.ToList();
+        return res;
     }
 }
 // @lc code=end
