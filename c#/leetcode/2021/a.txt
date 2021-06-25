@@ -1,1 +1,2 @@
-["leetcoder","leetcode","od","hamlet","am"]
+[0,-10,10]
+[]
