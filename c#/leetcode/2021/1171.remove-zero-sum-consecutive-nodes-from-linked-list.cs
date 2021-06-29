@@ -36,14 +36,16 @@ public class Solution {
                 sum += second.val;
 
                 if (sum == 0) {
-                    Console.WriteLine
-                    ("head: " + head.val + " start: " + start.val + " second: " + second.val);
+                    //  Console.WriteLine
+                    // ("head: " + head?.val + " start: " + start?.val + " second: " + second?.val);
 
                     if (start == null) {
                         head = second;
-                        res = start;
+                        res = second.next;
                     } else {
                         start.next = second.next;
+                        head = start;
+                        //Console.WriteLine("start.next: " + start.next?.val);
                     }
 
                     isFound = true;
