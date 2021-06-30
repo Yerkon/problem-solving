@@ -28,26 +28,32 @@ public class Solution {
         ListNode start = null;
 
         while (head != null) {
-            int sum = head.val;
+            if (head.val == 0) {
+                if (start == null) {
+                    res = head.next;
+                } else {
+                    start.next = head.next;
+                }
+
+                head = head.next;
+                continue;
+            }
+
             ListNode second = head.next;
+            int sum = head.val;
             bool isFound = false;
 
             while (second != null) {
                 sum += second.val;
 
                 if (sum == 0) {
-                    //  Console.WriteLine
-                    // ("head: " + head?.val + " start: " + start?.val + " second: " + second?.val);
-
                     if (start == null) {
-                        head = second;
                         res = second.next;
                     } else {
                         start.next = second.next;
-                        head = start;
-                        //Console.WriteLine("start.next: " + start.next?.val);
                     }
 
+                    head = second.next;
                     isFound = true;
                     break;
                 }
@@ -55,12 +61,10 @@ public class Solution {
                 second = second.next;
             }
 
-            if (isFound) {
-                head = head.next;
-            } else {
-                start = head;
-                head = head.next;
-            }
+            if (isFound) continue;
+
+            start = head;
+            head = head.next;
         }
 
         return res;
