@@ -25,6 +25,40 @@ using Common;
  */
 public class Solution {
     public ListNode RemoveZeroSumSublists(ListNode head) {
+        var dic = new Dictionary<int, ListNode>();
+        var dummy = new ListNode();
+        dummy.next = head;
+        int prefix = 0;
+        ListNode cur = dummy;
+
+        while (cur != null)
+        {
+            prefix += cur.val;
+
+            if(dic.ContainsKey(prefix)) {
+                cur = dic[prefix].next;
+                int p = prefix + cur.val;
+                
+                while (p != prefix)
+                {
+                    dic.Remove(p);
+                    cur = cur.next;                                                                                                                                                                                                                                                                                                                         
+                    p += cur.val;
+                }
+
+                dic[prefix].next = cur.next;
+
+            } else {
+                dic.Add(prefix, cur);
+            }
+
+            cur = cur.next;
+        }
+
+        return dummy.next;
+    }
+
+    public ListNode RemoveZeroSumSublists1(ListNode head) {
         ListNode res = head;
         ListNode start = null;
 
