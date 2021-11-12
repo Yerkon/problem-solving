@@ -1,0 +1,10 @@
+{{SERVER}}/payment/payments/2021100000165997
+
+{{SERVER}}/payment/payments/2021070000165137
+
+payment-6b87dbfbfb-x5s96
+267.63 MiB
+
+GET /payment/context/RU/2021-10-27T16:22:54/12 
+
+soapAction="http://bip.bee.kz/SyncChannel/v10/Interfaces/SendMessage"
