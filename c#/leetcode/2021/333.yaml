@@ -1,0 +1,146 @@
+Logging:
+  IncludeScopes: false
+  LogLevel:
+    Default: Information
+    Microsoft: Warning
+    System: Warning
+UpdateJobsStartHour: 02
+PushSendingJobStartHour: 09
+PushSendingJobEndHour: 19
+EnabledEventConsumers:
+  UserCreated: true
+  LoginChange: true
+EnabledJobs:
+  PushSender: false
+  Invoices: false
+  Penalties: true
+  Taxes: false
+  RegularPaymentNotifyBeforeExecution: false
+  RegularPayment: false
+  RegularPaymentExecutionStatus: false
+  CheckStatus: false
+  Revert: false
+  MrpUpdate: true
+  HcsbkRegisterRegistry: true
+  HcsbkRegistryStatus: false
+ConnectionStrings:
+  MyConnectionString: Data Source=vserver499.alfa-bank.kz\TESTSDBO, 1533;Initial Catalog=TB2RDB;User ID=payments;Password=qwer1234@;Pooling=True;Max Pool Size=500;
+RabbitMQ:
+  host: vserver759.alfa-bank.kz
+  port: 5672
+  username: micro
+  password: micro123
+  --host: rabbitmq
+  --port: 5672
+  --username: guest
+  --password: guest
+BankSystemRabbitMQRpc:
+  exchange: colvir.worker.exchange
+  queuename: default
+  replyQueueName: payment.queue.rpc.answer.jobs
+  creditPaymentReplyQueueName: colvir.worker.queue.creditpayment
+  appid: Payment
+  rpcTimeout: 30000
+  heartbeat: 60
+  mrpUpdateReplyQueueName: colvir.worker.queue.mrpupdate
+MRPUpdateSettings:
+  durationDays: 1
+  cityId: 3105
+  cityPattern: "Город ({0} ₸)"
+  townId: 3106
+  townPattern: "Село ({0} ₸)"
+PaymentProviderRabbitMQRpc:
+  exchange: paynet.worker.exchange
+  queuename: paynet
+  replyQueueNameMobileOperator: rpc.queue.answer.paynet.mobileoperator
+  replyQueueNameCheck: rpc.queue.answer.paynet.check
+  replyQueueNamePayment: rpc.queue.answer.paynet.payment
+  replyQueueNameGetStatus: rpc.queue.answer.paynet.getstatus
+  replyQueueNameGetStatusByAgentRequest: rpc.queue.answer.paynet.getstatusbyagentrequest
+  rpcTimeout: 30000
+  heartbeat: 60
+EgovRabbitMQRpc:
+  exchange: egov.worker.exchange
+  queuename: egov
+  appid: Payment
+  rpcTimeout: 10000
+  heartbeat: 60
+EgovRabbitMQRpcAnswerQueues:
+  check: rpc.queue.answer.check.egov
+  checkTax: rpc.queue.answer.checkTax.egov
+  payment: rpc.queue.answer.payment.egov
+  paymentTax: rpc.queue.answer.paymentTax.egov
+  paymentStatusTax: rpc.queue.answer.paymentStatusTax.egov
+PublishClientAccountUpdate:
+  exchange: transfer.history.topic
+  routingkey: auth.login.update
+  appid: Payment
+  heartbeat: 60
+Redis: "redis:6379"
+PaymentConfiguration:
+  PaynetTerminalCode: "440000001"
+  PenaltiesTerminalCode: "789987456"
+  TaxesTerminalCode: "889987456"
+  PaynetAccount: KZ619472398000071198
+  PenaltiesAccount: KZ359470398991911898
+  TaxesAccount: KZ329472398870595213
+  AlfaGoodAccount: KZ589470398991625625
+  SendSmsUrl: https://rancher-test.alfa-bank.kz:30030/push-notification
+MetricsOptions:
+  DefaultContextLabel: MyMvcApplication
+  Enabled: true
+MetricsWebTrackingOptions:
+  ApdexTrackingEnabled: true
+  ApdexTSeconds: 0.1
+  IgnoredHttpStatusCodes:
+    - 404
+  IgnoredRoutesRegexPatterns:
+  OAuth2TrackingEnabled: true
+MetricEndpointsOptions:
+  MetricsEndpointEnabled: true
+  MetricsTextEndpointEnabled: true
+  EnvironmentInfoEndpointEnabled: true
+AdminSecret: "sdvd324#&s3fsdVGSG"
+MainUrl: https://tmbank.alfabank.kz
+PushService:
+  sendMessageUrl: https://rancher-test.alfa-bank.kz:30030/push-notification/notifications
+UserCreatedEventConsumer:
+  queueName: payment-ms.consumer.user.created
+  exchange: auth-ms.events
+  routingKey: user.created
+LoginChangeEventConsumer:
+  queueName: payment-ms.consumer.user.loginchange
+  exchange: passport.topic
+  routingKey: client.loginchange
+HcsbkRabbitMQRpc:
+  exchange: hcsbk.worker.exchange
+  queuename: hcsbk
+  rpcTimeout: 30000
+  heartbeat: 60
+  checkBillAnswerQueue: rpc.queue.answer.checkBill.hcsbk
+  registerPaymentAnswerQueue: rpc.queue.answer.registerPayment.hcsbk
+  registryRegistrationAnswerQueue: rpc.queue.answer.registryRegistration.hcsbk
+  registryStatusAnswerQueue: rpc.queue.answer.registryStatus.hcsbk
+JobsDurations:
+  InvoiceUpdateDays: 1
+  TaxUpdateDays: 10
+HcsbkJobsSettings:
+  checkRegistriesDurationHours: 1
+  runOnlyWorkingDays: false
+  schedulerRunningHour: 16
+  schedulerRunningHourCredit: 17
+  schedulerRunningMinute: 0
+  registerRegistriesSubTaskDurationHours: 1
+DictionaryUrl: https://rancher-pci-test.alfa-bank.kz:30032/dictionary
+TestNewFunctionality: true
+PaymentContextCacheUpdater:
+  DbSyncInterval: 1
+Sentry:
+  Dsn: https://720f487313c745c5a257a5aec140414b@sentry.alfabank.kz/34
+  MaxRequestBodySize: "Always"
+  SendDefaultPii: true
+  MinimumBreadcrumbLevel: "Debug"
+  MinimumEventLevel: "Warning"
+  AttachStackTrace: true
+  Debug: true
+  Environment: Development

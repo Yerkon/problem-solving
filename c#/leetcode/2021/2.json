@@ -1,0 +1,93 @@
+{
+    "data": {
+        "id": 1986312,
+        "regDate": "2021-06-30T22:44:56",
+        "checkId": "28a7eb4b-4464-4b8a-9f45-0f482f222ce4",
+        "amount": 34001.5000,
+        "fee": 0.0000,
+        "sourceAccountNumber": "KZ669470398993508348",
+        "telebankPaymentNumber": "2021060002086312",
+        "additionalInfo": null,
+        "paymentServiceId": 909,
+        "paymentServiceName": "ВУЗы",
+        "invoiceId": null,
+        "currency": "KZT",
+        "accountId": -1,
+        "paymentAggregatorCode": null,
+        "knp": null,
+        "paymentPurpose": "Оплата \"ВУЗы\", 1102_1 - Алматы , 1103_21 - Университет Туран , ЭФ, Турехожаев Эмир-Арафат Есеналиевич, 971114300453, 2, Турехожаев Эмир-Арафат Есеналиевич, 06.2021 через Интернет банк \"Альфа-Мобайл\"",
+        "parameters": [
+            {
+                "id": 2022358,
+                "serviceParameterId": 1102,
+                "paymentInfoId": 1986312,
+                "label": null,
+                "value": "1102_1",
+                "displayValue": "Алматы"
+            },
+            {
+                "id": 2022359,
+                "serviceParameterId": 1103,
+                "paymentInfoId": 1986312,
+                "label": null,
+                "value": "1103_21",
+                "displayValue": "Университет Туран"
+            },
+            {
+                "id": 2022360,
+                "serviceParameterId": 1104,
+                "paymentInfoId": 1986312,
+                "label": null,
+                "value": "ЭФ",
+                "displayValue": "ЭФ"
+            },
+            {
+                "id": 2022361,
+                "serviceParameterId": 1105,
+                "paymentInfoId": 1986312,
+                "label": null,
+                "value": "Турехожаев Эмир-Арафат Есеналиевич",
+                "displayValue": "Турехожаев Эмир-Арафат Есеналиевич"
+            },
+            {
+                "id": 2022362,
+                "serviceParameterId": 1106,
+                "paymentInfoId": 1986312,
+                "label": null,
+                "value": "971114300453",
+                "displayValue": "971114300453"
+            },
+            {
+                "id": 2022363,
+                "serviceParameterId": 1107,
+                "paymentInfoId": 1986312,
+                "label": null,
+                "value": "2",
+                "displayValue": "2"
+            },
+            {
+                "id": 2022364,
+                "serviceParameterId": 1108,
+                "paymentInfoId": 1986312,
+                "label": null,
+                "value": "Турехожаев Эмир-Арафат Есеналиевич",
+                "displayValue": "Турехожаев Эмир-Арафат Есеналиевич"
+            },
+            {
+                "id": 2022365,
+                "serviceParameterId": 1109,
+                "paymentInfoId": 1986312,
+                "label": null,
+                "value": "06.2021",
+                "displayValue": "06.2021"
+            }
+        ],
+        "status": 3,
+        "addInfo": null,
+        "subscriptionId": null,
+        "addInfoDynamic": null,
+        "bankReference": "R300621224459977174000"
+    },
+    "code": 0,
+    "codeDescription": "Операция выполнена успешно"
+}
