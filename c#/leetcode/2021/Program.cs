@@ -16,6 +16,53 @@ namespace Yandex_Test {
             //Console.WriteLine(res);
         }
 
+          public bool[] FriendRequests(int n, int[][] restrictions, int[][] requests)
+        {
+            bool[] res = new bool[requests.GetLength(0)];
+           // int[,] connects = new int[n, n];
+            int[,] restrics = new int[n, n];
+
+            for (int i = 0; i < restrictions.GetLength(0); i++)
+            {
+                int[] row = restrictions[i];
+                restrics[row[0], row[1]] = 1;
+                restrics[row[1], row[0]] = 1;
+            }
+
+            for (int i = 0; i < requests.GetLength(0); i++)
+            {
+                int[] req = requests[i];
+
+                if(restrics[req[0], req[1]] == 0 && restrics[req[1], req[0]] == 0) {
+                    //connects[req[0], req[1]] = 1;
+                    //connects[req[1], req[0]] = 1;
+
+                    // add each other restrictions
+                    // iterate columns
+                    for (int k = 0; k < restrics.GetLength(1); k++)
+                    {
+                        if (restrics[req[0], k] == 1) {
+                            restrics[req[1], k] = 1;
+                            restrics[k, req[1]] = 1;
+                        }
+
+                        if(restrics[req[1], k] == 1)
+                        {
+                            restrics[req[0], k] = 1;
+                            restrics[k, req[0]] = 1;
+                        }
+                    }
+
+                    res[i] = true;
+                } else
+                {
+                    res[i] = false;
+                }
+            }
+
+            return res;
+        }
+
         public string DecodeCiphertext(string encodedText, int rows)
         {
             if(rows == 1)
