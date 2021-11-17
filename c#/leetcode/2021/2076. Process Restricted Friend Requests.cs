@@ -1,18 +1,18 @@
 public class Solution {
     
-     public class UnionFind {
-            private int[] arr;
+      public class UnionFind {
+            private int[] parent;
             Random rnd = new Random();
             public UnionFind(int n) {
-                arr = new int[n];
+                parent = new int[n];
 
-                for(int i = 0; i < arr.Length; i++) {
-                    arr[i] = i;
+                for(int i = 0; i < parent.Length; i++) {
+                    parent[i] = i;
                 }
             }
 
             public int Find(int u) {
-                return u == arr[u] ? u : Find(arr[u]);
+                return u == parent[u] ? u : Find(parent[u]);
             }
 
             public bool Connected(int u, int v) {
@@ -28,7 +28,7 @@ public class Solution {
                     v = temp;
                 }
 
-                arr[Find(u)] = Find(v);
+                parent[Find(u)] = Find(v);
             }
         }
     
