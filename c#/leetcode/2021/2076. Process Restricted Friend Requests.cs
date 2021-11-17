@@ -12,7 +12,12 @@ public class Solution {
             }
 
             public int Find(int u) {
-                return u == parent[u] ? u : Find(parent[u]);
+                while(u != parent[u]) {
+                    parent[u] = parent[parent[u]];
+                    u = parent[u];
+                }
+
+                return u;
             }
 
             public bool Connected(int u, int v) {
@@ -21,7 +26,7 @@ public class Solution {
 
             public void Union(int u, int v) {
                 int value = rnd.Next(2);
-                
+
                 if(value == 1) {
                     int temp = u;
                     u = v;
